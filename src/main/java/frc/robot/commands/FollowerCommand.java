@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import frc.robot.Robot;
 import frc.robot.autonomous.SwerveTrajectory;
+import frc.robot.modules.DriveModule;
 
 public class FollowerCommand extends Command {
     private SwerveTrajectory trajectory;
@@ -19,11 +19,8 @@ public class FollowerCommand extends Command {
 
     @Override
     public boolean execute() {
-        if (!Robot.isReal()) {
-        
-        }
-        
-        return true;
+        DriveModule.getInstance().drive(trajectory.sample(commandTimer.get()));
+        return trajectory.isFinished(commandTimer.get());
     }
 
     @Override

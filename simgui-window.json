@@ -5,34 +5,49 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "720",
-      "maximized": "0",
+      "height": "1009",
+      "maximized": "1",
       "style": "0",
       "userScale": "2",
-      "width": "1280",
-      "xpos": "-1",
-      "ypos": "-1"
+      "width": "1920",
+      "xpos": "0",
+      "ypos": "23"
     }
   },
   "Window": {
+    "###/FMSInfo": {
+      "Collapsed": "0",
+      "Pos": "642,813",
+      "Size": "181,167"
+    },
+    "###/Shuffleboard/Auton Configuration/Choose Autonomous": {
+      "Collapsed": "0",
+      "Pos": "300,937",
+      "Size": "254,54"
+    },
+    "###/SmartDashboard/Field": {
+      "Collapsed": "0",
+      "Pos": "216,132",
+      "Size": "971,523"
+    },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "5,540",
-      "Size": "169,184"
+      "Pos": "10,852",
+      "Size": "283,140"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "311,606",
+      "Pos": "321,722",
       "Size": "796,73"
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "837,29",
-      "Size": "438,476"
+      "Pos": "1416,29",
+      "Size": "499,975"
     },
     "###NetworkTables Info": {
-      "Collapsed": "0",
-      "Pos": "250,51",
+      "Collapsed": "1",
+      "Pos": "253,51",
       "Size": "750,224"
     },
     "###Other Devices": {
@@ -47,7 +62,7 @@
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "5,150",
+      "Pos": "271,857",
       "Size": "135,127"
     },
     "Debug##Default": {
@@ -57,7 +72,7 @@
     },
     "Robot State": {
       "Collapsed": "0",
-      "Pos": "5,20",
+      "Pos": "9,731",
       "Size": "92,116"
     }
   }
