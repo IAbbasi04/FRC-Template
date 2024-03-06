@@ -5,7 +5,6 @@ import java.util.Queue;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandQueue {
     private Queue<Command> queue;

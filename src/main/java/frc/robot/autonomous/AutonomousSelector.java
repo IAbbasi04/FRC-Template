@@ -13,8 +13,6 @@ public class AutonomousSelector {
     private GenericEntry delayEntry;
 
     public Class<?>[] autos = {
-        MobilityAuto.class,
-
         UpPreloadMobility.class,
     };
 
