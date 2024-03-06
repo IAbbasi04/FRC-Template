@@ -1,6 +1,6 @@
 package frc.robot.modes;
 
-public class TestModeManager extends ModeManager {
+public class TestModeManager extends BaseTeleopModeManager {
     private static TestModeManager INSTANCE = null;
     public static TestModeManager getInstance() {
         if (INSTANCE == null) {
@@ -11,6 +11,6 @@ public class TestModeManager extends ModeManager {
 
     @Override
     public void runPeriodic() {
-
+        super.updateSwerve();
     }
 }

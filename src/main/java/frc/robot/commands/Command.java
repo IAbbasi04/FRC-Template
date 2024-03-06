@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class Command {
+    protected String tag = "DEFAULT COMMAND";
     protected double startDelay = 0.0;
     private Timer timeoutTimer = new Timer();
     protected Timer commandTimer = new Timer();
@@ -55,6 +56,22 @@ public abstract class Command {
      */
     public boolean isPastTimeout() {
         return this.timeoutTimer.get() >= this.timeout;
+    }
+
+    /**
+     * Sets a traceable tag for the given command; useful for cherry-picking a
+     * certain command out of the queue
+     */
+    public Command setTag(String tag) {
+        this.tag = tag;
+        return this;
+    }
+
+    /**
+     * @return {@code String} representing the given tag for the command
+     */
+    public String getTag() {
+        return tag;
     }
     
     /**

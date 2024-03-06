@@ -94,6 +94,13 @@ public class DriveModule extends Module {
     }
 
     /**
+     * Resets the gyroscope to 0
+     */
+    public void resetGyroscope() {
+        swerve.gyro.setYaw(0.0);
+    }
+
+    /**
      * Sets the initial position of the robot
      */
     public void setStartPose(Pose2d startPose) {

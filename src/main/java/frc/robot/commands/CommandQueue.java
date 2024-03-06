@@ -5,6 +5,8 @@ import java.util.Queue;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 
 public class CommandQueue {
     private Queue<Command> queue;
@@ -61,7 +63,11 @@ public class CommandQueue {
                 if (queue.size() != 0) {
                     queue.peek().initialize();
                     queue.peek().startTimeout();
+                } else if (Robot.isSimulation()) {
+                    SmartDashboard.putString("Current Command", "N/A");
                 }
+            } else if (Robot.isSimulation()) {
+                SmartDashboard.putString("Current Command", queue.peek().getTag());
             }
         }
     }

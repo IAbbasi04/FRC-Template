@@ -11,13 +11,14 @@ public class UpPreloadMobility extends BaseAuto {
     private SwerveTrajectory MOBILITY = generate(
         slowConfig, 
         SUBWOOFER_UP.getPose(),
-        SUBWOOFER_UP.translate(4.0, 0.0)
+        SUBWOOFER_MIDDLE.translate(4.0, 1.0)
     );
 
     @Override
     public void initialize() {
         queue = new CommandQueue(
             new FollowerCommand(MOBILITY)
+                .setTag("LEAVE WING")
         );
     }
 }
