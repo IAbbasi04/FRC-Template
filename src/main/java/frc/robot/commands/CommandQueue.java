@@ -53,7 +53,6 @@ public class CommandQueue {
      */
     public void run() {
         if (!isFinished()) {
-            SmartDashboard.putNumber("AKLDASKSDAKLJKLD", queue.peek().timeout);
             //if command has been executed, reset and get ready for the next command
             if (queue.peek().execute() || queue.peek().isPastTimeout()) {
                 queue.peek().shutdown();
