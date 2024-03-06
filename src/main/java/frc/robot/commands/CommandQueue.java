@@ -6,7 +6,6 @@ import java.util.Queue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 
 public class CommandQueue {
     private Queue<Command> queue;
@@ -85,7 +84,7 @@ public class CommandQueue {
                 return command.getStartPose();
             } else if (command.getClass() == JointCommand.class) {
                 for (Command jointCommand : ((JointCommand)command).getCommands()) {
-                    if (jointCommand.getClass() == FollowerCommand.class || jointCommand.getClass() == WaypointCommand.class) {
+                    if (jointCommand.getClass() == FollowerCommand.class) {
                         return jointCommand.getStartPose();
                     }
                 }
