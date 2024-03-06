@@ -35,6 +35,6 @@ public class Constants {
         public static final double MAX_VOLTAGE = 12.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 4.5;
 
-        public static final double SLEW_LIMIT = 1.0; // 100% rate of change per second
+        public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }
 }

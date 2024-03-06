@@ -9,7 +9,10 @@ import frc.robot.controls.DriveScaler.ScaleType;
 import frc.robot.modules.DriveModule;
 
 public class BaseTeleopModeManager extends ModeManager {
-    protected DriveScaler scaler = new DriveScaler(ScaleType.LINEAR, true); // Linear scaling with a slew limiter
+    protected DriveScaler xScaler = new DriveScaler(ScaleType.LINEAR, true); // Linear scaling with a slew limiter
+    protected DriveScaler yScaler = new DriveScaler(ScaleType.LINEAR, true); // Linear scaling with a slew limiter
+    protected DriveScaler rotateScaler = new DriveScaler(ScaleType.LINEAR, true); // Linear scaling with a slew limiter
+    
 
     @Override
     public void runPeriodic() {
@@ -20,9 +23,9 @@ public class BaseTeleopModeManager extends ModeManager {
      * Updates inputs for the swerve throughout the entire teleop mode
      */
     protected void updateSwerve() {
-        double desiredX = scaler.scale(driverController.get(DRIVER.TRANSLATE_X));
-        double desiredY = scaler.scale(driverController.get(DRIVER.TRANSLATE_Y));
-        double desiredRotate = scaler.scale(driverController.get(DRIVER.ROTATE));
+        double desiredX = xScaler.scale(-driverController.get(DRIVER.TRANSLATE_X));
+        double desiredY = yScaler.scale(-driverController.get(DRIVER.TRANSLATE_Y));
+        double desiredRotate = rotateScaler.scale(driverController.get(DRIVER.ROTATE));
         boolean snailMode = driverController.get(DRIVER.SNAIL_MODE) == 1.0;
         boolean resetGyro = driverController.get(DRIVER.RESET_GYRO) == 1.0;
 
@@ -37,9 +40,9 @@ public class BaseTeleopModeManager extends ModeManager {
             rotateMultiplier = Constants.SWERVE.ROTATE_POWER_SLOW;
         }
 
-        desiredX *= translateMultiplier;
-        desiredY *= translateMultiplier;
-        desiredRotate *= rotateMultiplier;
+        desiredX *= translateMultiplier * Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND;
+        desiredY *= translateMultiplier * Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND;
+        desiredRotate *= rotateMultiplier * Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND;
 
         ChassisSpeeds speeds = new ChassisSpeeds(desiredX, desiredY, desiredRotate);
 

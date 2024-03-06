@@ -22,7 +22,7 @@ public class DriveScaler {
      * Scales the input by the desired scaling method
      */
     public double scale(double input) {
-        double scaledInput = Math.pow(input, type.ordinal()); // Currently only works with polynomial functions (x, x^2, x^3)
+        double scaledInput = Math.pow(input, type.ordinal() + 1); // Currently only works with polynomial functions (x, x^2, x^3)
         if (slewLimiter != null) {
             scaledInput = slewLimiter.calculate(scaledInput);
         }

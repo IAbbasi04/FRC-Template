@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     currentMode.runPeriodic();
+    activeModules.periodicAll();
   }
 
   @Override
@@ -59,7 +60,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    activeModules.periodicAll();
+
   }
 
   @Override
@@ -72,7 +73,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    activeModules.periodicAll();
+
   }
 
   @Override
@@ -85,7 +86,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    activeModules.periodicAll();
+  
   }
 
   @Override
@@ -98,7 +99,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    activeModules.periodicAll();
+
   }
 
   @Override
