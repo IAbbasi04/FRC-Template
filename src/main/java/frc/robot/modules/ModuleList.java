@@ -1,5 +1,6 @@
 package frc.robot.modules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import frc.robot.common.Enums.MatchMode;
@@ -19,9 +20,7 @@ public class ModuleList {
      */
     public ModuleList addModule(Module module) {
         if (!modules.contains(module)) {
-            modules.add(module);
-        } else {
-            throw new UnsupportedOperationException("ALREADY EXISTS IN LIST");
+            this.modules.add(module);
         }
         return this;
     }
@@ -32,8 +31,6 @@ public class ModuleList {
     public ModuleList removeModule(Module module) {
         if (modules.contains(module)) {
             modules.remove(module);
-        } else {
-            throw new UnsupportedOperationException("DOES NOT EXIST IN LIST");
         }
         return this;
     }
@@ -49,7 +46,15 @@ public class ModuleList {
     /**
      * Runs periodic for all {@code Modules} in the module list
      */
-    public void periodicAll(MatchMode mode) {
+    public void periodicAll() {
         modules.forEach(module -> module.periodic());
+    }
+
+    /**
+     * Clears all active modules from list
+     */
+    public ModuleList clearModules() {
+        modules = new ArrayList<>();
+        return this;
     }
 }
