@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 public abstract class Command {
     protected double startDelay = 0.0;
     private Timer timeoutTimer = new Timer();
+    protected Timer commandTimer = new Timer();
     public double timeout = 15.0; // 15 seconds means it technically never times out in autonomous
 
     /**
