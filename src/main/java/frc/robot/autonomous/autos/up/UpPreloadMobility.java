@@ -2,8 +2,8 @@ package frc.robot.autonomous.autos.up;
 
 import frc.robot.autonomous.BaseAuto;
 import frc.robot.autonomous.SwerveTrajectory;
-import frc.robot.commands.CommandQueue;
-import frc.robot.commands.FollowerCommand;
+import frc.robot.autonomous.commands.CommandQueue;
+import frc.robot.autonomous.commands.FollowerCommand;
 
 import static frc.robot.autonomous.AutoGenerator.*;
 

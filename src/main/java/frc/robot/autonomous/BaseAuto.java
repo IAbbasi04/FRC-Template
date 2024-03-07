@@ -2,7 +2,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import frc.robot.commands.CommandQueue;
+import frc.robot.autonomous.commands.CommandQueue;
 import frc.robot.modes.ModeManager;
 
 public abstract class BaseAuto extends ModeManager {

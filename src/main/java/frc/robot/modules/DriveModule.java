@@ -118,8 +118,7 @@ public class DriveModule extends Module {
      */
     public Rotation2d getCurrentRotation() {
         if (!Robot.isReal()) { // Return simulated rotation if in simulation
-            SmartDashboard.putNumber("ROTATION DEGREES", Robot.FIELD.getRobotPose().getRotation().getDegrees());
-            return Robot.FIELD.getRobotPose().getRotation();
+            return Rotation2d.fromDegrees(Robot.FIELD.getRobotPose().getRotation().getDegrees() % 360);
         }
         return swerve.getGyroscopeRotation();
     }
@@ -159,8 +158,8 @@ public class DriveModule extends Module {
             Pose2d simulatedRobotPose = Robot.FIELD.getRobotPose();
             Pose2d newSimulatedPose = new Pose2d(
                 new Translation2d(
-                    simulatedRobotPose.getX() + 0.02*desiredSpeeds.vxMetersPerSecond,
-                    simulatedRobotPose.getY() + 0.02*desiredSpeeds.vyMetersPerSecond
+                    simulatedRobotPose.getX() - 0.02*desiredSpeeds.vyMetersPerSecond,
+                    simulatedRobotPose.getY() + 0.02*desiredSpeeds.vxMetersPerSecond
                 ),
                 Rotation2d.fromRadians(
                     (simulatedRobotPose.getRotation().getRadians() + 0.02*desiredSpeeds.omegaRadiansPerSecond) % 360
