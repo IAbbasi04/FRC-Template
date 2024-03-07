@@ -1,6 +1,5 @@
 package frc.robot.autonomous.autos;
 
-import frc.robot.autonomous.BaseAuto;
 import frc.robot.autonomous.commands.CommandQueue;
 import frc.robot.autonomous.commands.DelayCommand;
 

@@ -4,14 +4,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.modules.DriveModule;
 
 public class CommandQueue {
     private Queue<Command> queue;
     private Command[] commandArray;
-    private Timer timer;
 
     /**
      * @param commands list of commands (in order) to run for the queue
@@ -23,21 +22,17 @@ public class CommandQueue {
         }
 
         commandArray = commands;
-        timer = new Timer();
-        timer.reset();
-        timer.start();
-        queue.peek().initialize();
+        initialize();
     }
 
     /**
      * Starts the queue
      */
     public void initialize() {
-        timer.reset();
-        timer.start();
         queue.peek().initialize();
         queue.peek().startTimeout();
-        // TODO - SET SWERVE STARTING POSE
+        queue.peek().startCommandTimer();
+        DriveModule.getInstance().setStartPose(getStartPose());
     }
 
     /**
@@ -58,11 +53,10 @@ public class CommandQueue {
             if (queue.peek().execute() || queue.peek().isPastTimeout()) {
                 queue.peek().shutdown();
                 queue.poll();
-                timer.reset();
-                timer.start();
                 if (queue.size() != 0) {
                     queue.peek().initialize();
                     queue.peek().startTimeout();
+                    queue.peek().startCommandTimer();
                 } else if (Robot.isSimulation()) {
                     SmartDashboard.putString("Current Command", "N/A");
                 }

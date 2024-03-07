@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autonomous.autos.*;
-import frc.robot.autonomous.autos.up.UpPreloadMobility;
+import frc.robot.autonomous.autos.center.*;
 
 public class AutonomousSelector {
     public ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Configuration");
@@ -13,7 +13,7 @@ public class AutonomousSelector {
     private GenericEntry delayEntry;
 
     public Class<?>[] autos = {
-        UpPreloadMobility.class,
+        Center1WingAuto.class,
     };
 
     public AutonomousSelector() {

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.AutonomousSelector;
-import frc.robot.autonomous.BaseAuto;
+import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.controls.XboxController;
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("AAA DT", CLOCK.dt());
+    
   }
 
   @Override

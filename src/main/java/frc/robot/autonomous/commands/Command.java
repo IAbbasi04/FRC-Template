@@ -51,6 +51,12 @@ public abstract class Command {
         return this;
     }
 
+    public Command startCommandTimer() {
+        this.commandTimer.reset();
+        this.commandTimer.start();
+        return this;
+    }
+
     /**
      * Whether or not the timeout timer has past the timeout time
      */

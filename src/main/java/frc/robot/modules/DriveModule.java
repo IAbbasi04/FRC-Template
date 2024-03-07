@@ -7,6 +7,7 @@ import com.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
 import com.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -16,6 +17,7 @@ import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.Ports;
+import frc.robot.common.ProfileGains;
 
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;
@@ -152,9 +154,8 @@ public class DriveModule extends Module {
     @Override
     public void periodic() {
         swerve.drive(desiredSpeeds);
-        SmartDashboard.putString("Desired speeds", desiredSpeeds.toString());
 
-        if (!Robot.isReal()) {
+        if (!Robot.isReal() && Robot.MODE != MatchMode.AUTONOMOUS) {
             Pose2d simulatedRobotPose = Robot.FIELD.getRobotPose();
             Pose2d newSimulatedPose = new Pose2d(
                 new Translation2d(

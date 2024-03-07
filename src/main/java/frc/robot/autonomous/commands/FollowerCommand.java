@@ -1,6 +1,7 @@
 package frc.robot.autonomous.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.modules.DriveModule;
 
@@ -30,6 +31,6 @@ public class FollowerCommand extends Command {
 
     @Override
     public void shutdown() {
-        
+        DriveModule.getInstance().drive(new ChassisSpeeds());
     }
 }

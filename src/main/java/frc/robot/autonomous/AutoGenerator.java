@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public enum AutoGenerator {
     SPEAKER_OPENING(1.0, 5.425),
 
-    SUBWOOFER_UP(1.0, 6.25, Rotation2d.fromDegrees(60)),
-    SUBWOOFER_MIDDLE(1.4, 5.5),
-    SUBWOOFER_DOWN(1.0, 4.5, Rotation2d.fromDegrees(-60)),
+    SUBWOOFER_UP(0.675, 6.75, Rotation2d.fromDegrees(60)),
+    SUBWOOFER_MIDDLE(1.385, 5.585),
+    SUBWOOFER_DOWN(0.675, 4.345, Rotation2d.fromDegrees(-60)),
 
     AMP(2.2, 7.75),
 
@@ -52,7 +52,7 @@ public enum AutoGenerator {
      * Rotates a position by a certain angle offset
      */
     public Pose2d rotate(Rotation2d p_rot) {
-        return new Pose2d(x, y, rotation.plus(p_rot));
+        return new Pose2d(x, y, p_rot);
     }
 
     /**
@@ -66,7 +66,7 @@ public enum AutoGenerator {
      * Translates a position by a certain x, y, and rotational offset
      */
     public Pose2d translate(double p_x, double p_y, Rotation2d p_rot) {
-        return new Pose2d(x + p_x, y + p_y, rotation.plus(p_rot));
+        return new Pose2d(x + p_x, y + p_y, p_rot);
     }
 
     /**
