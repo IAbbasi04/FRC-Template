@@ -10,6 +10,7 @@ import frc.robot.autonomous.BaseAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.controls.XboxController;
+import frc.robot.hardware.Clock;
 import frc.robot.modes.DisabledModeManager;
 import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;
@@ -24,12 +25,16 @@ public class Robot extends TimedRobot {
 
   public static MatchMode MODE;
   public static Field2d FIELD;
+  public static Clock CLOCK;
 
   private AutonomousSelector autoSelector;
 
   @Override
   public void robotInit() {
     MODE = MatchMode.DISABLED;
+    FIELD = new Field2d();
+    CLOCK = new Clock();
+
     driverController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT);
     operatorController = new XboxController(Constants.INPUT.OPERATOR_CONTROLLER_PORT);
 
@@ -40,12 +45,13 @@ public class Robot extends TimedRobot {
 
     autoSelector = new AutonomousSelector();
 
-    FIELD = new Field2d();
   }
 
   @Override
   public void robotPeriodic() {
     currentMode.runPeriodic();
+    activeModules.periodicAll();
+    CLOCK.update();
   }
 
   @Override
@@ -59,7 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    activeModules.periodicAll();
+
   }
 
   @Override
@@ -72,7 +78,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    activeModules.periodicAll();
+    SmartDashboard.putNumber("AAA DT", CLOCK.dt());
   }
 
   @Override
@@ -85,7 +91,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    activeModules.periodicAll();
+  
   }
 
   @Override
@@ -98,7 +104,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    activeModules.periodicAll();
+
   }
 
   @Override

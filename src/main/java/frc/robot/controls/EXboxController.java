@@ -11,7 +11,7 @@ public enum EXboxController {
 	Y_BTN,
 	LEFT_BUMPER,
 	RIGHT_BUMPER,
-    BACK,
+    BACK_BTN,
     START,
     LEFT_JOYSTICK_BTN,
 	RIGHT_JOYSTICK_BTN,
@@ -52,7 +52,7 @@ public enum EXboxController {
             case Y_BTN:
             case LEFT_BUMPER:
             case RIGHT_BUMPER:
-            case BACK:
+            case BACK_BTN:
             case START:
             case LEFT_JOYSTICK_BTN:
             case RIGHT_JOYSTICK_BTN:

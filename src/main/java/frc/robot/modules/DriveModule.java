@@ -9,7 +9,9 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
@@ -94,6 +96,13 @@ public class DriveModule extends Module {
     }
 
     /**
+     * Resets the gyroscope to 0
+     */
+    public void resetGyroscope() {
+        swerve.gyro.setYaw(0.0);
+    }
+
+    /**
      * Sets the initial position of the robot
      */
     public void setStartPose(Pose2d startPose) {
@@ -109,7 +118,7 @@ public class DriveModule extends Module {
      */
     public Rotation2d getCurrentRotation() {
         if (!Robot.isReal()) { // Return simulated rotation if in simulation
-            return Robot.FIELD.getRobotPose().getRotation();
+            return Rotation2d.fromDegrees(Robot.FIELD.getRobotPose().getRotation().getDegrees() % 360);
         }
         return swerve.getGyroscopeRotation();
     }
@@ -143,5 +152,21 @@ public class DriveModule extends Module {
     @Override
     public void periodic() {
         swerve.drive(desiredSpeeds);
+        SmartDashboard.putString("Desired speeds", desiredSpeeds.toString());
+
+        if (!Robot.isReal()) {
+            Pose2d simulatedRobotPose = Robot.FIELD.getRobotPose();
+            Pose2d newSimulatedPose = new Pose2d(
+                new Translation2d(
+                    simulatedRobotPose.getX() - 0.02*desiredSpeeds.vyMetersPerSecond,
+                    simulatedRobotPose.getY() + 0.02*desiredSpeeds.vxMetersPerSecond
+                ),
+                Rotation2d.fromRadians(
+                    (simulatedRobotPose.getRotation().getRadians() + 0.02*desiredSpeeds.omegaRadiansPerSecond) % 360
+                )
+            );
+
+            Robot.FIELD.setRobotPose(newSimulatedPose);
+        }
     }
 }

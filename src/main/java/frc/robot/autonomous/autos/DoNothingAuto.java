@@ -1,8 +1,8 @@
 package frc.robot.autonomous.autos;
 
 import frc.robot.autonomous.BaseAuto;
-import frc.robot.commands.CommandQueue;
-import frc.robot.commands.DelayCommand;
+import frc.robot.autonomous.commands.CommandQueue;
+import frc.robot.autonomous.commands.DelayCommand;
 
 public class DoNothingAuto extends BaseAuto {
     @Override
