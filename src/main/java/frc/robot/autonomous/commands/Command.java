@@ -35,6 +35,13 @@ public abstract class Command {
     }
 
     /**
+     * Gets the delay for the start of the command
+     */
+    public double getDelay() {
+        return this.startDelay;
+    }
+
+    /**
      * Adds a mandatory timeout to the command to end early
      */
     public Command addTimeout(double timeout) {
@@ -48,6 +55,12 @@ public abstract class Command {
     public Command startTimeout() {
         this.timeoutTimer.reset();
         this.timeoutTimer.start();
+        return this;
+    }
+
+    public Command startCommandTimer() {
+        this.commandTimer.reset();
+        this.commandTimer.start();
         return this;
     }
 

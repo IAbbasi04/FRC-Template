@@ -11,7 +11,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
@@ -134,6 +133,13 @@ public class DriveModule extends Module {
     }
 
     /**
+     * Gets the current speed demand of the chassis
+     */
+    public ChassisSpeeds getDesiredSpeeds() {
+        return this.desiredSpeeds;
+    }
+
+    /**
      * Sets the desired translational and rotational speeds of the robot 
      */
     public void drive(ChassisSpeeds speeds) {
@@ -152,9 +158,8 @@ public class DriveModule extends Module {
     @Override
     public void periodic() {
         swerve.drive(desiredSpeeds);
-        SmartDashboard.putString("Desired speeds", desiredSpeeds.toString());
 
-        if (!Robot.isReal()) {
+        if (!Robot.isReal() && Robot.MODE != MatchMode.AUTONOMOUS) {
             Pose2d simulatedRobotPose = Robot.FIELD.getRobotPose();
             Pose2d newSimulatedPose = new Pose2d(
                 new Translation2d(

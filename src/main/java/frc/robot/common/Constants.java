@@ -3,6 +3,10 @@ package frc.robot.common;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
+    public static class FIELD {
+        public static final double RED_WALL_X = 16.542;
+    }
+
     public static class INPUT {
         public static final double PRESSING_AXIS_DEADBAND = 0.25;
         public static final int DRIVER_CONTROLLER_PORT = 0;
@@ -34,6 +38,7 @@ public class Constants {
 
         public static final double MAX_VOLTAGE = 12.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 4.5;
+        public static final double MAX_ACCELERATION_METERS_PER_SECOND_PER_SECOND = 4.5;
 
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }

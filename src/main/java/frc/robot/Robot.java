@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.AutonomousSelector;
-import frc.robot.autonomous.BaseAuto;
+import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.controls.XboxController;
@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     MODE = MatchMode.AUTONOMOUS;
+    CLOCK.restart();
     BaseAuto selectedAuto = autoSelector.getSelectedAutonomous();
     selectedAuto.initialize();
     currentMode = selectedAuto;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     MODE = MatchMode.TELEOP;
+    CLOCK.restart();
     currentMode = TeleopModeManager.getInstance();
     currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);
@@ -78,12 +80,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("AAA DT", CLOCK.dt());
+    
   }
 
   @Override
   public void disabledInit() {
     MODE = MatchMode.DISABLED;
+    CLOCK.restart();
     currentMode = DisabledModeManager.getInstance();
     currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);
@@ -97,6 +100,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     MODE = MatchMode.TEST;
+    CLOCK.restart();
     currentMode = TestModeManager.getInstance();
     currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);

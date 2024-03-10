@@ -3,6 +3,7 @@ package frc.robot.autonomous;
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.Trajectory.State;
@@ -16,21 +17,22 @@ import frc.robot.modules.DriveModule;
 public class SwerveTrajectory {
     private Trajectory trajectory;
     private Rotation2d endRotation;
+    private Rotation2d startRotation;
     private double turnDelay = 0.0; // seconds
 
     private HolonomicDriveController drivePID;
 
     private ProfileGains translateGains = new ProfileGains()
-        .setP(3.0)
+        .setP(6.0)
         .setTolerance(Units.inchesToMeters(1)); // meters
 
     private ProfileGains rotateGains = new ProfileGains()
-        .setP(0.04)
+        .setP(3.0)
         .setI(0)
         .setD(0)
-        .setMaxVelocity(4 * Math.PI)
-        .setMaxAccel(2 * Math.PI)
-        .setContinuousInput(-Math.PI, Math.PI)
+        .setMaxVelocity(360)
+        .setMaxAccel(360)
+        .setContinuousInput(0, 360)
         .setTolerance(3); // degrees
 
     public SwerveTrajectory(Trajectory trajectory) {
@@ -50,10 +52,22 @@ public class SwerveTrajectory {
             )
         );
 
-        // if (DriverStation.getAlliance().g) {
-
-        // }
         addRotation(new Rotation2d());
+        startRotation = new Rotation2d();
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            startRotation = Rotation2d.fromDegrees(180 - startRotation.getDegrees());
+        }
+    }
+
+    /**
+     * Sets the starting rotation of the trajectory
+     */
+    public SwerveTrajectory setStartAngle(Rotation2d startAngle) {
+        this.startRotation = startAngle;
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            startRotation = Rotation2d.fromDegrees(180 - startRotation.getDegrees());
+        }
+        return this;
     }
 
     /**
@@ -79,21 +93,40 @@ public class SwerveTrajectory {
      * Gets the position of the robot at the start of the path
      */
     public Pose2d getInitialPose() {
-        return trajectory.sample(0.0).poseMeters;
+        return new Pose2d(
+            trajectory.sample(0.0).poseMeters.getTranslation(),
+            startRotation
+        );
+        // return trajectory.sample(0.0).poseMeters;
     }
 
     /**
      * Whether the path has been completed
      */
     public boolean isFinished(double time) {
-        return time >= trajectory.getTotalTimeSeconds();
+        return time >= trajectory.getTotalTimeSeconds() * 1.2 ||
+        (drivePID.atReference() && time >= trajectory.getTotalTimeSeconds());
     }
 
     /**
-     * Simulates the position of the robot
+     * Simulates the position of the robot on the field
      */
-    private void simulate(Pose2d pose) {
-        Robot.FIELD.setRobotPose(pose);
+    public void simulate(ChassisSpeeds speeds, boolean simTrajectory) {
+        Pose2d robotPose = Robot.FIELD.getRobotPose();
+
+        Pose2d newPose = new Pose2d(
+            new Translation2d(
+                robotPose.getX() - 0.1 * speeds.vxMetersPerSecond,
+                robotPose.getY() - 0.1 * speeds.vyMetersPerSecond
+            ),
+            robotPose.getRotation().plus(Rotation2d.fromRadians(0.02 * speeds.omegaRadiansPerSecond))
+        );
+
+        if (simTrajectory) {
+            Robot.FIELD.getObject("TRAJECTORY").setTrajectory(trajectory);
+        }
+
+        Robot.FIELD.setRobotPose(newPose);
     }
 
     /**
@@ -113,7 +146,7 @@ public class SwerveTrajectory {
         }
 
         if (!Robot.isReal()) {
-            simulate(new Pose2d(desiredState.poseMeters.getTranslation(), endRotation));
+            simulate(desiredSpeeds, false);
         }
 
         return desiredSpeeds;

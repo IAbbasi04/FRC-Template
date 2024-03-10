@@ -4,8 +4,12 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import frc.robot.autonomous.autos.*;
-import frc.robot.autonomous.autos.up.UpPreloadMobility;
+
+import frc.robot.autonomous.autos.ampside.*;
+import frc.robot.autonomous.autos.center.*;
+import frc.robot.autonomous.autos.sourceside.*;
 
 public class AutonomousSelector {
     public ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Configuration");
@@ -13,7 +17,13 @@ public class AutonomousSelector {
     private GenericEntry delayEntry;
 
     public Class<?>[] autos = {
-        UpPreloadMobility.class,
+        AmpSidePreloadMobility.class, // 1 speaker | 7 pts
+        AmpSide1Wing2MidAuto.class, // 4 speaker | 22 pts
+
+        Center1WingAuto.class, // 2 speaker | 12 pts
+        Center3WingAuto.class, // 4 speaker | 22 pts
+
+        SourceSidePreloadMobility.class, // 1 speaker | 7 pts
     };
 
     public AutonomousSelector() {
