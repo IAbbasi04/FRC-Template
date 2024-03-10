@@ -88,41 +88,6 @@ public class NewtonSwerve {
                         new SwerveModulePosition(), new SwerveModulePosition() });
     }
 
-    // public NewtonSwerve(ModuleConfig config, Gyro gyro, NewtonModule frontLeft,
-    // NewtonModule frontRight, NewtonModule backLeft, NewtonModule backRight){
-
-    // this.gyro = gyro;
-    // this.config = config;
-
-    // this.MAX_VELOCITY_METERS_PER_SECOND = config.getMaxVelocityMetersPerSecond();
-    // this.MAX_VOLTAGE = config.getNominalVoltage();
-
-    // // set current limits
-    // this.MAX_SWERVE_DRIVE_AUTO_CURRENT =
-    // !Double.isNaN(config.getAutoCurrentLimit()) ? config.getAutoCurrentLimit() :
-    // this.MAX_SWERVE_DRIVE_AUTO_CURRENT;
-    // this.MAX_SWERVE_DRIVE_TELEOP_CURRENT =
-    // !Double.isNaN(config.getTeleopCurrentLimit()) ?
-    // config.getTeleopCurrentLimit() : this.MAX_SWERVE_DRIVE_TELEOP_CURRENT;
-
-    // // grab drivetrain dimensions
-    // this.DRIVETRAIN_LENGTH_METERS = config.getDriveTrainLengthMeters();
-    // this.DRIVETRAIN_WIDTH_METERS = config.getDriveTrainWidthMeters();
-    // this.WHEEL_CIRCUMFERENCE = config.getWheelCircumference();
-
-    // // setup modules
-    // this.m_frontLeftModule = frontLeft;
-    // this.m_frontRightModule = frontRight;
-    // this.m_backLeftModule = backLeft;
-    // this.m_backRightModule = backRight;
-
-    // // intialize odometry
-    // this.odometry = new SwerveDriveOdometry(m_kinematics, new Rotation2d(), new
-    // SwerveModulePosition[] {new SwerveModulePosition(), new
-    // SwerveModulePosition(), new SwerveModulePosition(), new
-    // SwerveModulePosition()});
-    // }
-
     public double getMaxTranslateVelocity() {
         return config.getMaxVelocityMetersPerSecond();
     }

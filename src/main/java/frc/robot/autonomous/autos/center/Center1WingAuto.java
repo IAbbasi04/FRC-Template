@@ -2,13 +2,8 @@ package frc.robot.autonomous.autos.center;
 
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.autos.BaseAuto;
-import frc.robot.autonomous.commands.CommandQueue;
-import frc.robot.autonomous.commands.DeliverCommand;
-import frc.robot.autonomous.commands.FollowerCommand;
-import frc.robot.autonomous.commands.IntakeCommand;
-import frc.robot.autonomous.commands.JointCommand;
+import frc.robot.autonomous.commands.*;
 import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
-
 import static frc.robot.autonomous.AutoGenerator.*;
 
 public class Center1WingAuto extends BaseAuto {
@@ -26,7 +21,9 @@ public class Center1WingAuto extends BaseAuto {
                 new FollowerCommand(SUBWOOFER_MID_TO_WING_NOTE_2),
                 new IntakeCommand()
             ).setTag("DRIVE TO AND INTAKE SECOND NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER).setTag("SCORE SECOND NOTE")
+            new DeliverCommand(DeliverType.SPEAKER)
+                .addPoseTarget(SPEAKER_OPENING.getPose())    
+                .setTag("SCORE SECOND NOTE")
         );
     }
 }

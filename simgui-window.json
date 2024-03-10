@@ -1,7 +1,7 @@
 {
   "Docking": {
     "Data": [
-      "DockNode    ID=0x00000001 Pos=556,746 Size=796,240 Split=X",
+      "DockNode    ID=0x00000001 Pos=556,747 Size=796,240 Split=X",
       "DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=599,240 Selected=0x138219D4",
       "DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=195,240 Selected=0x6AE6D891"
     ]
@@ -10,7 +10,7 @@
     "GLOBAL": {
       "fps": "120",
       "height": "1009",
-      "maximized": "1",
+      "maximized": "0",
       "style": "0",
       "userScale": "2",
       "width": "1920",
@@ -33,7 +33,7 @@
     },
     "###/Shuffleboard/Auton Configuration/Choose Autonomous": {
       "Collapsed": "0",
-      "Pos": "17,723",
+      "Pos": "14,728",
       "Size": "254,54"
     },
     "###/SmartDashboard/Field": {
@@ -43,18 +43,18 @@
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "8,784",
+      "Pos": "12,785",
       "Size": "169,184"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "DockId": "0x00000002,0",
-      "Pos": "556,746",
+      "Pos": "556,747",
       "Size": "599,240"
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "1352,22",
+      "Pos": "1349,23",
       "Size": "553,968"
     },
     "###NetworkTables Info": {
@@ -70,7 +70,7 @@
     "###System Joysticks": {
       "Collapsed": "0",
       "DockId": "0x00000003,0",
-      "Pos": "1157,746",
+      "Pos": "1157,747",
       "Size": "195,240"
     },
     "###Timing": {

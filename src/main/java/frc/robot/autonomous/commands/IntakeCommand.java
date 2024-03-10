@@ -1,8 +1,12 @@
 package frc.robot.autonomous.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class IntakeCommand extends Command {
     @Override
-    public void initialize() {}
+    public void initialize() {
+        SmartDashboard.putBoolean("INTAKING", true);
+    }
 
     @Override
     public boolean execute() {
@@ -10,5 +14,7 @@ public class IntakeCommand extends Command {
     }
 
     @Override
-    public void shutdown() {}
+    public void shutdown() {
+        SmartDashboard.putBoolean("INTAKING", false);
+    }
 }

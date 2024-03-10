@@ -3,6 +3,10 @@ package frc.robot.common;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
+    public static class FIELD {
+        public static final double RED_WALL_X = 16.542;
+    }
+
     public static class INPUT {
         public static final double PRESSING_AXIS_DEADBAND = 0.25;
         public static final int DRIVER_CONTROLLER_PORT = 0;

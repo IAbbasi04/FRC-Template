@@ -108,6 +108,7 @@ public class CommandQueue {
         for (int i = 0; i < commandArray.length; i++) {
             newArray[i+1] = commandArray[i];
         }
+        commandArray = newArray;
         queue = new CommandQueue(newArray).getQueue();
         return this;
     }
