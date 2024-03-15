@@ -58,6 +58,10 @@ public abstract class Command {
         return this;
     }
 
+
+    /**
+     * Running clock during the execution of the command
+     */
     public Command startCommandTimer() {
         this.commandTimer.reset();
         this.commandTimer.start();

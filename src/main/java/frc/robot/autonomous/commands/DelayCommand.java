@@ -8,20 +8,13 @@ public class DelayCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-        commandTimer.reset();
-        commandTimer.start();
-    }
+    public void initialize() {}
 
     @Override
     public boolean execute() {
         return commandTimer.get() >= delay;
     }
 
-
     @Override
-    public void shutdown() {
-        commandTimer.stop();
-        commandTimer.reset();
-    }
+    public void shutdown() {}
 }

@@ -1,6 +1,7 @@
 package frc.robot.autonomous.autos.center;
 
 import frc.robot.autonomous.SwerveTrajectory;
+import frc.robot.autonomous.SwerveTrajectory.RotationProfile;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.autonomous.commands.*;
 import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
@@ -13,21 +14,21 @@ public class Center3WingAuto extends BaseAuto {
         createDefaultTrajectoryConfig(movingScoreConfig),
         SUBWOOFER_MIDDLE.getPose(),
         WING_NOTE_3.translate(-0.25, 0, Rotation2d.fromDegrees(-45))
-    ).addRotation(Rotation2d.fromDegrees(-45), 0.25);
+    ).withRotation(new RotationProfile(Rotation2d.fromDegrees(-45)).delay(0.25));
 
     private SwerveTrajectory WING_NOTE_3_TO_WING_NOTE_2 = generate(
         createDefaultTrajectoryConfig(movingScoreConfig),
         WING_NOTE_3.translate(-0.25, 0, Rotation2d.fromDegrees(180)),
         WING_NOTE_3.translate(-0.75, 0.75),
         WING_NOTE_2.translate(-0.25, 0.0)
-    ).addRotation(Rotation2d.fromDegrees(0), 0.25);
+    ).withRotation(new RotationProfile(Rotation2d.fromDegrees(0)).delay(0.25));
 
     private SwerveTrajectory WING_NOTE_2_TO_WING_NOTE_1 = generate(
         createDefaultTrajectoryConfig(movingScoreConfig),
         WING_NOTE_2.translate(-0.25, 0.0, Rotation2d.fromDegrees(180)),
         WING_NOTE_2.translate(-0.75, 0.5),
         WING_NOTE_1.translate(-0.25, 0.0, Rotation2d.fromDegrees(30))
-    ).addRotation(Rotation2d.fromDegrees(30), 0.25);
+    ).withRotation(new RotationProfile(Rotation2d.fromDegrees(30)).delay(0.25));
 
     @Override
     public void initialize() {
