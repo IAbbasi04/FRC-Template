@@ -22,7 +22,7 @@ import frc.robot.modules.OperatorInputModule;
 public class Robot extends TimedRobot {
   private ModuleList activeModules;
   private ModeManager currentMode;
-  public static XboxController driverController, operatorController;
+  private XboxController driverController, operatorController;
 
   public static MatchMode MODE = MatchMode.DISABLED;;
   public static Field2d FIELD = new Field2d();
@@ -63,9 +63,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -89,9 +87,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {
-    
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void testInit() {
@@ -103,9 +99,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {
-
-  }
+  public void testPeriodic() {}
 
   @Override
   public void simulationInit() {

@@ -14,4 +14,11 @@ public class Utils {
     public static double clamp(double value, double range) {
         return Math.max(Math.min(value, range), -range);
     }
+
+    /**
+     * Rounds the number to a certain number of decimal places
+     */
+    public static double roundTo(double value, double decimals) {
+        return Math.round(value*Math.pow(10, decimals))/Math.pow(10, decimals);
+    }
 }
