@@ -62,7 +62,10 @@ public class DeliverCommand extends Command {
             Pose2d currentPose = DriveModule.getInstance().getCurrentPose();
             double dx = currentPose.getX() - target.getX();
             double dy = currentPose.getY() - target.getY();
-            Rotation2d desiredAngle = Rotation2d.fromRadians(Math.PI + Math.atan(dy/dx));
+            Rotation2d desiredAngle = Rotation2d.fromRadians(Math.atan(dy/dx));
+            if (DriverStation.getAlliance().get() == Alliance.Red) {
+                desiredAngle = desiredAngle.plus(Rotation2d.fromRadians(Math.PI));
+            }
             Robot.FIELD.setRobotPose(new Pose2d(currentPose.getTranslation(), desiredAngle));
         }
 

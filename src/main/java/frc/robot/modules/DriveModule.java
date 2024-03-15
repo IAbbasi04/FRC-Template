@@ -148,10 +148,6 @@ public class DriveModule extends Module {
 
     @Override
     public void init(MatchMode mode) {
-        if (mode == MatchMode.AUTONOMOUS) {
-            swerve.gyro.setYaw(0);
-        }
-
         desiredSpeeds = new ChassisSpeeds();
     }
 

@@ -5,9 +5,47 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight {
     private NetworkTable limelightTable; // Network table associated with the given limelight name
+    private LimelightProfile profile;
+
+    /**
+     * Physical properties of the limelight
+     */
+    public class LimelightProfile {
+        public double mountHeight = 0.0; // meters
+        public double mountAngle = 0.0; // radians
+        
+        public LimelightProfile(double mountHeight, double mountAngle) {
+            this.mountHeight = mountHeight;
+            this.mountAngle = mountAngle;
+        }
+
+        /**
+         * Height above the ground the limelight is mounted
+         */
+        public LimelightProfile setMountHeight(double mountHeight) {
+            this.mountHeight = mountHeight;
+            return this;
+        }
+
+        /**
+         * Angle at which the limelight is mounted
+         */
+        public LimelightProfile setMountAngle(double mountAngle) {
+            this.mountAngle = mountAngle;
+            return this;
+        }
+    }
 
     public Limelight(String limelightName) {
         limelightTable = NetworkTableInstance.getDefault().getTable(limelightName);
+    }
+
+    /**
+     * Physical properties of the limelight
+     */
+    public Limelight withProfile(LimelightProfile profile) {
+        this.profile = profile;
+        return this;
     }
 
     /**
@@ -22,6 +60,18 @@ public class Limelight {
      */
     public double getY() {
         return limelightTable.getEntry("ty").getDouble(0.0);
+    }
+
+    /**
+     * Limelight distance in meters from the target
+     */
+    public double getDistanceFromTarget(double targetHeight) {
+        if (isTargetValid()) {
+            double angleFromHorizon = this.getY() + profile.mountAngle;
+            double deltaHeight = targetHeight - profile.mountHeight;
+            return deltaHeight / Math.tan(angleFromHorizon);
+        }
+        return -1.0;
     }
 
     /**

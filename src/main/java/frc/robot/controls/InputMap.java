@@ -1,7 +1,7 @@
 package frc.robot.controls;
 
 public class InputMap {
-    public static class DRIVER {
+    public static class DRIVER extends InputMap {
         public static EXboxController
             TRANSLATE_Y = EXboxController.LEFT_X_AXIS,
             TRANSLATE_X = EXboxController.LEFT_Y_AXIS,
@@ -11,7 +11,7 @@ public class InputMap {
             ;
     }
 
-    public static class OPERATOR {
+    public static class MANIPULATOR extends InputMap {
 
     }
 }

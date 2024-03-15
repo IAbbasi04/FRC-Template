@@ -27,8 +27,8 @@ public enum AutoGenerator {
     MID_NOTE_1(8.30, 7.475),
     MID_NOTE_2(8.30, 5.775),
     MID_NOTE_3(8.30, 4.125),
-    MID_NOTE_4(8.30, 2.6),
-    MID_NOTE_5(8.30, 1.1),
+    MID_NOTE_4(8.30, 2.45),
+    MID_NOTE_5(8.30, 0.75),
 
     WING_SCORE(6.0, 7.125 - 0.3),
     ;

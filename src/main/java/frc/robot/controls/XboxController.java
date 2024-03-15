@@ -5,6 +5,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,9 +18,13 @@ public class XboxController {
     private Dictionary<EXboxController, SendableChooser<EXboxController>> inputMap;
     private Dictionary<Field, SendableChooser<EXboxController>> map;
     private String tabName;
-    
-    public XboxController(int port) {
-        controller = new Joystick(port);
+
+    public XboxController(int port, String shuffleboardTabName) {
+        this.controller = new Joystick(port);
+        inputMap = new Hashtable<>();
+        map = new Hashtable<>();
+        tabName = shuffleboardTabName;
+        Shuffleboard.getTab(shuffleboardTabName);
     }
 
     /**
@@ -107,7 +112,7 @@ public class XboxController {
 
         switch (controller.getPort()) {
             case 1:
-                cls = InputMap.OPERATOR.class;
+                cls = InputMap.MANIPULATOR.class;
                 break;
             default:
                 cls = InputMap.DRIVER.class;
@@ -130,12 +135,12 @@ public class XboxController {
      */
     public void updateChanges() {
         Class<?> cls = InputMap.DRIVER.class;
-        if (controller.getPort() == 1) cls = InputMap.OPERATOR.class;
+        if (controller.getPort() == 1) cls = InputMap.MANIPULATOR.class;
         Field[] fields = cls.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             SendableChooser<EXboxController> chooser = map.get(field);
-            EXboxController selected = (EXboxController) chooser.getSelected();
+            EXboxController selected = (EXboxController)chooser.getSelected();
             try {
                 field.set(null, selected);
             } catch (Exception e) {}
