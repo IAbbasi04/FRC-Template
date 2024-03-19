@@ -3,7 +3,7 @@ package frc.robot.common.regressions;
 import frc.robot.common.Utils;
 
 public class LinearRegression extends Regression {
-    private double slope, intercept;
+    private double slope, intercept, residual;
 
     public LinearRegression(double[] inputs, double[] outputs) {
         if (inputs.length != outputs.length) {
@@ -33,15 +33,28 @@ public class LinearRegression extends Regression {
 
         this.slope = slope;
         this.intercept = intercept;
+
+        double ssr = 0, sst = 0;
+        for (int i = 0; i < outputs.length; i++) {
+            ssr += Math.pow((outputs[i] - grabInterpolation(inputs[i])), 2);
+            sst += Math.pow(outputs[i] - yAvg, 2);
+        }
+
+        residual = Math.pow(Math.sqrt(1 - ssr/sst), 2);
     }
 
     @Override
-    public double grabLinearInterpolation(double input) {
+    public double grabInterpolation(double input) {
         return this.slope * input + this.intercept;
     }
 
     public double grabInverseInterpolation(double output) {
         return -(output - this.intercept) / this.slope;
+    }
+
+    @Override
+    public double getResidual() {
+        return residual;
     }
 
     @Override
