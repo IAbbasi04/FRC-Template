@@ -44,4 +44,19 @@ public class Constants {
 
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }
+
+    public static class INTAKE {
+        public static final double ROLLER_INTAKE_RPM = 4500.0;
+        public static final double ROLLER_OUTTAKE_RPM = -2000.0;
+    }
+
+    public static class FEEDER {
+        public static final int PID_FEED_SLOT = 0;
+        public static final int PID_SHOOT_SLOT = 1;
+
+        public static final int FEEDER_SHOOT_RPM = 2500;
+        public static final int FEEDER_INTAKE_RPM = 2000;
+        public static final int FEEDER_OUTAKE_RPM = -2000;
+        public static final int FEEDER_ALIGN_RPM = -1000;
+    }
 }

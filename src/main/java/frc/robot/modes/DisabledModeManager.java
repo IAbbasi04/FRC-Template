@@ -10,5 +10,7 @@ public class DisabledModeManager extends ModeManager {
     }
 
     @Override
-    public void runPeriodic() {}
+    public void runPeriodic() {
+        
+    }
 }

@@ -13,6 +13,6 @@ public class BeamSensor {
      * If the beam is broken, indicating an object has obstructed its view
      */
     public boolean isBroken() {
-        return sensor.get();
+        return !sensor.get();
     }
 }

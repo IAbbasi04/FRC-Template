@@ -1,5 +1,15 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "window": {
         "visible": false
@@ -19,9 +29,14 @@
       "/Shuffleboard/Driver/RESET_GYRO": "String Chooser",
       "/Shuffleboard/Driver/ROTATE": "String Chooser",
       "/Shuffleboard/Driver/SNAIL_MODE": "String Chooser",
+      "/Shuffleboard/Driver/SPEAKER_TARGET_LOCK": "String Chooser",
       "/Shuffleboard/Driver/Select Driver": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_X": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_Y": "String Chooser",
+      "/Shuffleboard/Manipulator/INTAKE": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_MODE": "String Chooser",
+      "/Shuffleboard/Manipulator/OUTAKE": "String Chooser",
+      "/Shuffleboard/Manipulator/SCORE_RANGED": "String Chooser",
       "/Shuffleboard/Manipulator/Select Manipulator": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
@@ -67,6 +82,15 @@
           "open": true
         },
         "BBB": {
+          "open": true
+        },
+        "FEEDER": {
+          "open": true
+        },
+        "INTAKE": {
+          "open": true
+        },
+        "RGB": {
           "open": true
         },
         "open": true
