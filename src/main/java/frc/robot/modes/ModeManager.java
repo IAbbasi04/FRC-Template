@@ -4,6 +4,8 @@ import frc.robot.common.Constants;
 import frc.robot.controls.XboxController;
 import frc.robot.modules.FeederModule;
 import frc.robot.modules.IntakeModule;
+import frc.robot.modules.LEDModule;
+import frc.robot.modules.LEDModule.LEDMode;
 import frc.robot.modules.FeederModule.FeederState;
 
 public abstract class ModeManager {
@@ -44,5 +46,28 @@ public abstract class ModeManager {
     protected void setOutaking() {
         IntakeModule.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTTAKE_RPM);
         FeederModule.getInstance().setFeederState(FeederState.kOutake);
+    }
+
+    /**
+     * Updates inputs for the leds the entire teleop mode
+     */
+    protected void updateLED() {
+        LEDMode desiredLEDMode = LEDMode.kOff;
+        switch (FeederModule.getInstance().getNoteState()) {
+            case kStaged:
+                desiredLEDMode = LEDMode.kStagedNote;
+                break;
+            case kHasNote: // Fall through intentional for now
+            case kAligning:
+                desiredLEDMode = LEDMode.kHasNote;
+                break;
+            case kNone:
+                desiredLEDMode = LEDMode.kOff;
+                break;
+            default:
+                break;
+        }
+
+        LEDModule.getInstance().setLEDMode(desiredLEDMode);
     }
 }

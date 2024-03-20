@@ -1,12 +1,10 @@
 package frc.robot.modules;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.common.Constants;
-import frc.robot.common.Ports;
-import frc.robot.common.ProfileGains;
+import frc.robot.Robot;
+import frc.robot.common.*;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.BeamSensor;
-import frc.robot.hardware.motors.VortexMotor;
+import frc.robot.hardware.*;
+import frc.robot.hardware.motors.*;
 import frc.robot.hardware.motors.Motor.ControlType;
 
 public class FeederModule extends Module {
@@ -63,6 +61,7 @@ public class FeederModule extends Module {
         hasNote = false;
         noteState = NoteState.kNone;
         feederState = FeederState.kOff;
+        super.addLogger("Feeder", Robot.LOG_TO_DASHBOARD);
     }
 
     /**
@@ -71,6 +70,13 @@ public class FeederModule extends Module {
     public void setFeederVelocity(double rpm) {
         this.desiredRPM = rpm;
         this.feederState = FeederState.kOverride;
+    }
+
+    /**
+     * Current speed of the feeder motor in RPM
+     */
+    public double getFeederVelocity() {
+        return this.feederMotor.getVelocity();
     }
 
     /**
@@ -108,60 +114,100 @@ public class FeederModule extends Module {
         return this.noteState == NoteState.kStaged;
     }
 
+    /**
+     * Removes declaration that the robot has a note
+     */
+    public void resetHasNote() {
+        this.hasNote = false;
+    }
+
+    /**
+     * Beam broken for entry sensor
+     */
+    private boolean entryBroken() {
+        return entryBeam.isBroken();
+    }
+
+    /**
+     * Beam broken for entry sensor
+     */
+    private boolean exitBroken() {
+        return exitBeam.isBroken();
+    }
+
+
+    /**
+     * Desired RPM for the feeder motor
+     */
+    private double getDesiredRPM() {
+        return desiredRPM;
+    }
+
     @Override
     public void init(MatchMode mode) {
         feederMotor.set(ControlType.kVelocity, 0, Constants.FEEDER.PID_FEED_SLOT);
     }
 
     @Override
+    public void initializeLogs() {
+        logger.setNumber("Applied RPM", () -> getDesiredRPM());
+
+        logger.setBoolean("Entry Broken", () -> entryBroken());
+        logger.setBoolean("Exit Broken", () -> exitBroken());
+        logger.setBoolean("Has Note", () -> hasNote());
+
+        logger.setEnum("Feeder State", () -> getFeederState());
+        logger.setEnum("Note State", () -> getNoteState());
+    }
+
+    @Override
     public void periodic() {
-        if (exitBeam.isBroken()) { // Any point the exit beam is broken align the note with the entry beam
-            noteState = NoteState.kAligning;
-        } else if (entryBeam.isBroken()) {
+        if (this.hasNote && !this.exitBroken() && !this.entryBroken()) { // Has note but no sign of note
+            this.resetHasNote();
+            this.noteState = NoteState.kNone;
+        } else if (this.exitBroken()) { // Any point the exit beam is broken align the note with the entry beam
+            this.noteState = NoteState.kAligning;
+        } else if (this.entryBroken()) {
             if (noteState.equals(NoteState.kNone)) { // Note not previously in robot
                 this.hasNote = true;
+                this.noteState = NoteState.kHasNote;
             } else if (noteState.equals(NoteState.kAligning)) { // Align until the note hits the entry beam sensor
-                noteState = NoteState.kStaged;
+                this.noteState = NoteState.kStaged;
             }
         }
 
         switch (feederState) {
             case kOff:
-                feederMotor.set(ControlType.kVelocity, 0);
+                desiredRPM = 0.0;
                 if (this.noteState == NoteState.kHasNote) {
                     this.feederState = FeederState.kIntake;
                 }
                 break;
             case kShoot:
-                feederMotor.set(ControlType.kVelocity, Constants.FEEDER.FEEDER_SHOOT_RPM);
+                desiredRPM = Constants.FEEDER.FEEDER_SHOOT_RPM;
                 break;
             case kIntake:
                 switch (noteState) {
+                    case kNone:
+                        desiredRPM = Constants.FEEDER.FEEDER_INTAKE_RPM;
+                        break;
                     case kHasNote: // Maybe want to lower speed when note passes the front beam break??
                     // Fall through intentional
-                    case kNone:
-                        feederMotor.set(ControlType.kVelocity, Constants.FEEDER.FEEDER_INTAKE_RPM);
-                        break;
                     case kAligning:
-                        feederMotor.set(ControlType.kVelocity, Constants.FEEDER.FEEDER_ALIGN_RPM);
+                        desiredRPM = Constants.FEEDER.FEEDER_ALIGN_RPM;
                         break;
                     case kStaged:
-                        feederMotor.set(ControlType.kVelocity, 0.0);
+                        desiredRPM = 0.0;
                         break;
                 }
                 break;
-            case kOverride:
-                feederMotor.set(ControlType.kVelocity, desiredRPM);
+            case kOverride: // DesiredRPM is already set
                 break;
             case kOutake:
-                feederMotor.set(ControlType.kVelocity, Constants.FEEDER.FEEDER_OUTAKE_RPM);
+                desiredRPM = Constants.FEEDER.FEEDER_OUTAKE_RPM;
                 break;
         }
 
-        SmartDashboard.putString("FEEDER/FEEDER STATE", feederState.name());
-        SmartDashboard.putString("FEEDER/NOTE STATE", noteState.name());
-
-        SmartDashboard.putBoolean("FEEDER/ENTRY BEAM", entryBeam.isBroken());
-        SmartDashboard.putBoolean("FEEDER/EXIT BEAM", exitBeam.isBroken());
+        feederMotor.set(ControlType.kVelocity, desiredRPM);
     }
 }

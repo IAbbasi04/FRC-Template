@@ -6,11 +6,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.controls.DriveScaler;
-import frc.robot.controls.EXboxController;
 import frc.robot.controls.DriveScaler.ScaleType;
 import frc.robot.modules.DriveModule;
-import frc.robot.modules.LEDModule;
-import frc.robot.modules.LEDModule.LEDMode;
 
 public class BaseTeleopModeManager extends ModeManager {
     protected DriveScaler xScaler = new DriveScaler(ScaleType.LINEAR, true);
@@ -49,18 +46,5 @@ public class BaseTeleopModeManager extends ModeManager {
         ChassisSpeeds speeds = new ChassisSpeeds(desiredX, desiredY, desiredRotate);
         if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, DriveModule.getInstance().getCurrentRotation());
         DriveModule.getInstance().drive(speeds);
-    }
-
-    /**
-     * Updates inputs for the leds the entire teleop mode
-     */
-    protected void updateLED() {
-        if (driverController.isPressing(EXboxController.A_BTN)) {
-            LEDModule.getInstance().setLEDMode(LEDMode.kStagedNote);
-        } else if (driverController.isPressing(EXboxController.B_BTN)) {
-            LEDModule.getInstance().setLEDMode(LEDMode.kHasNote);
-        } else if (driverController.isPressing(EXboxController.Y_BTN)) {
-            LEDModule.getInstance().setLEDMode(LEDMode.kAmplify);
-        }
     }
 }

@@ -152,6 +152,9 @@ public class DriveModule extends Module {
     }
 
     @Override
+    public void initializeLogs() {}
+
+    @Override
     public void periodic() {
         swerve.drive(desiredSpeeds);
 

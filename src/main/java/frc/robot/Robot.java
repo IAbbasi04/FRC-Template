@@ -31,6 +31,8 @@ public class Robot extends TimedRobot {
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
 
+  public static boolean LOG_TO_DASHBOARD = true;
+
   private AutonomousSelector autoSelector;
 
   @Override

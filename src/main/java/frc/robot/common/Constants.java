@@ -16,10 +16,10 @@ public class Constants {
     }
 
     public static class SWERVE {
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(233.525); // Teal Module
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(133.77); // Orange Module
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(78.75); // Black Module
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(147.041); // White Module
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(145.02+180); // Black Module
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(339.785-180); // Orange Module
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(62.93+180); // Teal Module
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(3.867+180); // White Module
 
         public static final double THROTTLE_kP = 0.02;
         public static final double THROTTLE_kI = 0.0;

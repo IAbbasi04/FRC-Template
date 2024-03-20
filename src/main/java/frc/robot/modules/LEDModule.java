@@ -59,6 +59,11 @@ public class LEDModule extends Module {
     }
 
     @Override
+    public void initializeLogs() {
+
+    }
+
+    @Override
     public void periodic() {
         switch (ledMode) {
             case kAmplify:

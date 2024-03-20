@@ -77,6 +77,12 @@
   },
   "NetworkTables": {
     "transitory": {
+      "Shuffleboard": {
+        "Feeder": {
+          "open": true
+        },
+        "open": true
+      },
       "SmartDashboard": {
         "AAA": {
           "open": true
@@ -87,7 +93,7 @@
         "FEEDER": {
           "open": true
         },
-        "INTAKE": {
+        "LED": {
           "open": true
         },
         "RGB": {

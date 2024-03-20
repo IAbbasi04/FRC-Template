@@ -1,5 +1,6 @@
 package frc.robot.modules;
 
+import frc.robot.Robot;
 import frc.robot.common.Ports;
 import frc.robot.common.ProfileGains;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +30,7 @@ public class IntakeModule extends Module {
     private IntakeModule() {
         rollerMotor = new VortexMotor(Ports.INTAKE_ROLLER_CAN_ID);
         rollerMotor.withGains(rollerVelocityGains, 0);
+        super.addLogger("Intake", Robot.LOG_TO_DASHBOARD);
     }
 
     /**
@@ -48,6 +50,11 @@ public class IntakeModule extends Module {
     @Override
     public void init(MatchMode mode) {
         rollerMotor.set(ControlType.kVelocity, 0);
+    }
+
+    @Override
+    public void initializeLogs() {
+
     }
 
     @Override

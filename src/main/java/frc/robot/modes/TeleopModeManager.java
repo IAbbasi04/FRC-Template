@@ -1,7 +1,5 @@
 package frc.robot.modes;
 
-import frc.robot.controls.InputMap;
-
 public class TeleopModeManager extends BaseTeleopModeManager {
     private static TeleopModeManager INSTANCE = null;
     public static TeleopModeManager getInstance() {
@@ -19,12 +17,13 @@ public class TeleopModeManager extends BaseTeleopModeManager {
     }
 
     public void updateIntake() {
-        if (driverController.isPressing(InputMap.MANIPULATOR.INTAKE)) {
-            super.setIntaking();
-        } else if (driverController.isPressing(InputMap.MANIPULATOR.OUTAKE)) {
-            super.setOutaking();
-        } else {
-            super.stopAllRollers();
-        }
+        // if (driverController.isPressing(InputMap.MANIPULATOR.INTAKE)) {
+        //     super.setIntaking();
+        // } else if (driverController.isPressing(InputMap.MANIPULATOR.OUTAKE)) {
+        //     super.setOutaking();
+        // } else {
+        //     super.stopAllRollers();
+        // }
+        super.setIntaking();
     }
 }

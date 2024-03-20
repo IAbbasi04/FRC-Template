@@ -41,6 +41,9 @@ public class OperatorInputModule extends Module {
     }
 
     @Override
+    public void initializeLogs() {}
+
+    @Override
     public void periodic() {
         if (DriverProfile.getSelected() == DriverProfile.DEFAULT) {
             driverController.updateChanges();

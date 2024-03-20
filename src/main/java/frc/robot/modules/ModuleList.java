@@ -41,6 +41,7 @@ public class ModuleList {
      */
     public void initAll(MatchMode mode) {
         modules.forEach(module -> module.init(mode));
+        modules.forEach(module -> module.initializeLogs());
     }
 
     /**
@@ -48,6 +49,7 @@ public class ModuleList {
      */
     public void periodicAll() {
         modules.forEach(module -> module.periodic());
+        modules.forEach(module -> module.updateLogger());
     }
 
     /**

@@ -17,5 +17,8 @@ public class VisionModule extends Module {
     public void init(MatchMode mode) {}
 
     @Override
+    public void initializeLogs() {}
+
+    @Override
     public void periodic() {}
 }
