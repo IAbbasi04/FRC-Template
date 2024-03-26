@@ -13,17 +13,6 @@ public class TeleopModeManager extends BaseTeleopModeManager {
     public void runPeriodic() {
         super.updateSwerve();
         super.updateLED();
-        this.updateIntake();
-    }
-
-    public void updateIntake() {
-        // if (driverController.isPressing(InputMap.MANIPULATOR.INTAKE)) {
-        //     super.setIntaking();
-        // } else if (driverController.isPressing(InputMap.MANIPULATOR.OUTAKE)) {
-        //     super.setOutaking();
-        // } else {
-        //     super.stopAllRollers();
-        // }
-        super.setIntaking();
+        super.updateIntake();
     }
 }

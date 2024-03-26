@@ -43,11 +43,11 @@ public class FeederModule extends Module {
     }
 
     public enum FeederState {
-        kOverride,
-        kShoot,
-        kIntake,
         kOff,
+        kIntake,
+        kShoot,
         kOutake,
+        kOverride,
     }
 
     private FeederModule() {
@@ -162,10 +162,7 @@ public class FeederModule extends Module {
 
     @Override
     public void periodic() {
-        if (this.hasNote && !this.exitBroken() && !this.entryBroken()) { // Has note but no sign of note
-            this.resetHasNote();
-            this.noteState = NoteState.kNone;
-        } else if (this.exitBroken()) { // Any point the exit beam is broken align the note with the entry beam
+        if (this.exitBroken()) { // Any point the exit beam is broken align the note with the entry beam
             this.noteState = NoteState.kAligning;
         } else if (this.entryBroken()) {
             if (noteState.equals(NoteState.kNone)) { // Note not previously in robot

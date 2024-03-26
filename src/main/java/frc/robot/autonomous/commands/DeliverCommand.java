@@ -79,7 +79,6 @@ public class DeliverCommand extends Command {
     public void shutdown() {
         SmartDashboard.putString("DELIVER MODE", "N/A");
         SmartDashboard.putBoolean("VISION LOCK", false);
-        // Robot.FIELD.getObject("TARGET").close();
     }
     
 }

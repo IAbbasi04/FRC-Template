@@ -1,7 +1,7 @@
 package frc.robot.modules;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.hardware.NeoPixelLED;
 import frc.robot.hardware.NeoPixelLED.PresetColor;
@@ -37,6 +37,7 @@ public class LEDModule extends Module {
 
         ampTimer = new Timer();
         stagedNoteTimer = new Timer();
+        super.addLogger("LED", Robot.LOG_TO_DASHBOARD);
     }
     
     public void setLEDMode(LEDMode ledMode) {
@@ -60,7 +61,9 @@ public class LEDModule extends Module {
 
     @Override
     public void initializeLogs() {
-
+        logger.setEnum("LED Mode", () -> ledMode);
+        // logger.setNumber("Amp Time", () -> ampTimer.get());
+        // logger.setNumber("Staged Note Time", () -> stagedNoteTimer.get());
     }
 
     @Override
@@ -96,7 +99,5 @@ public class LEDModule extends Module {
 
         if (!ledMode.equals(LEDMode.kAmplify)) ampTimer.reset();
         if (!ledMode.equals(LEDMode.kStagedNote)) stagedNoteTimer.reset();
-
-        SmartDashboard.putString("LED/MODE", ledMode.name());
     }
 }

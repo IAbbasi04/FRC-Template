@@ -57,6 +57,9 @@ public class NeoPixelLED {
         waveTimer.start();
     }
 
+    /**
+     * Switch between color1 and color2 in the rate indicated by secondsPerPulse
+     */
     public void pulse(PresetColor color1, PresetColor color2, double secondsPerPulse) {
         if (pulseTimer.get() < secondsPerPulse / 2.0) {
             this.setColor(color1);
@@ -67,6 +70,9 @@ public class NeoPixelLED {
         }
     }
 
+    /**
+     * 2 colors scroll through the led display in a rate indicated by scrollTime
+     */
     public void scroll(PresetColor color1, PresetColor color2, double scrollTime) {
         if (scrollTimer.get() >= scrollTime) {
             scrollIndex++;
@@ -83,6 +89,9 @@ public class NeoPixelLED {
         }
     }
 
+    /**
+     * 2 colors ripple from the center of the display to the endges at a rate indicated by waveTime
+     */
     public void wave(PresetColor color1, PresetColor color2, double waveTime) {
         if (waveTimer.get() >= waveTime) {
             waveIndex++;
@@ -101,18 +110,34 @@ public class NeoPixelLED {
         }
     }
 
-    public void setColor(int pixel, int brightness, PresetColor color) {
-        ledBuffer.setRGB(pixel, brightness*color.r, brightness*color.g, brightness*color.b);
+    /**
+     * Directly sets the color and brightness of a particular pixel
+     */
+    private void setColor(int pixel, double brightness, PresetColor color) {
+        ledBuffer.setRGB(pixel, (int)(brightness*color.r), (int)(brightness*color.g), (int)(brightness*color.b));
         led.setData(ledBuffer);
     }
 
-    public void setColor(int pixel, PresetColor color) {
+    /**
+     * Directly sets the color of a particular pixel at full brightness
+     */
+    private void setColor(int pixel, PresetColor color) {
         this.setColor(pixel, 1, color);
     }
 
-    public void setColor(PresetColor color) {
+    /**
+     * Sets the color and brightness of the entire strip
+     */
+    public void setColor(PresetColor color, double brightness) {
         for (int i = 0; i < LED_LENGTH; i++) {
-            this.setColor(i, color);
+            this.setColor(i, brightness, color);
         }
+    }
+
+    /**
+     * Sets the color of the entire strip
+     */
+    public void setColor(PresetColor color) {
+        this.setColor(color, 1.0);
     }
 }

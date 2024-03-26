@@ -33,10 +33,19 @@
       "/Shuffleboard/Driver/Select Driver": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_X": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_Y": "String Chooser",
+      "/Shuffleboard/Manipulator/AMP_POSITION": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_LOWER": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_POSITION": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_RAISE": "String Chooser",
       "/Shuffleboard/Manipulator/INTAKE": "String Chooser",
       "/Shuffleboard/Manipulator/MANUAL_MODE": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_PODIUM_SHOT": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_SUBWOOFER_SHOT": "String Chooser",
       "/Shuffleboard/Manipulator/OUTAKE": "String Chooser",
+      "/Shuffleboard/Manipulator/PRIME": "String Chooser",
+      "/Shuffleboard/Manipulator/SCORE": "String Chooser",
       "/Shuffleboard/Manipulator/SCORE_RANGED": "String Chooser",
+      "/Shuffleboard/Manipulator/STOW": "String Chooser",
       "/Shuffleboard/Manipulator/Select Manipulator": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
@@ -78,7 +87,10 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
-        "Feeder": {
+        "LED": {
+          "open": true
+        },
+        "Shooter": {
           "open": true
         },
         "open": true

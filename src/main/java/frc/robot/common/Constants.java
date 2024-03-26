@@ -59,4 +59,12 @@ public class Constants {
         public static final int FEEDER_OUTAKE_RPM = -2000;
         public static final int FEEDER_ALIGN_RPM = -1000;
     }
+
+    public static class SHOOTER {
+        public static final double TARGET_TOLERANCE = 50.0;
+    }
+
+    public static class VISION {
+        public static final String FRONT_LIMELIGHT_NAME = "limelight-targetting";
+    }
 }

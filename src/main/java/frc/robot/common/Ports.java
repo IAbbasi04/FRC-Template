@@ -22,8 +22,8 @@ public class Ports {
 
     public static final int INTAKE_ROLLER_CAN_ID = 35; // Intake
 
-    public static final int TOP_SHOOTER_MOTOR_CAN_ID = 29; // Shooter
-    public static final int BOTTOM_SHOOTER_MOTOR_CAN_ID = 28;
+    public static final int LEFT_SHOOTER_MOTOR_CAN_ID = 29; // Shooter
+    public static final int RIGHT_SHOOTER_MOTOR_CAN_ID = 28;
 
     public static final int FEEDER_MOTOR_CAN_ID = 31; // Feeder
 

@@ -3,7 +3,6 @@ package frc.robot.modules;
 import frc.robot.Robot;
 import frc.robot.common.Ports;
 import frc.robot.common.ProfileGains;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.hardware.motors.VortexMotor;
 import frc.robot.hardware.motors.Motor.ControlType;
@@ -54,14 +53,12 @@ public class IntakeModule extends Module {
 
     @Override
     public void initializeLogs() {
-
+        logger.setNumber("Current RPM", () -> getRollerVelocity());
+        logger.setNumber("Desired RPM", () -> desiredRollerRPM);
     }
 
     @Override
     public void periodic() {
         rollerMotor.set(ControlType.kVelocity, desiredRollerRPM);
-
-        SmartDashboard.putNumber("INTAKE/CURRENT VELOCITY", this.getRollerVelocity());
-        SmartDashboard.putNumber("INTAKE/DESIRED VELOCITY", this.desiredRollerRPM);
     }
 }

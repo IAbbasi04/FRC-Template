@@ -9,6 +9,9 @@ import frc.robot.autonomous.AutonomousSelector;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
+import frc.robot.common.crescendo.tables.DefendedShotTable;
+import frc.robot.common.crescendo.tables.ShotTable;
+import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.controls.XboxController;
 import frc.robot.hardware.Clock;
 import frc.robot.modes.DisabledModeManager;
@@ -21,6 +24,7 @@ import frc.robot.modules.IntakeModule;
 import frc.robot.modules.LEDModule;
 import frc.robot.modules.ModuleList;
 import frc.robot.modules.OperatorInputModule;
+import frc.robot.modules.ShooterModule;
 
 public class Robot extends TimedRobot {
   private ModuleList activeModules;
@@ -32,6 +36,9 @@ public class Robot extends TimedRobot {
   public static Clock CLOCK = new Clock();
 
   public static boolean LOG_TO_DASHBOARD = true;
+
+  public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
+  public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
 
   private AutonomousSelector autoSelector;
 
@@ -47,6 +54,7 @@ public class Robot extends TimedRobot {
       DriveModule.getInstance(),
       IntakeModule.getInstance(),
       FeederModule.getInstance(),
+      ShooterModule.getInstance(),
       LEDModule.getInstance()
     ));
 
