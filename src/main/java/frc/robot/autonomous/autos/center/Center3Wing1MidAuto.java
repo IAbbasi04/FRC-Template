@@ -2,9 +2,10 @@ package frc.robot.autonomous.autos.center;
 
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.commands.*;
-import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
 import static frc.robot.autonomous.AutoGenerator.*;
 import static frc.robot.autonomous.TrajectoryUtil.*;
+
+import frc.robot.Robot;
 
 public class Center3Wing1MidAuto extends Center3WingAuto {
     private SwerveTrajectory WING_NOTE_1_TO_MID_NOTE_1 = generate(
@@ -28,8 +29,7 @@ public class Center3Wing1MidAuto extends Center3WingAuto {
                 new IntakeCommand()
             ).setTag("INTAKING FIFTH NOTE"),
             new FollowerCommand(MID_NOTE_1_TO_WING).setTag("MOVE BACK TO WING"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(3.0))
                 .setTag("SCORE FIFTH NOTE")
         );
     }

@@ -21,6 +21,10 @@ public class LoggerEntry<T> {
         return (boolean)data.get();
     }
 
+    public String getString() {
+        return (String)data.get();
+    }
+
     public T getEnum() {
         return (T)data.get();
     }

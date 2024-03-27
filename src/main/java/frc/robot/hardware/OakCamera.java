@@ -134,6 +134,19 @@ public class OakCamera {
     }
 
     /**
+     * Horizontal offset from specified april tag
+     */
+    public double getXOffsetFromTag(int tag) {        
+        if (tag == getCurrTagID()) {
+            return getCurrTagX();
+        } else if (tag == getCurrTag2ID()) {
+            return getCurrTag2X();
+        } else {
+            return Double.NaN;
+        }
+    }
+
+    /**
      * Assume we have a tag in view. 
      * 
      * @param servoTarget 0 for x, 1 for y, 2 for z, 3 for yaw, 4 for tx, see {@code VISUAL_SERVO_TARGETS}

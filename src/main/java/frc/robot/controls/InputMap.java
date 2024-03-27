@@ -9,7 +9,7 @@ public class InputMap {
             SNAIL_MODE = EXboxController.RIGHT_BUMPER,
             RESET_GYRO = EXboxController.BACK_BTN,
             
-            SPEAKER_TARGET_LOCK = EXboxController.LEFT_TRIGGER_AXIS
+            SPEAKER_TARGET_LOCK = EXboxController.RIGHT_TRIGGER_AXIS
             ;
     }
 
@@ -24,8 +24,8 @@ public class InputMap {
             AMP_POSITION = EXboxController.X_BTN,
             CLIMB_POSITION = EXboxController.Y_BTN,
 
-            CLIMB_RAISE = EXboxController.DPAD_UP,
-            CLIMB_LOWER = EXboxController.DPAD_DOWN,
+            EXTENSION_RAISE = EXboxController.DPAD_UP,
+            EXTENSION_LOWER = EXboxController.DPAD_DOWN,
 
             MANUAL_MODE = EXboxController.START,
 

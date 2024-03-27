@@ -19,12 +19,14 @@ import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;
 import frc.robot.modes.TestModeManager;
 import frc.robot.modules.DriveModule;
+import frc.robot.modules.ElevatorModule;
 import frc.robot.modules.FeederModule;
 import frc.robot.modules.IntakeModule;
 import frc.robot.modules.LEDModule;
 import frc.robot.modules.ModuleList;
 import frc.robot.modules.OperatorInputModule;
 import frc.robot.modules.ShooterModule;
+import frc.robot.modules.VisionModule;
 
 public class Robot extends TimedRobot {
   private ModuleList activeModules;
@@ -51,10 +53,12 @@ public class Robot extends TimedRobot {
     // Add all modules to run here
     activeModules = new ModuleList(List.of(
       OperatorInputModule.getInstance(driverController, operatorController),
+      VisionModule.getInstance(),
       DriveModule.getInstance(),
       IntakeModule.getInstance(),
       FeederModule.getInstance(),
       ShooterModule.getInstance(),
+      ElevatorModule.getInstance(),
       LEDModule.getInstance()
     ));
 

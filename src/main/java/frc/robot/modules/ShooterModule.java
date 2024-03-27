@@ -22,7 +22,7 @@ public class ShooterModule extends Module {
 
     private ShooterModule() {
         leftShooterMotor = new VortexMotor(Ports.LEFT_SHOOTER_MOTOR_CAN_ID);
-        rightShooterMotor = new VortexMotor(Ports.RIGHT_SHOOTER_MOTOR_CAN_ID);
+        rightShooterMotor = new VortexMotor(Ports.RIGHT_SHOOTER_MOTOR_CAN_ID, true);
         super.addLogger("Shooter", Robot.LOG_TO_DASHBOARD);
     }
 
@@ -51,7 +51,7 @@ public class ShooterModule extends Module {
      * Desired velocity of the right motor
      */
     public double getDesiredRightRPM() {
-        return desiredLeftRPM;
+        return desiredRightRPM;
     }
 
     /**

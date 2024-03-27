@@ -11,6 +11,6 @@ public class DisabledModeManager extends ModeManager {
 
     @Override
     public void runPeriodic() {
-        
+        super.updateLED();
     }
 }

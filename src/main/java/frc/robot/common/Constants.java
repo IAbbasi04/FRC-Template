@@ -64,6 +64,32 @@ public class Constants {
         public static final double TARGET_TOLERANCE = 50.0;
     }
 
+    public static class ELEVATOR {
+        private static final double PIVOT_PULLEY_RATIO = 12.0 / 5.0;
+        private static final double PIVOT_GEARBOX_RATIO = 75.0 / 1.0;
+        public static final double PIVOT_RATIO = PIVOT_PULLEY_RATIO * PIVOT_GEARBOX_RATIO;
+
+        private static final double DIAMETER_OF_ELEVATOR_SPROCKET = 1.885; // inches
+        private static final double EXTENSION_GEARBOX_RATIO = 1.0 / 48.0;
+        public static final double EXTENSION_RATIO = 
+            Conversions.inchesToMeters(
+                EXTENSION_GEARBOX_RATIO *                                
+                DIAMETER_OF_ELEVATOR_SPROCKET * Math.PI
+            );
+
+        public static final double PIVOT_TOLERANCE = 0.1; // degrees
+        public static final double EXTENSION_TOLERANCE = 0.005; // meters
+
+        public static final double MIN_EXTENSION = 0; // meters
+        public static final double MAX_EXTENSION = 0.279; // meters
+
+        public static final double MIN_PIVOT = 0; // meters
+        public static final double MAX_PIVOT = 75; // meters
+
+        public static final double EXTENSION_PIVOT_THRESHOLD = 30; // degrees
+        public static final double PIVOT_EXTENSION_THRESHOLD = 0.05; // meters
+    }
+
     public static class VISION {
         public static final String FRONT_LIMELIGHT_NAME = "limelight-targetting";
     }

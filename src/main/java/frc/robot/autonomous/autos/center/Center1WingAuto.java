@@ -3,8 +3,9 @@ package frc.robot.autonomous.autos.center;
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.autonomous.commands.*;
-import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
 import static frc.robot.autonomous.AutoGenerator.*;
+
+import frc.robot.Robot;
 
 public class Center1WingAuto extends BaseAuto {
     private SwerveTrajectory SUBWOOFER_MID_TO_WING_NOTE_2 = generate(
@@ -16,13 +17,13 @@ public class Center1WingAuto extends BaseAuto {
     @Override
     public void initialize() {
         queue = new CommandQueue(
-            new DeliverCommand(DeliverType.SPEAKER).setTag("SCORE PRELOAD NOTE"),
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.40))
+                .setTag("SCORE PRELOAD NOTE"),
             new JointCommand(
                 new FollowerCommand(SUBWOOFER_MID_TO_WING_NOTE_2),
                 new IntakeCommand()
             ).setTag("DRIVE TO AND INTAKE SECOND NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())    
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.8))
                 .setTag("SCORE SECOND NOTE")
         );
     }

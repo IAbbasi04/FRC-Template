@@ -1,11 +1,10 @@
 package frc.robot.autonomous;
 
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.autos.*;
+import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.shuffleboard.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
+import frc.robot.autonomous.autos.*;
 import frc.robot.autonomous.autos.ampside.*;
 import frc.robot.autonomous.autos.center.*;
 import frc.robot.autonomous.autos.sourceside.*;

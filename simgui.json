@@ -11,6 +11,11 @@
       }
     },
     "Other Devices": {
+      "SPARK MAX [36]": {
+        "header": {
+          "open": true
+        }
+      },
       "window": {
         "visible": false
       }
@@ -37,6 +42,8 @@
       "/Shuffleboard/Manipulator/CLIMB_LOWER": "String Chooser",
       "/Shuffleboard/Manipulator/CLIMB_POSITION": "String Chooser",
       "/Shuffleboard/Manipulator/CLIMB_RAISE": "String Chooser",
+      "/Shuffleboard/Manipulator/EXTENSION_LOWER": "String Chooser",
+      "/Shuffleboard/Manipulator/EXTENSION_RAISE": "String Chooser",
       "/Shuffleboard/Manipulator/INTAKE": "String Chooser",
       "/Shuffleboard/Manipulator/MANUAL_MODE": "String Chooser",
       "/Shuffleboard/Manipulator/MANUAL_PODIUM_SHOT": "String Chooser",
@@ -87,10 +94,13 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
-        "LED": {
+        "Elevator": {
           "open": true
         },
         "Shooter": {
+          "open": true
+        },
+        "Vision": {
           "open": true
         },
         "open": true

@@ -9,7 +9,6 @@ import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.ProfileGains;
 import frc.robot.common.Utils;
@@ -25,7 +24,7 @@ public class SwerveTrajectory {
     private VisionType visionType;
 
     private ProfileGains translateGains = new ProfileGains()
-        .setP(6.0)
+        .setP(3.0)
         .setTolerance(Units.inchesToMeters(1)); // meters
 
     private ProfileGains rotateGains = new ProfileGains()
@@ -213,22 +212,7 @@ public class SwerveTrajectory {
         if (time < rotationProfile.turnDelay) {
             turnSpeed = 0.0;
         }
-
-        String lockString = "NOT LOCKING";
-        switch(visionType) {
-            case kStrafe:
-                lockString = "STRAFING";
-                break;
-            case kRotate:
-                lockString = "ROTATING";
-            case kFetch:
-                lockString += " AND DRIVING TOWARDS";
-            default:
-                break;
-        }
         
-        SmartDashboard.putString("FOLLOWER VISION", lockString);
-
         desiredSpeeds = new ChassisSpeeds(
             desiredSpeeds.vxMetersPerSecond,
             desiredSpeeds.vyMetersPerSecond,

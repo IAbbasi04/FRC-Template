@@ -58,6 +58,36 @@ public class SmartLogger {
         return data.get(cardName).getDouble();
     }
 
+    public void setString(String cardName, Supplier<String> suppliedString) {
+        tabData.put(cardName, suppliedString);
+        data.put(cardName, new LoggerEntry<String>(suppliedString));
+        if (!logToShuffleboard) return;
+        if (cards.get(cardName) == null) {
+            cards.put(cardName, tab.add(cardName, suppliedString.get()).getEntry());
+        } else {
+            cards.get(cardName).setString(suppliedString.get());
+        }
+    }
+
+    public String getString(String cardName) {
+        return data.get(cardName).getString();
+    }
+
+    public <T> void setData(String cardName, Supplier<T> suppliedData) {
+        tabData.put(cardName, suppliedData);
+        data.put(cardName, new LoggerEntry<T>(suppliedData));
+        if (!logToShuffleboard) return;
+        if (cards.get(cardName) == null) {
+            cards.put(cardName, tab.add(cardName, suppliedData.get().toString()).getEntry());
+        } else {
+            cards.get(cardName).setString(suppliedData.get().toString());
+        }
+    }
+
+    public <T> T getData(String cardName) {
+        return (T) data.get(cardName);
+    }
+
     public <T extends Enum<T>> void setEnum(String cardName, Supplier<T> suppliedEnum) {
         tabData.put(cardName, suppliedEnum);
         data.put(cardName, new LoggerEntry<T>(suppliedEnum));

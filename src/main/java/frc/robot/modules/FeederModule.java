@@ -173,23 +173,30 @@ public class FeederModule extends Module {
             }
         }
 
+        if (this.noteState == NoteState.kStaged) {
+            if (!this.entryBroken() && !this.exitBroken()) { // No beam tripped
+                this.noteState = NoteState.kNone;
+            }
+        }
+
         switch (feederState) {
             case kOff:
                 desiredRPM = 0.0;
-                if (this.noteState == NoteState.kHasNote) {
+                if (this.noteState == NoteState.kHasNote || this.noteState == NoteState.kAligning) {
                     this.feederState = FeederState.kIntake;
                 }
                 break;
             case kShoot:
                 desiredRPM = Constants.FEEDER.FEEDER_SHOOT_RPM;
+                this.noteState = NoteState.kNone;
                 break;
             case kIntake:
                 switch (noteState) {
+                    case kHasNote: // Maybe want to lower speed when note passes the front beam break??
+                    // Fall through intentional
                     case kNone:
                         desiredRPM = Constants.FEEDER.FEEDER_INTAKE_RPM;
                         break;
-                    case kHasNote: // Maybe want to lower speed when note passes the front beam break??
-                    // Fall through intentional
                     case kAligning:
                         desiredRPM = Constants.FEEDER.FEEDER_ALIGN_RPM;
                         break;
@@ -202,6 +209,7 @@ public class FeederModule extends Module {
                 break;
             case kOutake:
                 desiredRPM = Constants.FEEDER.FEEDER_OUTAKE_RPM;
+                this.noteState = NoteState.kNone;
                 break;
         }
 

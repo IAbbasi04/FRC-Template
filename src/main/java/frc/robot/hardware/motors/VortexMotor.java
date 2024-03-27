@@ -9,6 +9,7 @@ public class VortexMotor extends Motor {
     private CANSparkFlex motor;
     private SparkPIDController motorCtrl;
     private RelativeEncoder motorEncoder;
+    private boolean useSmartMotion = false;
 
     /**
      * Creates a neo motor with a particular CAN ID
@@ -30,6 +31,7 @@ public class VortexMotor extends Motor {
     @Override
     public void withGains(ProfileGains gains, int index) {
         HardwareUtils.setPIDGains(motor, gains);
+        useSmartMotion = gains.getMaxVelocity() == 0;
     }
 
     @Override
@@ -49,10 +51,18 @@ public class VortexMotor extends Motor {
                 motor.set(demand);
                 break;
             case kVelocity:
-                motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartVelocity, pidSlot);
+                if (useSmartMotion) {
+                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartVelocity, pidSlot);
+                } else {
+                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVelocity, pidSlot);
+                }
                 break;
             case kPosition:
-                motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartMotion, pidSlot);
+                if (useSmartMotion) {
+                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartMotion, pidSlot);
+                } else {
+                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kPosition, pidSlot);
+                }
                 break;
             case kVoltage:
                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVoltage, pidSlot);

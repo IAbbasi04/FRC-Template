@@ -1,9 +1,9 @@
 package frc.robot.autonomous.autos.ampside;
 
+import frc.robot.Robot;
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.autonomous.commands.*;
-import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import static frc.robot.autonomous.AutoGenerator.*;
 import static frc.robot.autonomous.TrajectoryUtil.*;
@@ -42,29 +42,27 @@ public class AmpSide1Wing2MidAuto extends BaseAuto {
     @Override
     public void initialize() {
         queue = new CommandQueue(
-            new DeliverCommand(DeliverType.SPEAKER).setTag("SCORE PRELOAD NOTE"),
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.4))
+                .setTag("SCORE PRELOAD NOTE"),
             new JointCommand(
                 new FollowerCommand(SPEAKER_AMP_TO_WING_NOTE_1),
                 new IntakeCommand()
             ).setTag("INTAKE SECOND NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(2.0))
                 .setTag("SCORE SECOND NOTE"),
             new JointCommand(
                 new FollowerCommand(WING_NOTE_1_TO_MID_NOTE_1),
                 new IntakeCommand()
             ).setTag("INTAKE THIRD NOTE"),
             new FollowerCommand(MID_NOTE_1_TO_WING).setTag("MOVE BACK TO WING"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(3.0))
                 .setTag("SCORE THIRD NOTE"),
             new JointCommand(
                 new FollowerCommand(WING_TO_MID_NOTE_2),
                 new IntakeCommand()
             ).setTag("INTAKE FOURTH NOTE"),
             new FollowerCommand(MID_NOTE_2_TO_WING).setTag("MOVE BACK TO WING"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(3.0))
                 .setTag("SCORE FOURTH NOTE")
         );
     }

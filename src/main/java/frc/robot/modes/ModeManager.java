@@ -3,10 +3,12 @@ package frc.robot.modes;
 import frc.robot.common.Constants;
 import frc.robot.common.crescendo.ShotProfile;
 import frc.robot.controls.XboxController;
+import frc.robot.modules.ElevatorModule;
 import frc.robot.modules.FeederModule;
 import frc.robot.modules.IntakeModule;
 import frc.robot.modules.LEDModule;
 import frc.robot.modules.ShooterModule;
+import frc.robot.modules.ElevatorModule.ElevatorState;
 import frc.robot.modules.LEDModule.LEDMode;
 import frc.robot.modules.FeederModule.FeederState;
 
@@ -38,6 +40,7 @@ public abstract class ModeManager {
                 desiredLEDMode = LEDMode.kOff;
                 break;
             default:
+                desiredLEDMode = LEDMode.kDisabled;
                 break;
         }
 
@@ -58,11 +61,10 @@ public abstract class ModeManager {
     }
 
     /**
-     * Powers off intake and feeder
+     * Powers off intake
      */
-    public static void stopAllRollers() {
+    public static void stopIntake() {
         IntakeModule.getInstance().setRollerVelocity(0.0);
-        FeederModule.getInstance().setFeederState(FeederState.kOff);
     }
 
     /**
@@ -76,9 +78,13 @@ public abstract class ModeManager {
     /**
      * Shoots the note
      */
-    public static void setShooting(double leftRPM, double rightRPM, double pivotAngle, double elevatorHeight) {
+    public static void setShooting(double leftRPM, double rightRPM, double pivotAngle, double elevatorHeight, boolean shouldShoot) {
         ShooterModule.getInstance().setDesiredRPM(leftRPM, rightRPM);
-        if (ShooterModule.getInstance().atTargetVelocity()) {
+        ElevatorModule.getInstance().setPivot(pivotAngle);
+        ElevatorModule.getInstance().setExtension(elevatorHeight);
+        if (ShooterModule.getInstance().atTargetVelocity() && 
+            ElevatorModule.getInstance().atTargetPosition() &&
+            shouldShoot || true) {
             FeederModule.getInstance().setFeederState(FeederState.kShoot);
         }
     }
@@ -91,7 +97,8 @@ public abstract class ModeManager {
             shotProfile.leftFlywheelRPM, 
             shotProfile.rightFlywheelRPM, 
             shotProfile.elevatorPivotDegrees, 
-            shotProfile.elevatorExtensionMeters
+            shotProfile.elevatorExtensionMeters,
+            shotProfile.shouldShoot
         );
     }
 
@@ -103,6 +110,14 @@ public abstract class ModeManager {
     }
 
     /**
+     * Shooter and feeder presets for scoring in amp
+     */
+    public static void scoreAmp() {
+        setShooterVelocity(-1000, -1000);
+        FeederModule.getInstance().setFeederVelocity(-3000);
+    }
+
+    /**
      * Turns off shooter motors
      */
     public static void stopShooter() {
@@ -110,12 +125,58 @@ public abstract class ModeManager {
     }
 
     /**
+     * Turns off feeder motor
+     */
+    public static void stopFeeder() {
+        FeederModule.getInstance().setFeederState(FeederState.kOff);
+    }
+
+    /**
      * Sets the angle of the pivot
      */
-    public static void setPivotAngle() {}
+    public static void setPivotAngle(double pivot) {
+        ElevatorModule.getInstance().setPivot(pivot);
+    }
 
     /**
      * Sets the height of the elevator
      */
-    public static void setElevatorHeight() {}
+    public static void setElevatorHeight(double extension) {
+        ElevatorModule.getInstance().setExtension(extension);
+    }
+
+    /**
+     * Sets the robot to the ground/starting state
+     */
+    public static void setGroundState() {
+        ElevatorModule.getInstance().setElevatorState(ElevatorState.kStow);
+    }
+
+    /**
+     * Sets the robot to the amp position
+     */
+    public static void setAmpState() {
+        ElevatorModule.getInstance().setElevatorState(ElevatorState.kAmp);
+    }
+
+    /**
+     * Sets the robot to the climb position
+     */
+    public static void setClimbState() {
+        ElevatorModule.getInstance().setElevatorState(ElevatorState.kClimb);
+    }
+
+    /**
+     * Extends the elevator
+     */
+    public static void raiseClimber() {
+        ElevatorModule.getInstance().moveElevator(0.005);
+    }
+
+    /**
+     * Retracts the elevator
+     */
+    public static void lowerClimber() {
+        ElevatorModule.getInstance().moveElevator(-0.005);
+    }
 }

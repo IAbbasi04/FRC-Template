@@ -1,10 +1,10 @@
 package frc.robot.autonomous.autos.sourceside;
 
+import frc.robot.Robot;
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.SwerveTrajectory.RotationProfile;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.autonomous.commands.*;
-import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
 import static frc.robot.autonomous.AutoGenerator.*;
 import static frc.robot.autonomous.TrajectoryUtil.*;
 
@@ -38,22 +38,20 @@ public class SourceSide2MidAuto extends BaseAuto {
     @Override
     public void initialize() {
         queue = new CommandQueue(
-            new DeliverCommand(DeliverType.SPEAKER).setTag("SCORE PRELOAD"),
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.40)).setTag("SCORE PRELOAD"),
             new JointCommand(
                 new FollowerCommand(SPEAKER_SOURCE_TO_MID_NOTE_5),
                 new IntakeCommand()
             ).setTag("INTAKE SECOND NOTE"),
             new FollowerCommand(MID_NOTE_5_TO_WING).setTag("MOVE BACK TO WING"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(3.0))
                 .setTag("SCORE SECOND NOTE"),
             new JointCommand(
                 new FollowerCommand(WING_TO_MID_NOTE_4),
                 new IntakeCommand()
             ).setTag("INTAKE THIRD NOTE"),
             new FollowerCommand(MID_NOTE_4_TO_WING).setTag("MOVE BACK TO WING"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(3.0))
                 .setTag("SCORE THIRD NOTE")
         );
     }

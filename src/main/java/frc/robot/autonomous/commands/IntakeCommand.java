@@ -17,6 +17,6 @@ public class IntakeCommand extends Command {
 
     @Override
     public void shutdown() {
-        ModeManager.stopAllRollers();
+        ModeManager.stopIntake();
     }
 }
