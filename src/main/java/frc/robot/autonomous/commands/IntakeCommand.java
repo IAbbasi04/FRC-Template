@@ -1,5 +1,6 @@
 package frc.robot.autonomous.commands;
 
+import frc.robot.Robot;
 import frc.robot.modes.ModeManager;
 import frc.robot.modules.FeederModule;
 
@@ -12,7 +13,7 @@ public class IntakeCommand extends Command {
     @Override
     public boolean execute() {
         ModeManager.setIntaking();
-        return FeederModule.getInstance().noteStaged();
+        return FeederModule.getInstance().noteStaged() || Robot.isSimulation();
     }
 
     @Override

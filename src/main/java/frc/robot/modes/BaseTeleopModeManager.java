@@ -12,6 +12,7 @@ import frc.robot.controls.InputMap.MANIPULATOR;
 import frc.robot.modules.DriveModule;
 import frc.robot.modules.ElevatorModule;
 import frc.robot.modules.FeederModule;
+import frc.robot.modules.IntakeModule;
 import frc.robot.modules.VisionModule;
 import frc.robot.modules.ElevatorModule.ElevatorState;
 import frc.robot.modules.FeederModule.NoteState;
@@ -73,16 +74,16 @@ public class BaseTeleopModeManager extends ModeManager {
         ShotProfile desiredShotProfile = new ShotProfile().shouldShoot(false);
         if (driverController.isPressing(MANIPULATOR.MANUAL_MODE)) { // Manual mode
             if (driverController.isPressing(MANIPULATOR.MANUAL_PODIUM_SHOT)) { // Shoot from podium
-                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.83);
+                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getPodiumShot();
             } else if (driverController.isPressing(MANIPULATOR.MANUAL_SUBWOOFER_SHOT)) { // Shoot from subwoofer
-                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.40);
+                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getSubwooferShot();
             }
         } else { // Auto ranged shot
             double distanceToTarget = VisionModule.getInstance().getDistanceToSpeaker();
-            if (distanceToTarget == -1) {
-                distanceToTarget = 2.0;
-            }
             desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(distanceToTarget);
+            if (distanceToTarget == -1) { // Cannot see target
+                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getStaticShot();
+            }
         }
 
         if (driverController.isPressingAny(MANIPULATOR.STOW, MANIPULATOR.CLIMB_POSITION)) { // Situations we want to stop priming for
@@ -104,15 +105,26 @@ public class BaseTeleopModeManager extends ModeManager {
     }
 
     protected void updateIntake() {
-        if (!driverController.isPressing(MANIPULATOR.SCORE)) {
-            if (driverController.isPressing(MANIPULATOR.INTAKE)) {
+        if (!operatorController.isPressing(MANIPULATOR.SCORE)) { // Not scoring
+            if (operatorController.isPressing(MANIPULATOR.MANUAL_MODE)) {  // Manual controls
+                if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
+                    FeederModule.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_INTAKE_RPM);
+                    IntakeModule.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_INTAKE_RPM);
+                } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
+                    FeederModule.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_OUTAKE_RPM);
+                    IntakeModule.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
+                } else { // Not pressing anything
+                    super.stopFeeder();
+                    super.stopIntake();
+                }
+            } else if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
                 super.setIntaking();
-            } else if (driverController.isPressing(MANIPULATOR.OUTAKE)) {
+            } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
                 super.setOutaking();
-            } else {
+            } else { // Not pressing anything
                 super.stopIntake();
                 if (FeederModule.getInstance().getNoteState() == NoteState.kNone ||
-                    driverController.isPressing(MANIPULATOR.STOW) ||
+                    operatorController.isPressing(MANIPULATOR.STOW) ||
                     scoreButton.isFallingEdge()) {
                     super.stopFeeder();
                 }
@@ -121,17 +133,17 @@ public class BaseTeleopModeManager extends ModeManager {
     }
 
     protected void updateElevator() {
-        if (driverController.isPressing(MANIPULATOR.STOW) || scoreButton.isFallingEdge()) { // Stow elevator
+        if (operatorController.isPressing(MANIPULATOR.STOW) || scoreButton.isFallingEdge()) { // Stow elevator
             super.setGroundState();
-        } else if (driverController.isPressing(MANIPULATOR.AMP_POSITION)) { // Amp position
+        } else if (operatorController.isPressing(MANIPULATOR.AMP_POSITION)) { // Amp position
             super.setAmpState();
             prime = false;
-        } else if (!driverController.isPressing(MANIPULATOR.SCORE) && !prime) { // Not attempting to shoot
-            if (driverController.isPressing(MANIPULATOR.CLIMB_POSITION)) { // Start climb
+        } else if (!(operatorController.isPressing(MANIPULATOR.SCORE) || prime)) { // Not attempting to shoot or prime
+            if (operatorController.isPressing(MANIPULATOR.CLIMB_POSITION)) { // Start climb
                 super.setClimbState();
-            } else if (driverController.isPressing(MANIPULATOR.EXTENSION_RAISE)) { // Climber up
+            } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_RAISE)) { // Climber up
                 super.raiseClimber();
-            } else if (driverController.isPressing(MANIPULATOR.EXTENSION_LOWER)) { // Climber down
+            } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_LOWER)) { // Climber down
                 super.lowerClimber();
             }
         }

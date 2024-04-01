@@ -15,5 +15,6 @@ public class TestModeManager extends BaseTeleopModeManager {
         super.updateLED();
         super.updateIntake();
         super.updateShooter();
+        super.updateElevator();
     }
 }

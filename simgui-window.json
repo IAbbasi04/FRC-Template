@@ -1,7 +1,7 @@
 {
   "Docking": {
     "Data": [
-      "DockNode    ID=0x00000001 Pos=548,721 Size=796,240 Split=X",
+      "DockNode    ID=0x00000001 Pos=551,720 Size=796,240 Split=X",
       "DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=599,240 Selected=0x138219D4",
       "DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=195,240 Selected=0x6AE6D891"
     ]
@@ -9,7 +9,7 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "991",
+      "height": "1009",
       "maximized": "1",
       "style": "0",
       "userScale": "2",
@@ -34,7 +34,7 @@
     "###/Shuffleboard/Auton Configuration/Choose Autonomous": {
       "Collapsed": "0",
       "Pos": "14,728",
-      "Size": "307,60"
+      "Size": "254,54"
     },
     "###/Shuffleboard/Auton Configuration/Choose Side": {
       "Collapsed": "0",
@@ -48,23 +48,23 @@
     },
     "###Addressable LEDs": {
       "Collapsed": "0",
-      "Pos": "1352,755",
-      "Size": "170,207"
+      "Pos": "1354,690",
+      "Size": "142,183"
     },
     "###DIO": {
       "Collapsed": "0",
-      "Pos": "1694,546",
-      "Size": "195,86"
+      "Pos": "1692,552",
+      "Size": "162,77"
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "1354,544",
-      "Size": "210,214"
+      "Pos": "1624,634",
+      "Size": "169,184"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "DockId": "0x00000002,0",
-      "Pos": "548,721",
+      "Pos": "551,720",
       "Size": "599,240"
     },
     "###NetworkTables": {
@@ -85,7 +85,7 @@
     "###System Joysticks": {
       "Collapsed": "0",
       "DockId": "0x00000003,0",
-      "Pos": "1149,721",
+      "Pos": "1152,720",
       "Size": "195,240"
     },
     "###Timing": {
@@ -100,8 +100,8 @@
     },
     "Robot State": {
       "Collapsed": "0",
-      "Pos": "327,729",
-      "Size": "109,134"
+      "Pos": "452,721",
+      "Size": "92,116"
     }
   }
 }

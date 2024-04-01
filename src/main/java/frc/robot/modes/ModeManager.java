@@ -1,5 +1,6 @@
 package frc.robot.modes;
 
+import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.crescendo.ShotProfile;
 import frc.robot.controls.XboxController;
@@ -71,7 +72,7 @@ public abstract class ModeManager {
      * Spit out a note from the front
      */
     public static void setOutaking() {
-        IntakeModule.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTTAKE_RPM);
+        IntakeModule.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
         FeederModule.getInstance().setFeederState(FeederState.kOutake);
     }
 
@@ -84,7 +85,7 @@ public abstract class ModeManager {
         ElevatorModule.getInstance().setExtension(elevatorHeight);
         if (ShooterModule.getInstance().atTargetVelocity() && 
             ElevatorModule.getInstance().atTargetPosition() &&
-            shouldShoot || true) {
+            shouldShoot || Robot.isSimulation()) {
             FeederModule.getInstance().setFeederState(FeederState.kShoot);
         }
     }

@@ -39,7 +39,11 @@ public class ShootCommand extends Command {
             shotTimer.start();
         }
 
-        return shotTimer.get() >= 0.75 || commandTimer.get() >= 5.0; // Automatic timeout if taking longer than 5 seconds
+        if (Robot.isReal()) {
+            return shotTimer.get() >= 0.75 || commandTimer.get() >= 5.0; // Automatic timeout if taking longer than 5 seconds
+        } else {
+            return commandTimer.get() >= 1.25;
+        }
     }
 
     @Override
