@@ -17,7 +17,6 @@ public class OperatorInputModule extends Module {
     }
 
     private XboxController driverController, manipulatorController;
-    private boolean hasInit = false;
 
     private OperatorInputModule(XboxController driverController, XboxController manipulatorController) {
         this.driverController = driverController;
@@ -25,6 +24,9 @@ public class OperatorInputModule extends Module {
 
         DriverProfile.logToSmartdashboard();
         ManipulatorProfile.logToSmartdashboard();
+
+        driverController.logInputsToShuffleboard();
+        manipulatorController.logInputsToShuffleboard();
     }
 
     @Override
@@ -36,13 +38,10 @@ public class OperatorInputModule extends Module {
             DriverProfile.changeInputs();
             ManipulatorProfile.changeInputs();
         }
-
-        if (!hasInit) {
-            driverController.logInputsToShuffleboard();
-            manipulatorController.logInputsToShuffleboard();
-            hasInit = true;
-        }
     }
+
+    @Override
+    public void initializeLogs() {}
 
     @Override
     public void periodic() {

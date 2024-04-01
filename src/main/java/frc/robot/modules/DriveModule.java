@@ -11,10 +11,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.Ports;
+import frc.robot.common.ProfileGains;
 
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;
@@ -27,6 +29,12 @@ public class DriveModule extends Module {
 
     private NewtonSwerve swerve;
     private ChassisSpeeds desiredSpeeds;
+
+    private ProfileGains turnToGains = new ProfileGains()
+        .setP(0.1)
+        .setContinuousInput(0, 360)
+        .setTolerance(0.1)
+        ;
 
     private DriveModule() {
         Mk4ModuleConfiguration config = new Mk4ModuleConfiguration();
@@ -92,6 +100,8 @@ public class DriveModule extends Module {
             backLeftModule,
             backRightModule
         );
+
+        super.addLogger("Swerve", Robot.LOG_TO_DASHBOARD);
     }
 
     /**
@@ -110,6 +120,17 @@ public class DriveModule extends Module {
         if (!Robot.isReal()) {
             Robot.FIELD.setRobotPose(startPose);
         }
+    }
+
+    /**
+     * Turns to the indicated gyroscope rotation
+     */
+    public void turnToAngle(double degree) {
+        desiredSpeeds = new ChassisSpeeds(
+            desiredSpeeds.vxMetersPerSecond,
+            desiredSpeeds.vyMetersPerSecond,
+            turnToGains.toPIDController().calculate(getCurrentRotation().getDegrees(), degree)
+        );
     }
 
     /**
@@ -150,6 +171,9 @@ public class DriveModule extends Module {
     public void init(MatchMode mode) {
         desiredSpeeds = new ChassisSpeeds();
     }
+
+    @Override
+    public void initializeLogs() {}
 
     @Override
     public void periodic() {

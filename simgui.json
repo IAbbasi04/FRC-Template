@@ -1,6 +1,21 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
+      "SPARK MAX [36]": {
+        "header": {
+          "open": true
+        }
+      },
       "window": {
         "visible": false
       }
@@ -19,9 +34,25 @@
       "/Shuffleboard/Driver/RESET_GYRO": "String Chooser",
       "/Shuffleboard/Driver/ROTATE": "String Chooser",
       "/Shuffleboard/Driver/SNAIL_MODE": "String Chooser",
+      "/Shuffleboard/Driver/SPEAKER_TARGET_LOCK": "String Chooser",
       "/Shuffleboard/Driver/Select Driver": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_X": "String Chooser",
       "/Shuffleboard/Driver/TRANSLATE_Y": "String Chooser",
+      "/Shuffleboard/Manipulator/AMP_POSITION": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_LOWER": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_POSITION": "String Chooser",
+      "/Shuffleboard/Manipulator/CLIMB_RAISE": "String Chooser",
+      "/Shuffleboard/Manipulator/EXTENSION_LOWER": "String Chooser",
+      "/Shuffleboard/Manipulator/EXTENSION_RAISE": "String Chooser",
+      "/Shuffleboard/Manipulator/INTAKE": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_MODE": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_PODIUM_SHOT": "String Chooser",
+      "/Shuffleboard/Manipulator/MANUAL_SUBWOOFER_SHOT": "String Chooser",
+      "/Shuffleboard/Manipulator/OUTAKE": "String Chooser",
+      "/Shuffleboard/Manipulator/PRIME": "String Chooser",
+      "/Shuffleboard/Manipulator/SCORE": "String Chooser",
+      "/Shuffleboard/Manipulator/SCORE_RANGED": "String Chooser",
+      "/Shuffleboard/Manipulator/STOW": "String Chooser",
       "/Shuffleboard/Manipulator/Select Manipulator": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
     },
@@ -62,11 +93,32 @@
   },
   "NetworkTables": {
     "transitory": {
+      "Shuffleboard": {
+        "Elevator": {
+          "open": true
+        },
+        "Shooter": {
+          "open": true
+        },
+        "Vision": {
+          "open": true
+        },
+        "open": true
+      },
       "SmartDashboard": {
         "AAA": {
           "open": true
         },
         "BBB": {
+          "open": true
+        },
+        "FEEDER": {
+          "open": true
+        },
+        "LED": {
+          "open": true
+        },
+        "RGB": {
           "open": true
         },
         "open": true

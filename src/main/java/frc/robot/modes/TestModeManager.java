@@ -12,5 +12,9 @@ public class TestModeManager extends BaseTeleopModeManager {
     @Override
     public void runPeriodic() {
         super.updateSwerve();
+        super.updateLED();
+        super.updateIntake();
+        super.updateShooter();
+        super.updateElevator();
     }
 }

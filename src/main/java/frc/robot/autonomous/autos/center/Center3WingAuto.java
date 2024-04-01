@@ -1,10 +1,10 @@
 package frc.robot.autonomous.autos.center;
 
+import frc.robot.Robot;
 import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.autonomous.SwerveTrajectory.RotationProfile;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.autonomous.commands.*;
-import frc.robot.autonomous.commands.DeliverCommand.DeliverType;
 import edu.wpi.first.math.geometry.Rotation2d;
 import static frc.robot.autonomous.AutoGenerator.*;
 import static frc.robot.autonomous.TrajectoryUtil.*;
@@ -33,27 +33,25 @@ public class Center3WingAuto extends BaseAuto {
     @Override
     public void initialize() {
         queue = new CommandQueue(
-            new DeliverCommand(DeliverType.SPEAKER).setTag("SCORE PRELOAD"),
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.40))
+                .setTag("SCORE PRELOAD"),
             new JointCommand(
                 new IntakeCommand(),
                 new FollowerCommand(SPEAKER_MID_TO_WING_NOTE_3)
             ).setTag("INTAKE SECOND NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(2.0))
                 .setTag("SCORE SECOND NOTE"),
             new JointCommand(
                 new IntakeCommand(),
                 new FollowerCommand(WING_NOTE_3_TO_WING_NOTE_2)
             ).setTag("INTAKE THIRD NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(1.8))
                 .setTag("SCORE THIRD NOTE"),
             new JointCommand(
                 new IntakeCommand(),
                 new FollowerCommand(WING_NOTE_2_TO_WING_NOTE_1)
             ).setTag("INTAKE FOURTH NOTE"),
-            new DeliverCommand(DeliverType.SPEAKER)
-                .addPoseTarget(SPEAKER_OPENING.getPose())
+            new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(2.0))
                 .setTag("SCORE FOURTH NOTE")
         );
     }

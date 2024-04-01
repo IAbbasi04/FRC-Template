@@ -9,7 +9,7 @@ public abstract class BaseAuto extends ModeManager {
     protected CommandQueue queue; // The queue of commands to run in autonomous
 
     protected TrajectoryConfig slowConfig = new TrajectoryConfig(1.0, 1.0);
-    protected TrajectoryConfig fastConfig = new TrajectoryConfig(4.0, 3.0);
+    protected TrajectoryConfig fastConfig = new TrajectoryConfig(3.0, 3.0);
     protected TrajectoryConfig movingScoreConfig = new TrajectoryConfig(2.0, 2.0);
 
     /**

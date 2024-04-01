@@ -9,6 +9,9 @@ import frc.robot.autonomous.AutonomousSelector;
 import frc.robot.autonomous.autos.BaseAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
+import frc.robot.common.crescendo.tables.DefendedShotTable;
+import frc.robot.common.crescendo.tables.ShotTable;
+import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.controls.XboxController;
 import frc.robot.hardware.Clock;
 import frc.robot.modes.DisabledModeManager;
@@ -16,17 +19,28 @@ import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;
 import frc.robot.modes.TestModeManager;
 import frc.robot.modules.DriveModule;
+import frc.robot.modules.ElevatorModule;
+import frc.robot.modules.FeederModule;
+import frc.robot.modules.IntakeModule;
+import frc.robot.modules.LEDModule;
 import frc.robot.modules.ModuleList;
 import frc.robot.modules.OperatorInputModule;
+import frc.robot.modules.ShooterModule;
+import frc.robot.modules.VisionModule;
 
 public class Robot extends TimedRobot {
   private ModuleList activeModules;
   private ModeManager currentMode;
-  public static XboxController driverController, operatorController;
+  private XboxController driverController, operatorController;
 
   public static MatchMode MODE = MatchMode.DISABLED;;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
+
+  public static boolean LOG_TO_DASHBOARD = true;
+
+  public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
+  public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
 
   private AutonomousSelector autoSelector;
 
@@ -38,8 +52,14 @@ public class Robot extends TimedRobot {
 
     // Add all modules to run here
     activeModules = new ModuleList(List.of(
+      OperatorInputModule.getInstance(driverController, operatorController),
+      VisionModule.getInstance(),
       DriveModule.getInstance(),
-      OperatorInputModule.getInstance(driverController, operatorController)
+      IntakeModule.getInstance(),
+      FeederModule.getInstance(),
+      ShooterModule.getInstance(),
+      ElevatorModule.getInstance(),
+      LEDModule.getInstance()
     ));
 
     autoSelector = new AutonomousSelector();
@@ -63,9 +83,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -89,9 +107,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {
-    
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void testInit() {
@@ -103,9 +119,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {
-
-  }
+  public void testPeriodic() {}
 
   @Override
   public void simulationInit() {

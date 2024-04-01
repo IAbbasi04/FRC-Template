@@ -1,20 +1,23 @@
 package frc.robot.autonomous.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
+import frc.robot.modes.ModeManager;
+import frc.robot.modules.FeederModule;
 
 public class IntakeCommand extends Command {
+    public IntakeCommand() {}
+
     @Override
-    public void initialize() {
-        SmartDashboard.putBoolean("INTAKING", true);
-    }
+    public void initialize() {}
 
     @Override
     public boolean execute() {
-        return true;
+        ModeManager.setIntaking();
+        return FeederModule.getInstance().noteStaged() || Robot.isSimulation();
     }
 
     @Override
     public void shutdown() {
-        SmartDashboard.putBoolean("INTAKING", false);
+        ModeManager.stopIntake();
     }
 }

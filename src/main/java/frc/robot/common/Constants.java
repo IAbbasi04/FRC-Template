@@ -16,10 +16,10 @@ public class Constants {
     }
 
     public static class SWERVE {
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(233.525); // Teal Module
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(133.77); // Orange Module
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(78.75); // Black Module
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(147.041); // White Module
+        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(145.02+180); // Black Module
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(339.785-180); // Orange Module
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(62.93+180); // Teal Module
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(3.867+180); // White Module
 
         public static final double THROTTLE_kP = 0.02;
         public static final double THROTTLE_kI = 0.0;
@@ -43,5 +43,54 @@ public class Constants {
         public static final double MAX_ACCELERATION_METERS_PER_SECOND_PER_SECOND = 4.5;
 
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
+    }
+
+    public static class INTAKE {
+        public static final double ROLLER_INTAKE_RPM = 4500.0;
+        public static final double ROLLER_OUTAKE_RPM = -2000.0;
+    }
+
+    public static class FEEDER {
+        public static final int PID_FEED_SLOT = 0;
+        public static final int PID_SHOOT_SLOT = 1;
+
+        public static final int FEEDER_SHOOT_RPM = 2500;
+        public static final int FEEDER_INTAKE_RPM = 2000;
+        public static final int FEEDER_OUTAKE_RPM = -2000;
+        public static final int FEEDER_ALIGN_RPM = -1000;
+    }
+
+    public static class SHOOTER {
+        public static final double TARGET_TOLERANCE = 50.0;
+    }
+
+    public static class ELEVATOR {
+        private static final double PIVOT_PULLEY_RATIO = 12.0 / 5.0;
+        private static final double PIVOT_GEARBOX_RATIO = 75.0 / 1.0;
+        public static final double PIVOT_RATIO = PIVOT_PULLEY_RATIO * PIVOT_GEARBOX_RATIO;
+
+        private static final double DIAMETER_OF_ELEVATOR_SPROCKET = 1.885; // inches
+        private static final double EXTENSION_GEARBOX_RATIO = 1.0 / 48.0;
+        public static final double EXTENSION_RATIO = 
+            Conversions.inchesToMeters(
+                EXTENSION_GEARBOX_RATIO *                                
+                DIAMETER_OF_ELEVATOR_SPROCKET * Math.PI
+            );
+
+        public static final double PIVOT_TOLERANCE = 0.1; // degrees
+        public static final double EXTENSION_TOLERANCE = 0.005; // meters
+
+        public static final double MIN_EXTENSION = 0; // meters
+        public static final double MAX_EXTENSION = 0.279; // meters
+
+        public static final double MIN_PIVOT = 0; // meters
+        public static final double MAX_PIVOT = 75; // meters
+
+        public static final double EXTENSION_PIVOT_THRESHOLD = 30; // degrees
+        public static final double PIVOT_EXTENSION_THRESHOLD = 0.05; // meters
+    }
+
+    public static class VISION {
+        public static final String FRONT_LIMELIGHT_NAME = "limelight-targetting";
     }
 }

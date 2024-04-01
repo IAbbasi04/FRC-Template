@@ -13,10 +13,7 @@ public class FollowerCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-        commandTimer.reset();
-        commandTimer.start();
-    }
+    public void initialize() {}
 
     @Override
     public boolean execute() {

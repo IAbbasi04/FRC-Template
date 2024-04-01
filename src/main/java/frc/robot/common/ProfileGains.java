@@ -12,8 +12,8 @@ public class ProfileGains {
     private double kD = 0;
     private double kFF = 0;
 
-    private double maxAccel = 0;
-    private double maxVelo = 0;
+    private double maxAccel = Double.POSITIVE_INFINITY;
+    private double maxVelo = Double.POSITIVE_INFINITY;
 
     private double tolerance = 0;
 
