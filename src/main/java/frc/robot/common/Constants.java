@@ -33,6 +33,8 @@ public class Constants {
         public static final double DRIVE_TRAIN_LENGTH = Units.inchesToMeters(35.750); // meters
         public static final double WHEEL_CIRCUMFERENCE = 4 * Math.PI; // inches
 
+        public static final double DRIVE_TRAIN_RADIUS = Math.sqrt(Math.pow(DRIVE_TRAIN_WIDTH, 2) + Math.pow(DRIVE_TRAIN_LENGTH, 2));
+
         public static final double TRANSLATE_POWER_FAST = 1.0; // Scaling for teleop driving.  1.0 is maximum
         public static final double ROTATE_POWER_FAST = 0.75; // Scaling for teleop driving.  1.0 is maximum
         public static final double TRANSLATE_POWER_SLOW = 0.15; // Scaling for teleop driving.  1.0 is maximum

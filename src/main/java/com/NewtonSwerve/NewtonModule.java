@@ -3,7 +3,6 @@ package com.NewtonSwerve;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.NewtonSwerve.SwerveModule;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -55,7 +54,7 @@ public class NewtonModule {
         return this.getThrottleMotor().getSupplyCurrent();
     }
 
-    public double getThrottleVelocity(SwerveModule module) {
+    public double getThrottleVelocity() {
         return this.getThrottleMotor().getSelectedSensorVelocity();
     }
 

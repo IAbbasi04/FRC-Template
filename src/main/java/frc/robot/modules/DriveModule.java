@@ -11,7 +11,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
@@ -161,6 +160,16 @@ public class DriveModule extends Module {
     }
 
     /**
+     * Gets the drivetrain translational and rotational velocity
+     */
+    public ChassisSpeeds getCurrentSpeed() {
+        if (Robot.isReal()) {
+            swerve.getKinematics().toChassisSpeeds(swerve.getStates());
+        }
+        return getDesiredSpeeds();
+    }
+
+    /**
      * Sets the desired translational and rotational speeds of the robot 
      */
     public void drive(ChassisSpeeds speeds) {
@@ -173,24 +182,46 @@ public class DriveModule extends Module {
     }
 
     @Override
-    public void initializeLogs() {}
+    public void initializeLogs() {
+        logger.setNumber("Desired Speeds X", () -> getDesiredSpeeds().vxMetersPerSecond);
+        logger.setNumber("Desired Speeds Y", () -> getDesiredSpeeds().vyMetersPerSecond);
+        logger.setNumber("Desired Speeds Omega", () -> getDesiredSpeeds().omegaRadiansPerSecond);
+        logger.setNumber("Current Rotation Degrees", () -> getCurrentRotation().getDegrees());
+        logger.setNumber("Cosine Rotation", () -> Math.cos(getCurrentRotation().getRadians()));
+        logger.setNumber("Sine Rotation", () -> Math.sin(getCurrentRotation().getRadians()));
+    }
 
     @Override
     public void periodic() {
         swerve.drive(desiredSpeeds);
 
-        if (!Robot.isReal() && Robot.MODE != MatchMode.AUTONOMOUS) {
+        if (!Robot.isReal()) {
+            ChassisSpeeds simulatedSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(desiredSpeeds, getCurrentRotation());
             Pose2d simulatedRobotPose = Robot.FIELD.getRobotPose();
-            Pose2d newSimulatedPose = new Pose2d(
-                new Translation2d(
-                    simulatedRobotPose.getX() - 0.02*desiredSpeeds.vyMetersPerSecond,
-                    simulatedRobotPose.getY() + 0.02*desiredSpeeds.vxMetersPerSecond
-                ),
-                Rotation2d.fromRadians(
-                    (simulatedRobotPose.getRotation().getRadians() + 0.02*desiredSpeeds.omegaRadiansPerSecond) % 360
-                )
-            );
+            Pose2d newSimulatedPose = simulatedRobotPose;
 
+            if (Robot.MODE == MatchMode.AUTONOMOUS) {
+                newSimulatedPose = new Pose2d(
+                    new Translation2d(
+                        simulatedRobotPose.getX() + 0.02*simulatedSpeeds.vxMetersPerSecond,
+                        simulatedRobotPose.getY() + 0.02*simulatedSpeeds.vyMetersPerSecond
+                    ),
+                    Rotation2d.fromRadians(
+                        (simulatedRobotPose.getRotation().getRadians() + 0.02*simulatedSpeeds.omegaRadiansPerSecond) % 360
+                    )
+                );
+            } else if (Robot.MODE != MatchMode.DISABLED) {
+                newSimulatedPose = new Pose2d(
+                    new Translation2d(
+                        simulatedRobotPose.getX() + 0.02*desiredSpeeds.vxMetersPerSecond,
+                        simulatedRobotPose.getY() - 0.02*desiredSpeeds.vyMetersPerSecond
+                    ),
+                    Rotation2d.fromRadians(
+                        (simulatedRobotPose.getRotation().getRadians() + 0.02*desiredSpeeds.omegaRadiansPerSecond) % 360
+                    )
+                );
+            }
+            
             Robot.FIELD.setRobotPose(newSimulatedPose);
         }
     }

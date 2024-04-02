@@ -1,9 +1,10 @@
 package frc.robot.modules;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.logging.SmartLogger;
 
-public abstract class Module {
+public abstract class Module extends SubsystemBase {
     protected SmartLogger logger = new SmartLogger("SmartDashboard", true); // Originally starts at smartdashboard tab
 
     /**

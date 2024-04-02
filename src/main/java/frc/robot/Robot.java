@@ -5,8 +5,10 @@ import java.util.List;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autonomous.AutonomousSelector;
-import frc.robot.autonomous.autos.BaseAuto;
+import frc.robot.autonomous.NewtonAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.crescendo.tables.DefendedShotTable;
@@ -63,23 +65,31 @@ public class Robot extends TimedRobot {
     ));
 
     autoSelector = new AutonomousSelector();
+    NewtonAuto.initializeAutoBuilder();
   }
 
   @Override
   public void robotPeriodic() {
-    currentMode.runPeriodic();
+    if (MODE != MatchMode.AUTONOMOUS) {
+      currentMode.runPeriodic();
+    }
+    
     activeModules.periodicAll();
     CLOCK.update();
+
+    CommandScheduler.getInstance().run();
   }
 
   @Override
   public void autonomousInit() {
     MODE = MatchMode.AUTONOMOUS;
     CLOCK.restart();
-    BaseAuto selectedAuto = autoSelector.getSelectedAutonomous();
-    selectedAuto.initialize();
-    currentMode = selectedAuto;
+
     activeModules.initAll(MODE);
+    Command autoCommand = autoSelector.getSelectedAutonomous().createAuto();
+    if (autoCommand != null) {
+      autoCommand.schedule();
+    }
   }
 
   @Override

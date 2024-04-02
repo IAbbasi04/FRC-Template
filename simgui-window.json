@@ -69,7 +69,7 @@
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "1350,25",
+      "Pos": "1349,24",
       "Size": "567,515"
     },
     "###NetworkTables Info": {
@@ -100,7 +100,7 @@
     },
     "Robot State": {
       "Collapsed": "0",
-      "Pos": "452,721",
+      "Pos": "410,723",
       "Size": "92,116"
     }
   }

@@ -21,7 +21,7 @@ public class SwerveTrajectory {
     private HolonomicDriveController drivePID;
     private RotationProfile rotationProfile;
 
-    private VisionType visionType;
+    // private VisionType visionType;
 
     private ProfileGains translateGains = new ProfileGains()
         .setP(3.0)
@@ -119,7 +119,7 @@ public class SwerveTrajectory {
         }
 
         this.withRotation(new RotationProfile());
-        visionType = VisionType.kNone;
+        // visionType = VisionType.kNone;
     }
 
     /**
@@ -146,7 +146,7 @@ public class SwerveTrajectory {
      * Adds vision for targetting in the trajectory
      */
     public SwerveTrajectory addVision(VisionType visionType) {
-        this.visionType = visionType;
+        // this.visionType = visionType;
         return this;
     }
 
