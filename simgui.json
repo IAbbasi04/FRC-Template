@@ -31,6 +31,7 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Auton Configuration/Choose Autonomous": "String Chooser",
       "/Shuffleboard/Auton Configuration/Choose Side": "String Chooser",
+      "/Shuffleboard/Driver/NOTE_TARGET_LOCK": "String Chooser",
       "/Shuffleboard/Driver/RESET_GYRO": "String Chooser",
       "/Shuffleboard/Driver/ROTATE": "String Chooser",
       "/Shuffleboard/Driver/SNAIL_MODE": "String Chooser",
@@ -94,13 +95,7 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
-        "Elevator": {
-          "open": true
-        },
-        "Shooter": {
-          "open": true
-        },
-        "Vision": {
+        "Swerve": {
           "open": true
         },
         "open": true

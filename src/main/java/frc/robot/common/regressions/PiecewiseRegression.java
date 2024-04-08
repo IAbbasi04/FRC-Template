@@ -1,9 +1,5 @@
 package frc.robot.common.regressions;
 
-import java.util.Arrays;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class PiecewiseRegression extends Regression {
     private double[] values;
     private double deltaDistance; // meters
@@ -21,10 +17,6 @@ public class PiecewiseRegression extends Regression {
         int startIndex = (int)(input/deltaDistance);
         int endIndex = startIndex + 1;
 
-        SmartDashboard.putNumber("AAAAAAA", input);
-        SmartDashboard.putNumber("BBAAAAA", startIndex);
-        SmartDashboard.putNumber("EEAAAAA", endIndex);
-
         if (startIndex >= values.length - 1) { // Above possible range
             return values[values.length - 1];
         } else if (startIndex < 0) { // Below possible range
@@ -32,17 +24,7 @@ public class PiecewiseRegression extends Regression {
         }
 
         double remainder = (input - startIndex*deltaDistance);// / deltaDistance;
-
-        SmartDashboard.putNumber("CCCAAAAA", remainder);
-
         double additional = remainder/deltaDistance*(values[endIndex] - values[startIndex]);
-
-        SmartDashboard.putNumber("DDDAAAAA", additional);
-        
-        SmartDashboard.putNumber("FFFFAAAAA", this.values[startIndex]);
-        SmartDashboard.putNumber("GGGGAAAAA", this.values[endIndex]);
-
-        SmartDashboard.putString("ABCDEFG", Arrays.toString(this.values));
 
         return values[startIndex] + additional;
     }

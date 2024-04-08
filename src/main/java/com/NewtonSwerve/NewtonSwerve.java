@@ -6,7 +6,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -27,6 +26,8 @@ public class NewtonSwerve {
     private final NewtonModule m_frontRightModule;
     private final NewtonModule m_backLeftModule;
     private final NewtonModule m_backRightModule;
+
+    private final NewtonModule[] modules;
 
     // Odometry object for swerve drive
     protected SwerveDriveOdometry odometry;
@@ -81,6 +82,13 @@ public class NewtonSwerve {
         this.m_frontRightModule = new NewtonModule(frontRight, WHEEL_CIRCUMFERENCE);
         this.m_backLeftModule = new NewtonModule(backLeft, WHEEL_CIRCUMFERENCE);
         this.m_backRightModule = new NewtonModule(backRight, WHEEL_CIRCUMFERENCE);
+
+        this.modules = new NewtonModule[] {
+            this.m_frontLeftModule,
+            this.m_frontRightModule,
+            this.m_backLeftModule,
+            this.m_backRightModule
+        };
 
         // intialize odometry
         this.odometry = new SwerveDriveOdometry(m_kinematics, new Rotation2d(),
@@ -137,6 +145,17 @@ public class NewtonSwerve {
                 new SwerveModulePosition[] { new SwerveModulePosition(), new SwerveModulePosition(),
                         new SwerveModulePosition(), new SwerveModulePosition() },
                 pose);
+    }
+
+    public SwerveModuleState[] getStates() {
+        SwerveModuleState[] states = new SwerveModuleState[modules.length];
+        for (int i = 0; i < modules.length; i++) {
+            states[i] = new SwerveModuleState(
+                modules[i].getThrottleVelocity() / METERS_PER_SECOND_TO_TICKS, 
+                Rotation2d.fromDegrees(modules[i].getSteerAngle())
+            );
+        }
+        return states;
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
@@ -212,10 +231,10 @@ public class NewtonSwerve {
     }
 
     public double[] getThrottleAppliedVelocity() {
-        double frontLeftVelo = ticksToMetersPerSecond(m_frontLeftModule.getThrottleVelocity(null));
-        double frontRightVelo = ticksToMetersPerSecond(m_frontRightModule.getThrottleVelocity(null));
-        double backLeftVelo = ticksToMetersPerSecond(m_backLeftModule.getThrottleVelocity(null));
-        double backRightVelo = ticksToMetersPerSecond(m_backRightModule.getThrottleVelocity(null));
+        double frontLeftVelo = ticksToMetersPerSecond(m_frontLeftModule.getThrottleVelocity());
+        double frontRightVelo = ticksToMetersPerSecond(m_frontRightModule.getThrottleVelocity());
+        double backLeftVelo = ticksToMetersPerSecond(m_backLeftModule.getThrottleVelocity());
+        double backRightVelo = ticksToMetersPerSecond(m_backRightModule.getThrottleVelocity());
 
         return new double[] { Math.abs(frontLeftVelo), Math.abs(frontRightVelo), Math.abs(backLeftVelo),
                 Math.abs(backRightVelo) };

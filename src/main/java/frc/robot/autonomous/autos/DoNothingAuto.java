@@ -1,13 +1,12 @@
 package frc.robot.autonomous.autos;
 
-import frc.robot.autonomous.commands.CommandQueue;
-import frc.robot.autonomous.commands.DelayCommand;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.autonomous.NewtonAuto;
+import frc.robot.autonomous.newtonCommands.DelayCommand;
 
-public class DoNothingAuto extends BaseAuto {
+public class DoNothingAuto extends NewtonAuto {
     @Override
-    public void initialize() {
-        queue = new CommandQueue(
-            new DelayCommand(1.0)
-        );
+    public Command createAuto() {
+        return new DelayCommand(1.0);
     }
 }

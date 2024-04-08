@@ -1,0 +1,25 @@
+{
+  "robotWidth": 0.9,
+  "robotLength": 0.9,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Mid Note 1",
+    "Mid Note 2",
+    "Mid Note 3",
+    "Mid Note 4",
+    "Mid Note 5",
+    "Wing Score",
+    "Speaker Amp",
+    "Speaker Center",
+    "Speaker Source",
+    "Wing Note 1",
+    "Wing Note 2",
+    "Wing Note 3"
+  ],
+  "autoFolders": [],
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "maxModuleSpeed": 4.5
+}
