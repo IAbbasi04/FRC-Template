@@ -18,26 +18,29 @@ public class ElevatorModule extends Module {
     }
 
     public enum ElevatorState {
-        kDefault(0, 0),
-        kStow(0, 0),
-        kAmp(0.27, 45),
-        kClimb(0.279, 70);
+        kDefault(0, 0, 0, 0),
+        kStow(0, 0, 1, 1),
+        kAmp(0.27, 45, 0, 0),
+        kClimb(0.279, 70, 2, 2);
 
         public double extension, pivot;
-        private ElevatorState(double extension, double pivot) {
+        public int pivotSlot, extensionSlot;
+        private ElevatorState(double extension, double pivot, int pivotSlot, int extensionSlot) {
             this.extension = extension;
             this.pivot = pivot;
+            this.pivotSlot = pivotSlot;
+            this.extensionSlot = extensionSlot;
         }
     }
 
-    private ProfileGains pivotUpGains = new ProfileGains()
+    private ProfileGains pivotDefaultGains = new ProfileGains()
         .setP(1E-6)
         .setFF(2.5E-4)
         .setMaxAccel(6500.0)
         .setMaxVelocity(5000.0)
     ;
 
-    private ProfileGains pivotDownGains = new ProfileGains()
+    private ProfileGains pivotStowGains = new ProfileGains()
         .setP(1E-6)
         .setFF(2.5E-4)
         .setMaxAccel(6500.0)
@@ -81,12 +84,12 @@ public class ElevatorModule extends Module {
         rightPivotMotor = new VortexMotor(Ports.PIVOT_FOLLOW_MOTOR_CAN_ID, true);
         extensionMotor = new VortexMotor(Ports.ELEVATOR_MOTOR_CAN_ID);
 
-        leftPivotMotor.withGains(pivotUpGains, 0);
-        leftPivotMotor.withGains(pivotDownGains, 1);
+        leftPivotMotor.withGains(pivotDefaultGains, 0);
+        leftPivotMotor.withGains(pivotStowGains, 1);
         leftPivotMotor.withGains(pivotClimbGains, 2);
 
-        rightPivotMotor.withGains(pivotUpGains, 0);
-        rightPivotMotor.withGains(pivotDownGains, 1);
+        rightPivotMotor.withGains(pivotDefaultGains, 0);
+        rightPivotMotor.withGains(pivotStowGains, 1);
         rightPivotMotor.withGains(pivotClimbGains, 2);
 
         extensionMotor.withGains(extensionUpGains, 0);
@@ -204,12 +207,18 @@ public class ElevatorModule extends Module {
         double outputExtension = desiredExtension;
         double outputAngle = desiredAngle;
 
+        int pivotSlot = 0;
+        int extensionSlot = 0;
+
         switch (desiredState) {
             case kStow:
             case kAmp:
-            case kClimb: // All above states use the enum constant's elevator values
+            case kClimb: // All above states use the enum constant's values
                 desiredExtension = desiredState.extension;
                 desiredAngle = desiredState.pivot;
+
+                pivotSlot = desiredState.pivotSlot;
+                extensionSlot = desiredState.extensionSlot;
                 break;
             default:
                 // Do nothing extra
@@ -237,12 +246,20 @@ public class ElevatorModule extends Module {
             } else { // Pivot too low
                 outputExtension = getElevatorExtensionMeters();
             }
+
+            if (desiredState != ElevatorState.kClimb) {
+                extensionSlot = extensionUpGains.getSlot();
+            }
         } else if (desiredExtension < getElevatorExtensionMeters()) { // Retracting
             if (getPivotAngleDegrees() <= ELEVATOR.EXTENSION_PIVOT_THRESHOLD) { // Pivot above threshold
                 outputExtension = getElevatorExtensionMeters();
                 outputAngle = ELEVATOR.EXTENSION_PIVOT_THRESHOLD + 5.0; // Adding a few degrees because of error margin
             } else { // Pivot too low
                 outputExtension = desiredExtension;
+            }
+
+            if (desiredState != ElevatorState.kClimb) {
+                extensionSlot = extensionDownGains.getSlot();
             }
         }
 
@@ -260,8 +277,8 @@ public class ElevatorModule extends Module {
         double outputPivotRotations = Conversions.degreesToRotations(outputAngle / ELEVATOR.PIVOT_RATIO);
         double outputExtensionRotations = outputExtension / ELEVATOR.EXTENSION_RATIO;
 
-        leftPivotMotor.set(ControlType.kPosition, outputPivotRotations);
-        rightPivotMotor.set(ControlType.kPosition, outputPivotRotations);
-        extensionMotor.set(ControlType.kPosition, outputExtensionRotations);
+        leftPivotMotor.set(ControlType.kPosition, outputPivotRotations, pivotSlot);
+        rightPivotMotor.set(ControlType.kPosition, outputPivotRotations, pivotSlot);
+        extensionMotor.set(ControlType.kPosition, outputExtensionRotations, extensionSlot);
     }
 }

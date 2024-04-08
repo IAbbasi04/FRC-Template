@@ -178,6 +178,9 @@ public class FeederModule extends Module {
                 this.noteState = NoteState.kNone;
             }
         }
+        
+        int pidSlot = Constants.FEEDER.PID_FEED_SLOT;
+
 
         switch (feederState) {
             case kOff:
@@ -189,6 +192,7 @@ public class FeederModule extends Module {
             case kShoot:
                 desiredRPM = Constants.FEEDER.FEEDER_SHOOT_RPM;
                 this.noteState = NoteState.kNone;
+                pidSlot = Constants.FEEDER.PID_SHOOT_SLOT;
                 break;
             case kIntake:
                 switch (noteState) {
@@ -213,6 +217,6 @@ public class FeederModule extends Module {
                 break;
         }
 
-        feederMotor.set(ControlType.kVelocity, desiredRPM);
+        feederMotor.set(ControlType.kVelocity, desiredRPM, pidSlot);
     }
 }
