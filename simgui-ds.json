@@ -96,6 +96,9 @@
     },
     {
       "guid": "Keyboard1"
+    },
+    {
+      "useGamepad": true
     }
   ],
   "useEnableDisableHotkeys": true

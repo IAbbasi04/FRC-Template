@@ -74,6 +74,10 @@ public enum EXboxController {
         }
     }
 
+    public int getButtonID() {
+        return ordinal() + 1;
+    }
+
     /**
      * Returns all inputs in a way that can be sent to shuffleboard
      */

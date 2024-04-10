@@ -16,6 +16,7 @@ import frc.robot.common.crescendo.tables.ShotTable;
 import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.controls.XboxController;
 import frc.robot.hardware.Clock;
+import frc.robot.logging.SmartLogger;
 import frc.robot.modes.DisabledModeManager;
 import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;
@@ -35,11 +36,13 @@ public class Robot extends TimedRobot {
   private ModeManager currentMode;
   private XboxController driverController, operatorController;
 
+  public static boolean LOG_TO_DASHBOARD = true;
+
   public static MatchMode MODE = MatchMode.DISABLED;;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
+  public static SmartLogger LOGGER = new SmartLogger("Robot", LOG_TO_DASHBOARD);
 
-  public static boolean LOG_TO_DASHBOARD = true;
 
   public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
   public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();

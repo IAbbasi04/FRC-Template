@@ -95,9 +95,6 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
-        "Swerve": {
-          "open": true
-        },
         "open": true
       },
       "SmartDashboard": {

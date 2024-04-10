@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -69,17 +71,24 @@ public class XboxController {
     }
 
     /**
-     * Returns whether the input has just been pressed (Only works the frame of pressing)
+     * Returns whether the input has just been pressed (Only works the frame of pressing); Currently only works on buttons
      */
-    public boolean getPressed(EXboxController input) { // TODO - WORK ON THIS LATER
-        return false;
+    public boolean getPressed(EXboxController input) {
+        return DriverStation.getStickButtonPressed(controller.getPort(), input.getButtonID());
     }
 
     /**
-     * Returns whether the input is no longer being pressed
+     * Returns whether the input is no longer being pressed (Only works the frame of releasing); Currently only works on buttons
      */
-    public boolean getReleased(EXboxController input) { // TODO - WORK ON THIS LATER
-        return false;
+    public boolean getReleased(EXboxController input) {
+        return DriverStation.getStickButtonReleased(controller.getPort(), input.getButtonID());
+    }
+
+    /**
+     * Shakes the controller at the desired intensity [0, 1]
+     */
+    public void setRumble(double intensity) {
+        controller.setRumble(RumbleType.kBothRumble, intensity);
     }
 
     /**

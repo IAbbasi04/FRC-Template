@@ -187,8 +187,6 @@ public class DriveModule extends Module {
         logger.setNumber("Desired Speeds Y", () -> getDesiredSpeeds().vyMetersPerSecond);
         logger.setNumber("Desired Speeds Omega", () -> getDesiredSpeeds().omegaRadiansPerSecond);
         logger.setNumber("Current Rotation Degrees", () -> getCurrentRotation().getDegrees());
-        logger.setNumber("Cosine Rotation", () -> Math.cos(getCurrentRotation().getRadians()));
-        logger.setNumber("Sine Rotation", () -> Math.sin(getCurrentRotation().getRadians()));
     }
 
     @Override
@@ -213,11 +211,11 @@ public class DriveModule extends Module {
             } else if (Robot.MODE != MatchMode.DISABLED) {
                 newSimulatedPose = new Pose2d(
                     new Translation2d(
-                        simulatedRobotPose.getX() + 0.02*desiredSpeeds.vxMetersPerSecond,
-                        simulatedRobotPose.getY() - 0.02*desiredSpeeds.vyMetersPerSecond
+                        simulatedRobotPose.getX() - 0.01*desiredSpeeds.vyMetersPerSecond,
+                        simulatedRobotPose.getY() + 0.01*desiredSpeeds.vxMetersPerSecond
                     ),
                     Rotation2d.fromRadians(
-                        (simulatedRobotPose.getRotation().getRadians() + 0.02*desiredSpeeds.omegaRadiansPerSecond) % 360
+                        (simulatedRobotPose.getRotation().getRadians() + 0.01*desiredSpeeds.omegaRadiansPerSecond) % 360
                     )
                 );
             }
