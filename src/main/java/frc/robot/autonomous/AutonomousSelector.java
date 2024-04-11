@@ -15,6 +15,8 @@ public class AutonomousSelector {
 
     public Class<?>[] autos = {
         Center1WingAuto.class,
+        CenterWing32Mid3Auto.class,
+        Center3WingAuto.class,
 
         AmpSide1Wing2MidAuto.class,
     };

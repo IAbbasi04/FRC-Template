@@ -2,10 +2,12 @@ package frc.robot.modes;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
+import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.BooleanManager;
 import frc.robot.common.Constants;
 import frc.robot.common.crescendo.ShotProfile;
 import frc.robot.controls.DriveScaler;
+import frc.robot.controls.EXboxController;
 import frc.robot.controls.DriveScaler.ScaleType;
 import frc.robot.controls.InputMap.DRIVER;
 import frc.robot.controls.InputMap.MANIPULATOR;
@@ -61,6 +63,13 @@ public class BaseTeleopModeManager extends ModeManager {
 
         if (driverController.isPressing(DRIVER.SPEAKER_TARGET_LOCK)) {
             DriveModule.getInstance().turnToAngle(VisionModule.getInstance().getAngleToSpeaker().getDegrees());
+        }
+
+        // DriveModule.getInstance().driveToPose(AutoGenerator.AMP.getPose());
+        if (driverController.getPressed(EXboxController.LEFT_BUMPER)) {
+            DriveModule.getInstance().driveToPose(AutoGenerator.AMP.getPose());
+        } else if (driverController.getReleased(EXboxController.LEFT_BUMPER)) {
+            DriveModule.getInstance().driveToPose(null);
         }
     }
 

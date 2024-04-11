@@ -1,21 +1,31 @@
 package frc.robot.modules;
 
+import java.util.List;
+
 import com.NewtonSwerve.NewtonSwerve;
 import com.NewtonSwerve.SwerveModule;
 import com.NewtonSwerve.Gyro.NewtonPigeon2;
 import com.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
 import com.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
+import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
+import frc.robot.common.Coordinate2d;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.Ports;
 import frc.robot.common.ProfileGains;
+import frc.robot.common.Vector2d;
 
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;
@@ -28,6 +38,7 @@ public class DriveModule extends Module {
 
     private NewtonSwerve swerve;
     private ChassisSpeeds desiredSpeeds;
+    private Command onTheFlyPathCommand;
 
     private ProfileGains turnToGains = new ProfileGains()
         .setP(0.1)
@@ -176,6 +187,48 @@ public class DriveModule extends Module {
         this.desiredSpeeds = speeds;
     }
 
+    /**
+     * Drives to a particular point on the field at a specified end rotation
+     */
+    public void driveToPose(Pose2d targetPose) {
+        if (targetPose == null) {
+            if (onTheFlyPathCommand != null) {
+                onTheFlyPathCommand.end(true);
+                onTheFlyPathCommand = null;
+            }
+            return;
+        }
+
+        // Vector2d vectorBetween = new Coordinate2d(
+        //         getCurrentPose().getTranslation()
+        //     ).vectorBetweenCoordinates(
+        //         new Coordinate2d(targetPose.getTranslation())
+        // );
+
+        // Rotation2d endRotation = Rotation2d.fromDegrees(90);
+        // List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
+        //     getCurrentPose(),
+        //     new Pose2d(
+        //         targetPose.getTranslation(),
+        //         vectorBetween.getDirection()
+        //     )
+        // );
+
+        // PathPlannerPath onTheFlyPath = new PathPlannerPath(
+        //     bezierPoints, 
+        //     new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI), 
+        //     new GoalEndState(0, endRotation)
+        // );
+
+        if (this.onTheFlyPathCommand == null) {
+            this.onTheFlyPathCommand = AutoBuilder.pathfindToPoseFlipped(
+                targetPose,//.rotateBy(Rotation2d.fromDegrees(90)),
+                new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI)
+            );
+            this.onTheFlyPathCommand.initialize();
+        }
+    }
+
     @Override
     public void init(MatchMode mode) {
         desiredSpeeds = new ChassisSpeeds();
@@ -191,7 +244,15 @@ public class DriveModule extends Module {
 
     @Override
     public void periodic() {
-        swerve.drive(desiredSpeeds);
+        if (onTheFlyPathCommand != null) {
+            onTheFlyPathCommand.execute();
+            if (onTheFlyPathCommand.isFinished()) {
+                onTheFlyPathCommand.end(false);
+                onTheFlyPathCommand = null;
+            }
+        } else {
+            swerve.drive(desiredSpeeds);
+        }
 
         if (!Robot.isReal()) {
             ChassisSpeeds simulatedSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(desiredSpeeds, getCurrentRotation());

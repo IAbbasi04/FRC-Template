@@ -16,7 +16,7 @@ public enum AutoGenerator {
     SUBWOOFER_MIDDLE(1.385, 5.585),
     SUBWOOFER_SOURCE(0.675, 4.345, Rotation2d.fromDegrees(-60)),
 
-    AMP(2.2, 7.75),
+    AMP(1.82, 7.65, Rotation2d.fromDegrees(90)),
 
     STAGE(5.0, 4.0),
 
