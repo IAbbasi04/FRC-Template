@@ -2,7 +2,7 @@ package frc.robot;
 
 import java.util.List;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import org.littletonrobotics.junction.LoggedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,12 +26,14 @@ import frc.robot.modules.ElevatorModule;
 import frc.robot.modules.FeederModule;
 import frc.robot.modules.IntakeModule;
 import frc.robot.modules.LEDModule;
+import frc.robot.modules.LoggerModule;
 import frc.robot.modules.ModuleList;
 import frc.robot.modules.OperatorInputModule;
+import frc.robot.modules.PowerModule;
 import frc.robot.modules.ShooterModule;
 import frc.robot.modules.VisionModule;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private ModuleList activeModules;
   private ModeManager currentMode;
   private XboxController driverController, operatorController;
@@ -50,7 +52,7 @@ public class Robot extends TimedRobot {
   private AutonomousSelector autoSelector;
 
   @Override
-  public void robotInit() {
+  public void robotInit() {        
     // Controllers
     driverController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT, "Driver");
     operatorController = new XboxController(Constants.INPUT.OPERATOR_CONTROLLER_PORT, "Manipulator");
@@ -58,13 +60,15 @@ public class Robot extends TimedRobot {
     // Add all modules to run here
     activeModules = new ModuleList(List.of(
       OperatorInputModule.getInstance(driverController, operatorController),
+      LoggerModule.getInstance(),
+      PowerModule.getInstance(),
       VisionModule.getInstance(),
+      LEDModule.getInstance(),
       DriveModule.getInstance(),
       IntakeModule.getInstance(),
       FeederModule.getInstance(),
       ShooterModule.getInstance(),
-      ElevatorModule.getInstance(),
-      LEDModule.getInstance()
+      ElevatorModule.getInstance()
     ));
 
     autoSelector = new AutonomousSelector();
