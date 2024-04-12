@@ -7,6 +7,33 @@ public class Constants {
         public static final double RED_WALL_X = 16.542;
     }
 
+    public final class LOGGING {
+        public static final String LOG_FOLDER = "CustomLogs";
+    }
+
+    public static class POWER {
+        public static final String LOG_PATH = LOGGING.LOG_FOLDER + "/Power/";
+
+        public static final int INTAKE_MOTOR_CURRENT_LIMIT = 60;
+
+        public static final int LEFT_SHOOTER_MOTOR_CURRENT_LIMIT = 60;
+        public static final int RIGHT_SHOOTER_MOTOR_CURRENT_LIMIT = 60;
+        public static final int FEEDER_MOTOR_CURRENT_LIMIT = 60;
+
+        public static final int ELEVATOR_MOTOR_CURRENT_LIMIT = 60;
+        public static final int PIVOT_MOTOR_CURRENT_LIMIT = 40;
+        public static final int PIVOT_FOLLOW_MOTOR_CURRENT_LIMIT = 40;
+
+        public static final int SWERVE_MAX_VOLTAGE = 12;
+        public static final int SWERVE_TELEOP_THROTTLE_CURRENT_LIMIT = 80;
+        public static final int SWERVE_AUTO_THROTTLE_CURRENT_LIMIT = 60;
+        public static final int SWERVE_AZIMUTH_CURRENT_LIMIT = 40;
+
+        public static final int VOLTAGE_SMOOTHING_LENGTH = 50; // TODO: Arbitrary (needs testing)
+        public static final double DISABLED_LOW_BATTERY_VOLTAGE = 11.5; // TODO: Arbitrary (needs testing)
+        public static final double TELEOP_LOW_BATTERY_VOLTAGE = 10.5; // TODO: Arbitrary (needs testing)
+    }
+
     public static class INPUT {
         public static final double PRESSING_AXIS_DEADBAND = 0.25;
         public static final int DRIVER_CONTROLLER_PORT = 0;
