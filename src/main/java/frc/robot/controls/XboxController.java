@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import com.lib.team8592.ShuffleboardUtils;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -13,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
-import frc.robot.common.ShuffleboardUtils;
 
 public class XboxController {
     private Joystick controller;

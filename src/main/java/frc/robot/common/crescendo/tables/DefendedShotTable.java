@@ -1,7 +1,8 @@
 package frc.robot.common.crescendo.tables;
 
-import frc.robot.common.regressions.LinearRegression;
 import static frc.robot.common.Global.*;
+
+import com.lib.team8592.regressions.LinearRegression;
 
 public class DefendedShotTable extends ShotTable {
     public DefendedShotTable() {

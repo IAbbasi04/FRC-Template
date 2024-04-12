@@ -1,9 +1,10 @@
 package frc.robot.modes;
 
+import com.lib.team8592.BooleanManager;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
-import frc.robot.common.BooleanManager;
 import frc.robot.common.Constants;
 import frc.robot.common.crescendo.ShotProfile;
 import frc.robot.controls.DriveScaler;

@@ -3,6 +3,10 @@ package frc.robot;
 import java.util.List;
 
 import org.littletonrobotics.junction.LoggedRobot;
+
+import com.lib.team8592.hardware.Clock;
+import com.lib.team8592.logging.SmartLogger;
+
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,8 +19,6 @@ import frc.robot.common.crescendo.tables.DefendedShotTable;
 import frc.robot.common.crescendo.tables.ShotTable;
 import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.controls.XboxController;
-import frc.robot.hardware.Clock;
-import frc.robot.logging.SmartLogger;
 import frc.robot.modes.DisabledModeManager;
 import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;

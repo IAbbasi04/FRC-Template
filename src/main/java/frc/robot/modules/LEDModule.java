@@ -1,10 +1,11 @@
 package frc.robot.modules;
 
+import com.lib.team8592.hardware.NeoPixelLED;
+import com.lib.team8592.hardware.NeoPixelLED.PresetColor;
+
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.NeoPixelLED;
-import frc.robot.hardware.NeoPixelLED.PresetColor;
 
 public class LEDModule extends Module {
     private static LEDModule INSTANCE = null;

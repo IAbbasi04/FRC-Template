@@ -1,5 +1,8 @@
 package frc.robot.autonomous;
 
+import com.lib.team1885.ProfileGains;
+import com.lib.team8592.Utils;
+
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -10,8 +13,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Robot;
-import frc.robot.common.ProfileGains;
-import frc.robot.common.Utils;
 import frc.robot.modules.DriveModule;
 
 public class SwerveTrajectory {

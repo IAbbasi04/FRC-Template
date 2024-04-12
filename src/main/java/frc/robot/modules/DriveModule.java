@@ -1,11 +1,12 @@
 package frc.robot.modules;
 
-import com.NewtonSwerve.NewtonSwerve;
-import com.NewtonSwerve.SwerveModule;
-import com.NewtonSwerve.Gyro.NewtonPigeon2;
-import com.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
-import com.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.lib.team1885.ProfileGains;
+import com.lib.team8592.NewtonSwerve.NewtonSwerve;
+import com.lib.team8592.NewtonSwerve.SwerveModule;
+import com.lib.team8592.NewtonSwerve.Gyro.NewtonPigeon2;
+import com.lib.team8592.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
+import com.lib.team8592.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -18,7 +19,6 @@ import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.Ports;
-import frc.robot.common.ProfileGains;
 
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;

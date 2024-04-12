@@ -1,7 +1,8 @@
 package frc.robot.common.crescendo.tables;
 
+import com.lib.team8592.regressions.*;
+
 import frc.robot.common.crescendo.ShotProfile;
-import frc.robot.common.regressions.*;
 import frc.robot.modules.ElevatorModule;
 
 public abstract class ShotTable {

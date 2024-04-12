@@ -1,11 +1,12 @@
 package frc.robot.modules;
 
+import com.lib.team1885.ProfileGains;
+import com.lib.team8592.hardware.motors.VortexMotor;
+import com.lib.team8592.hardware.motors.Motor.ControlType;
+
 import frc.robot.Robot;
 import frc.robot.common.Ports;
-import frc.robot.common.ProfileGains;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.motors.VortexMotor;
-import frc.robot.hardware.motors.Motor.ControlType;
 
 public class IntakeModule extends Module {
     private static IntakeModule INSTANCE = null;

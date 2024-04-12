@@ -1,5 +1,7 @@
 package frc.robot.common;
 
+import com.lib.team8592.Conversions;
+
 import edu.wpi.first.math.util.Units;
 
 public class Constants {

@@ -1,6 +1,10 @@
 package frc.robot.modules;
 
+import static frc.robot.common.crescendo.AprilTags.*;
+
 import java.util.List;
+
+import com.lib.team8592.hardware.OakCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,11 +15,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
-import frc.robot.common.AprilTags;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.OakCamera;
-import static frc.robot.common.AprilTags.*;
+import frc.robot.common.crescendo.AprilTags;
 
 public class VisionModule extends Module {
     private static VisionModule INSTANCE = null;

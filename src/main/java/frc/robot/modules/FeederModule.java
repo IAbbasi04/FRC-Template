@@ -1,11 +1,14 @@
 package frc.robot.modules;
 
+import com.lib.team1885.BeamSensor;
+import com.lib.team1885.ProfileGains;
+import com.lib.team8592.hardware.*;
+import com.lib.team8592.hardware.motors.*;
+import com.lib.team8592.hardware.motors.Motor.ControlType;
+
 import frc.robot.Robot;
 import frc.robot.common.*;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.*;
-import frc.robot.hardware.motors.*;
-import frc.robot.hardware.motors.Motor.ControlType;
 
 public class FeederModule extends Module {
     private static FeederModule INSTANCE = null;

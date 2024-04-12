@@ -3,10 +3,13 @@ package frc.robot.modules;
 import frc.robot.Robot;
 import frc.robot.common.*;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.hardware.motors.VortexMotor;
-import frc.robot.hardware.motors.Motor.ControlType;
 
 import static frc.robot.common.Constants.*;
+
+import com.lib.team1885.ProfileGains;
+import com.lib.team8592.Conversions;
+import com.lib.team8592.hardware.motors.VortexMotor;
+import com.lib.team8592.hardware.motors.Motor.ControlType;
 
 public class ElevatorModule extends Module {
     private static ElevatorModule INSTANCE = null;
