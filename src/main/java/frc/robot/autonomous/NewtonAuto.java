@@ -43,7 +43,7 @@ public abstract class NewtonAuto {
     }
 
     /**
-     * Useful for passing into the WPILib command scheduler; Initializes and creates the autonomous routine
+     * Initializes and creates the autonomous routine; Useful for passing into the WPILib command scheduler
      */
     public abstract Command createAuto();
 

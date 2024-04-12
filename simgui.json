@@ -95,6 +95,9 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
+        "Feeder": {
+          "open": true
+        },
         "open": true
       },
       "SmartDashboard": {
