@@ -61,12 +61,11 @@ public class BaseTeleopModeManager extends ModeManager {
         if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, DriveModule.getInstance().getCurrentRotation());
         DriveModule.getInstance().drive(speeds);
 
-        if (driverController.isPressing(DRIVER.SPEAKER_TARGET_LOCK)) {
+        if (driverController.isPressing(DRIVER.SPEAKER_TARGET_LOCK)) { // Lock angle to speaker
             DriveModule.getInstance().turnToAngle(VisionModule.getInstance().getAngleToSpeaker().getDegrees());
         }
 
-        // DriveModule.getInstance().driveToPose(AutoGenerator.AMP.getPose());
-        if (driverController.getPressed(EXboxController.LEFT_BUMPER)) {
+        if (driverController.getPressed(EXboxController.LEFT_BUMPER)) { // Drive to amp
             DriveModule.getInstance().driveToPose(AutoGenerator.AMP.getPose());
         } else if (driverController.getReleased(EXboxController.LEFT_BUMPER)) {
             DriveModule.getInstance().driveToPose(null);

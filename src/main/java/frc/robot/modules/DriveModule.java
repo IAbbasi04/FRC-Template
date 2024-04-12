@@ -1,7 +1,5 @@
 package frc.robot.modules;
 
-import java.util.List;
-
 import com.NewtonSwerve.NewtonSwerve;
 import com.NewtonSwerve.SwerveModule;
 import com.NewtonSwerve.Gyro.NewtonPigeon2;
@@ -9,9 +7,7 @@ import com.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
 import com.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,13 +15,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
-import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
-import frc.robot.common.Coordinate2d;
 import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.Ports;
 import frc.robot.common.ProfileGains;
-import frc.robot.common.Vector2d;
 
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;
