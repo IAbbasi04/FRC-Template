@@ -1,9 +1,10 @@
-package frc.robot.controls;
+package frc.robot.controls.xbox;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.controls.ControllerInput;
 
-public enum EXboxController {
+public enum XboxInput implements ControllerInput{
     // Do not change the order of these buttons
     A_BTN,
     B_BTN,
@@ -81,10 +82,10 @@ public enum EXboxController {
     /**
      * Returns all inputs in a way that can be sent to shuffleboard
      */
-    public static SendableChooser<EXboxController> getAsSendable(EXboxController defaultOption) {
-        SendableChooser<EXboxController> chooser = new SendableChooser<>();
+    public static SendableChooser<XboxInput> getAsSendable(XboxInput defaultOption) {
+        SendableChooser<XboxInput> chooser = new SendableChooser<>();
         chooser.setDefaultOption(defaultOption.name(), defaultOption);
-        for (EXboxController input : values()) {
+        for (XboxInput input : values()) {
             chooser.addOption(input.name(), input);
         }
         return chooser;

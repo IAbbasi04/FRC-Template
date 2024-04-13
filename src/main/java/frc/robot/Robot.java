@@ -18,7 +18,7 @@ import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.crescendo.tables.DefendedShotTable;
 import frc.robot.common.crescendo.tables.ShotTable;
 import frc.robot.common.crescendo.tables.UndefendedShotTable;
-import frc.robot.controls.XboxController;
+import frc.robot.controls.xbox.XboxController;
 import frc.robot.modes.DisabledModeManager;
 import frc.robot.modes.ModeManager;
 import frc.robot.modes.TeleopModeManager;

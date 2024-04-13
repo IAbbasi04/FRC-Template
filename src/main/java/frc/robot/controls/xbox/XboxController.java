@@ -1,4 +1,4 @@
-package frc.robot.controls;
+package frc.robot.controls.xbox;
 
 import java.lang.reflect.Field;
 import java.util.Dictionary;
@@ -15,11 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
+import frc.robot.controls.InputMap;
 
 public class XboxController {
     private Joystick controller;
-    private Dictionary<EXboxController, SendableChooser<EXboxController>> inputMap;
-    private Dictionary<Field, SendableChooser<EXboxController>> map;
+    private Dictionary<XboxInput, SendableChooser<XboxInput>> inputMap;
+    private Dictionary<Field, SendableChooser<XboxInput>> map;
     private String tabName;
 
     public XboxController(int port, String shuffleboardTabName) {
@@ -33,7 +34,7 @@ public class XboxController {
     /**
      * Gets the [-1, 1] value for an axis input and {0, 1} for buttons; DPAD_RAW returns in degrees [0, 360]
      */
-    public double get(EXboxController input) {
+    public double get(XboxInput input) {
         if (Robot.isReal()) {
             return input.get(controller);
         }
@@ -43,15 +44,15 @@ public class XboxController {
     /**
      * Determines whether a particular input is currently being pressed or has a non-zero value
      */
-    public boolean isPressing(EXboxController input) {
+    public boolean isPressing(XboxInput input) {
         return Math.abs(input.get(controller)) > Constants.INPUT.PRESSING_AXIS_DEADBAND;
     }
 
     /**
      * Determines whether any of the inputs are currently being pressed or have a non-zero value
      */
-    public boolean isPressingAny(EXboxController ... inputs) {
-        for (EXboxController input : inputs) {
+    public boolean isPressingAny(XboxInput ... inputs) {
+        for (XboxInput input : inputs) {
             if (Math.abs(input.get(controller)) >= Constants.INPUT.PRESSING_AXIS_DEADBAND) {
                 return true;
             }
@@ -62,8 +63,8 @@ public class XboxController {
     /**
      * Determines whether all of the inputs are currently being pressed or have a non-zero value
      */
-    public boolean isPressingAll(EXboxController ... inputs) {
-        for (EXboxController input : inputs) {
+    public boolean isPressingAll(XboxInput ... inputs) {
+        for (XboxInput input : inputs) {
             if (Math.abs(input.get(controller)) < Constants.INPUT.PRESSING_AXIS_DEADBAND) {
                 return false;
             }
@@ -74,14 +75,14 @@ public class XboxController {
     /**
      * Returns whether the input has just been pressed (Only works the frame of pressing); Currently only works on buttons
      */
-    public boolean getPressed(EXboxController input) {
+    public boolean getPressed(XboxInput input) {
         return DriverStation.getStickButtonPressed(controller.getPort(), input.getButtonID());
     }
 
     /**
      * Returns whether the input is no longer being pressed (Only works the frame of releasing); Currently only works on buttons
      */
-    public boolean getReleased(EXboxController input) {
+    public boolean getReleased(XboxInput input) {
         return DriverStation.getStickButtonReleased(controller.getPort(), input.getButtonID());
     }
 
@@ -104,7 +105,7 @@ public class XboxController {
      */
     public void logButtonStatusToSmartdashboard(String controllerName, boolean activate) {
         if (activate) {
-            for (EXboxController input : EXboxController.values()) {
+            for (XboxInput input : XboxInput.values()) {
                 SmartDashboard.putNumber(controllerName + "/" + input.toString(), input.get(controller));
             }
         }
@@ -116,7 +117,7 @@ public class XboxController {
     public void logInputsToShuffleboard() {
         ShuffleboardTab tab = ShuffleboardUtils.create(tabName);
         Class<?> cls;
-        SendableChooser<EXboxController> inputChooser;
+        SendableChooser<XboxInput> inputChooser;
         inputMap = new Hashtable<>();
         map = new Hashtable<>();
 
@@ -131,8 +132,8 @@ public class XboxController {
 
         for (Field field : cls.getDeclaredFields()) {
             try {
-                EXboxController input = ((EXboxController)field.get(null));
-                inputChooser = EXboxController.getAsSendable(input);
+                XboxInput input = ((XboxInput)field.get(null));
+                inputChooser = XboxInput.getAsSendable(input);
                 inputMap.put(input, inputChooser);
                 map.put(field, inputChooser);
                 tab.add(field.getName(), inputChooser).withSize(2, 1);
@@ -149,8 +150,8 @@ public class XboxController {
         Field[] fields = cls.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
-            SendableChooser<EXboxController> chooser = map.get(field);
-            EXboxController selected = (EXboxController)chooser.getSelected();
+            SendableChooser<XboxInput> chooser = map.get(field);
+            XboxInput selected = (XboxInput)chooser.getSelected();
             try {
                 field.set(null, selected);
             } catch (Exception e) {}

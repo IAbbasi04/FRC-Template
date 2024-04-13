@@ -3,7 +3,7 @@ package frc.robot.modes;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.crescendo.ShotProfile;
-import frc.robot.controls.XboxController;
+import frc.robot.controls.xbox.XboxController;
 import frc.robot.modules.ElevatorModule;
 import frc.robot.modules.FeederModule;
 import frc.robot.modules.IntakeModule;

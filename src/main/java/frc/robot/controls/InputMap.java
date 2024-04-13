@@ -1,37 +1,46 @@
 package frc.robot.controls;
 
+import frc.robot.controls.ps5.PS5Input;
+import frc.robot.controls.xbox.XboxInput;
+
 public class InputMap {
     public static class DRIVER extends InputMap {
-        public static EXboxController
-            TRANSLATE_Y = EXboxController.LEFT_X_AXIS,
-            TRANSLATE_X = EXboxController.LEFT_Y_AXIS,
-            ROTATE = EXboxController.RIGHT_X_AXIS,
-            SNAIL_MODE = EXboxController.RIGHT_BUMPER,
-            RESET_GYRO = EXboxController.BACK_BTN,
+        public static XboxInput
+            TRANSLATE_Y = XboxInput.LEFT_X_AXIS,
+            TRANSLATE_X = XboxInput.LEFT_Y_AXIS,
+            ROTATE = XboxInput.RIGHT_X_AXIS,
+            SNAIL_MODE = XboxInput.RIGHT_BUMPER,
+            RESET_GYRO = XboxInput.BACK_BTN,
             
-            SPEAKER_TARGET_LOCK = EXboxController.RIGHT_TRIGGER_AXIS,
-            NOTE_TARGET_LOCK = EXboxController.LEFT_TRIGGER_AXIS
+            SPEAKER_TARGET_LOCK = XboxInput.RIGHT_TRIGGER_AXIS,
+            NOTE_TARGET_LOCK = XboxInput.LEFT_TRIGGER_AXIS
             ;
     }
 
+    public static class TEST extends InputMap {
+        public static ControllerInput
+            SHOOT = PS5Input.CROSS_BTN,
+            INTAKE = XboxInput.A_BTN;
+    }
+
     public static class MANIPULATOR extends InputMap {
-        public static EXboxController
-            INTAKE = EXboxController.LEFT_TRIGGER_AXIS,
-            OUTAKE = EXboxController.LEFT_BUMPER,
-            SCORE = EXboxController.RIGHT_TRIGGER_AXIS,
+        public static XboxInput
+            INTAKE = XboxInput.LEFT_TRIGGER_AXIS,
+            OUTAKE = XboxInput.LEFT_BUMPER,
+            SCORE = XboxInput.RIGHT_TRIGGER_AXIS,
 
-            STOW = EXboxController.A_BTN,
-            PRIME = EXboxController.B_BTN,
-            AMP_POSITION = EXboxController.X_BTN,
-            CLIMB_POSITION = EXboxController.Y_BTN,
+            STOW = XboxInput.A_BTN,
+            PRIME = XboxInput.B_BTN,
+            AMP_POSITION = XboxInput.X_BTN,
+            CLIMB_POSITION = XboxInput.Y_BTN,
 
-            EXTENSION_RAISE = EXboxController.DPAD_UP,
-            EXTENSION_LOWER = EXboxController.DPAD_DOWN,
+            EXTENSION_RAISE = XboxInput.DPAD_UP,
+            EXTENSION_LOWER = XboxInput.DPAD_DOWN,
 
-            MANUAL_MODE = EXboxController.START,
+            MANUAL_MODE = XboxInput.START,
 
-            MANUAL_SUBWOOFER_SHOT = EXboxController.LEFT_BUMPER,
-            MANUAL_PODIUM_SHOT = EXboxController.RIGHT_BUMPER
+            MANUAL_SUBWOOFER_SHOT = XboxInput.LEFT_BUMPER,
+            MANUAL_PODIUM_SHOT = XboxInput.RIGHT_BUMPER
             ;
     }
 }
