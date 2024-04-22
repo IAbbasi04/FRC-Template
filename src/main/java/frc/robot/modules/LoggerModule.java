@@ -57,7 +57,5 @@ public class LoggerModule extends Module {
     public void initializeLogs() {}
 
     @Override
-    public void periodic() {
-        Robot.LOGGER.update();
-    }
+    public void periodic() {}
 }

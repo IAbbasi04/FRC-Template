@@ -5,7 +5,6 @@ import java.util.List;
 import org.littletonrobotics.junction.LoggedRobot;
 
 import com.lib.team8592.hardware.Clock;
-import com.lib.team8592.logging.SmartLogger;
 
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -45,8 +44,6 @@ public class Robot extends LoggedRobot {
   public static MatchMode MODE = MatchMode.DISABLED;;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
-  public static SmartLogger LOGGER = new SmartLogger("Robot", LOG_TO_DASHBOARD);
-
 
   public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
   public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
