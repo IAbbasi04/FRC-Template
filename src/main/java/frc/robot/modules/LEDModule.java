@@ -63,8 +63,6 @@ public class LEDModule extends Module {
     @Override
     public void initializeLogs() {
         logger.setEnum("LED Mode", () -> ledMode);
-        // logger.setNumber("Amp Time", () -> ampTimer.get());
-        // logger.setNumber("Staged Note Time", () -> stagedNoteTimer.get());
     }
 
     @Override

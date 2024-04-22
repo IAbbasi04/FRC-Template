@@ -23,12 +23,12 @@ public class FollowerCommand extends NewtonCommand {
     }
 
     @Override
-    public Pose2d getStartPose() {
-        return trajectory.getInitialPose();
+    public void end(boolean interrupted) {
+        DriveModule.getInstance().drive(new ChassisSpeeds());
     }
 
     @Override
-    public void end(boolean interrupted) {
-        DriveModule.getInstance().drive(new ChassisSpeeds());
+    public Pose2d getStartPose() {
+        return trajectory.getInitialPose();
     }
 }

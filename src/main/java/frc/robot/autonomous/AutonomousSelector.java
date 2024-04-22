@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autonomous.autos.*;
 import frc.robot.autonomous.autos.ampside.AmpSide1Wing2MidAuto;
+import frc.robot.autonomous.autos.ampside.AmpSide1WingAuto;
 import frc.robot.autonomous.autos.center.*;
 
 public class AutonomousSelector {
@@ -18,6 +19,7 @@ public class AutonomousSelector {
         CenterWing32Mid3Auto.class,
         Center3WingAuto.class,
 
+        AmpSide1WingAuto.class,
         AmpSide1Wing2MidAuto.class,
     };
 

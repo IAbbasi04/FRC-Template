@@ -31,7 +31,7 @@ public class VortexMotor extends Motor {
     @Override
     public void withGains(ProfileGains gains, int index) {
         HardwareUtils.setPIDGains(motor, gains.setSlot(index));
-        useSmartMotion = gains.getMaxVelocity() == 0;
+        useSmartMotion = gains.isSmartMotion();
     }
 
     @Override

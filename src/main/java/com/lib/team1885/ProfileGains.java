@@ -29,6 +29,8 @@ public class ProfileGains {
 
     private int currentLimit = -1;
 
+    private boolean useSmartMotion = false;
+
     public ProfileGains() {}
 
     public ProfileGains setP(double gain) {
@@ -69,6 +71,7 @@ public class ProfileGains {
 
     public ProfileGains setMaxAccel(double gain) {
         maxAccel = gain;
+        useSmartMotion = true;
         return this;
     }
 
@@ -78,6 +81,7 @@ public class ProfileGains {
 
     public ProfileGains setMaxVelocity(double gain) {
         maxVelo = gain;
+        useSmartMotion = true;
         return this;
     }
 
@@ -166,6 +170,13 @@ public class ProfileGains {
      */
     public int getCurrentLimit() {
         return currentLimit;
+    }
+
+    /**
+     * If smart motion and/or smart velocity should be applied
+     */
+    public boolean isSmartMotion() {
+        return useSmartMotion;
     }
 
     /**
