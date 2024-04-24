@@ -2,7 +2,6 @@ package frc.robot.modules;
 
 import com.lib.team1885.BeamSensor;
 import com.lib.team1885.ProfileGains;
-import com.lib.team8592.hardware.*;
 import com.lib.team8592.hardware.motors.*;
 import com.lib.team8592.hardware.motors.Motor.ControlType;
 

@@ -40,6 +40,9 @@ public class Vector2d {
         return this.direction;
     }
 
+    /**
+     * Basic vector addition between this vector and the given vector
+     */
     public Vector2d plus(Vector2d other) {
         double x = magnitude.toMeters() * direction.getCos();
         double y = magnitude.toMeters() * direction.getSin();
