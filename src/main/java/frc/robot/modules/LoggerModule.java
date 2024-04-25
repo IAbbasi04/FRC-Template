@@ -14,9 +14,7 @@ import frc.robot.common.Enums.MatchMode;
 public class LoggerModule extends Module {
     private static LoggerModule INSTANCE = null;
     public static LoggerModule getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new LoggerModule();
-        }
+        if (INSTANCE == null) INSTANCE = new LoggerModule();
         return INSTANCE;
     }
 

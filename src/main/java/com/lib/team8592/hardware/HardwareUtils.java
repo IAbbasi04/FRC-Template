@@ -2,12 +2,10 @@ package com.lib.team8592.hardware;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.lib.team1885.ProfileGains;
-import com.revrobotics.CANSparkFlex;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.*;
 import com.revrobotics.CANSparkBase.SoftLimitDirection;
 import com.revrobotics.SparkPIDController.AccelStrategy;
+import com.lib.team8592.ProfileGains;
 
 public class HardwareUtils {
     public static void setPIDGains(CANSparkMax motor, ProfileGains gains) {

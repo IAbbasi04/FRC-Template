@@ -8,9 +8,7 @@ import frc.robot.controls.xbox.XboxController;
 public class OperatorInputModule extends Module {
     private static OperatorInputModule INSTANCE = null;
     public static OperatorInputModule getInstance(XboxController driver, XboxController manipulator) {
-        if (INSTANCE == null) {
-            INSTANCE = new OperatorInputModule(driver, manipulator);
-        }
+        if (INSTANCE == null) INSTANCE = new OperatorInputModule(driver, manipulator);
         return INSTANCE;
     }
 

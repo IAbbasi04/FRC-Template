@@ -1,7 +1,7 @@
 package com.lib.team8592.hardware.motors;
 
-import com.lib.team1885.ProfileGains;
-import com.lib.team8592.hardware.HardwareUtils;
+import com.lib.team8592.hardware.*;
+import com.lib.team8592.ProfileGains;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -11,21 +11,28 @@ public class VortexMotor extends Motor {
     private RelativeEncoder motorEncoder;
     private boolean useSmartMotion = false;
 
-    /**
-     * Creates a neo motor with a particular CAN ID
-     */
     public VortexMotor(int id) {
         this(id, false);
     }
 
-    /**
-     * Creates a neo motor with a particular CAN ID
-     */
     public VortexMotor(int id, boolean reversed) {
         motor = new CANSparkFlex(id, MotorType.kBrushless);
         motor.setInverted(reversed);
         motorCtrl = motor.getPIDController();
         motorEncoder = motor.getEncoder();
+    }
+
+    @Override
+    public int getMotorID() {
+        return this.motor.getDeviceId();
+    }
+
+    @Override
+    public void follow(Motor other, boolean reversed) {
+        if (other.getClass() != VortexMotor.class) {
+            throw new UnsupportedOperationException("Can only follow another Vortex motor");
+        }
+        this.motor.follow(((VortexMotor)other).motor, reversed);
     }
 
     @Override

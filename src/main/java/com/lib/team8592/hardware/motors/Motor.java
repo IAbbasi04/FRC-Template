@@ -1,6 +1,6 @@
 package com.lib.team8592.hardware.motors;
 
-import com.lib.team1885.ProfileGains;
+import com.lib.team8592.ProfileGains;
 
 public abstract class Motor {
     /**
@@ -12,6 +12,10 @@ public abstract class Motor {
         kPercentOutput,
         kVoltage,
     }
+
+    public abstract int getMotorID();
+
+    public abstract void follow(Motor other, boolean reversed);
 
     /**
      * Sets the PID gains for a particular motor slot

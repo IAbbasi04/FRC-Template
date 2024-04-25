@@ -1,6 +1,6 @@
 package frc.robot.autonomous;
 
-import com.lib.team1885.ProfileGains;
+import com.lib.team8592.ProfileGains;
 import com.lib.team8592.Utils;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;

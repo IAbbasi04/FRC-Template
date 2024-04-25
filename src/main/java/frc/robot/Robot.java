@@ -6,33 +6,15 @@ import org.littletonrobotics.junction.LoggedRobot;
 
 import com.lib.team8592.hardware.Clock;
 
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autonomous.AutonomousSelector;
-import frc.robot.autonomous.NewtonAuto;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.common.crescendo.tables.DefendedShotTable;
-import frc.robot.common.crescendo.tables.ShotTable;
-import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.controls.xbox.XboxController;
-import frc.robot.modes.DisabledModeManager;
-import frc.robot.modes.ModeManager;
-import frc.robot.modes.TeleopModeManager;
-import frc.robot.modes.TestModeManager;
-import frc.robot.modules.DriveModule;
-import frc.robot.modules.ElevatorModule;
-import frc.robot.modules.FeederModule;
-import frc.robot.modules.IntakeModule;
-import frc.robot.modules.LEDModule;
-import frc.robot.modules.LoggerModule;
-import frc.robot.modules.ModuleList;
-import frc.robot.modules.OperatorInputModule;
-import frc.robot.modules.PowerModule;
-import frc.robot.modules.ShooterModule;
-import frc.robot.modules.VisionModule;
+
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.autonomous.*;
+import frc.robot.modes.*;
+import frc.robot.modules.*;
 
 public class Robot extends LoggedRobot {
   private ModuleList activeModules;
@@ -44,9 +26,6 @@ public class Robot extends LoggedRobot {
   public static MatchMode MODE = MatchMode.DISABLED;;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
-
-  public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
-  public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
 
   private AutonomousSelector autoSelector;
 
@@ -65,9 +44,7 @@ public class Robot extends LoggedRobot {
       LEDModule.getInstance(),
       DriveModule.getInstance(),
       IntakeModule.getInstance(),
-      FeederModule.getInstance(),
-      ShooterModule.getInstance(),
-      ElevatorModule.getInstance()
+      ExampleModule.getInstance()
     ));
 
     autoSelector = new AutonomousSelector();

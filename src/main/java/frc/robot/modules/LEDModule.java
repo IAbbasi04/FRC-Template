@@ -10,9 +10,7 @@ import frc.robot.common.Enums.MatchMode;
 public class LEDModule extends Module {
     private static LEDModule INSTANCE = null;
     public static LEDModule getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new LEDModule();
-        }
+        if (INSTANCE == null) INSTANCE = new LEDModule();
         return INSTANCE;
     }
 

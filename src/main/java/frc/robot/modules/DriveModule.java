@@ -1,7 +1,7 @@
 package frc.robot.modules;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.lib.team1885.ProfileGains;
+import com.lib.team8592.ProfileGains;
 import com.lib.team8592.NewtonSwerve.NewtonSwerve;
 import com.lib.team8592.NewtonSwerve.SwerveModule;
 import com.lib.team8592.NewtonSwerve.Gyro.NewtonPigeon2;
@@ -23,9 +23,7 @@ import frc.robot.common.Ports;
 public class DriveModule extends Module {
     private static DriveModule INSTANCE = null;
     public static DriveModule getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new DriveModule();
-        }
+        if (INSTANCE == null) INSTANCE = new DriveModule();
         return INSTANCE;
     }
 

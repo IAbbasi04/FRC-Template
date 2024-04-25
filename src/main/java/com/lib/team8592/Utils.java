@@ -21,4 +21,11 @@ public class Utils {
     public static double roundTo(double value, double decimals) {
         return Math.round(value*Math.pow(10, decimals))/Math.pow(10, decimals);
     }
+
+    /**
+     * Whether the particlar value is within a specified tolerance of the target
+     */
+    public static boolean isWithin(double value, double target, double tolerance) {
+        return Math.abs(target - value) <= tolerance;
+    }
 }

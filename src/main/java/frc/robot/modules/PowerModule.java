@@ -14,9 +14,7 @@ import frc.robot.common.Enums.MatchMode;
 public class PowerModule extends Module {
     private static PowerModule INSTANCE = null;
     public static PowerModule getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new PowerModule();
-        }
+        if (INSTANCE == null) INSTANCE = new PowerModule();
         return INSTANCE;
     }
 
