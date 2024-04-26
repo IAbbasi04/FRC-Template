@@ -1,6 +1,5 @@
 package frc.robot.modules;
 
-import com.ctre.phoenix.sensors.Pigeon2;
 import org.frc8592.ProfileGains;
 import org.frc8592.NewtonSwerve.*;
 import org.frc8592.NewtonSwerve.Gyro.NewtonPigeon2;
@@ -93,9 +92,7 @@ public class DriveModule extends Module {
 
         swerve = new NewtonSwerve(
             config,
-            new NewtonPigeon2(
-                new Pigeon2(Ports.PIGEON_CAN_ID)
-            ),
+            new NewtonPigeon2(Ports.PIGEON_CAN_ID),
             frontLeftModule,
             frontRightModule,
             backLeftModule,
