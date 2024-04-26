@@ -4,10 +4,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
-import com.lib.team8592.controls.DriveScaler;
-import com.lib.team8592.controls.DriveScaler.ScaleType;
+import org.frc8592.controls.DriveScaler;
+import org.frc8592.controls.DriveScaler.ScaleType;
 import frc.robot.controls.InputMap.DRIVER;
-import com.lib.team8592.controls.xbox.XboxInput;
+import org.frc8592.controls.xbox.XboxInput;
 import frc.robot.modules.*;
 
 public class BaseTeleopModeManager extends ModeManager {

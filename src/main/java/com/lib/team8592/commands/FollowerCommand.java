@@ -1,9 +1,8 @@
 package com.lib.team8592.commands;
 
-import com.lib.team8592.autonomous.SwerveTrajectory;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.robot.autonomous.SwerveTrajectory;
 import frc.robot.modules.DriveModule;
 
 public class FollowerCommand extends NewtonCommand {

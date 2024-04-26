@@ -1,3 +1,3 @@
-[submodule "CommonCode"]
-	path = CommonCode
+[submodule "common"]
+	path = common
 	url = https://github.com/IAbbasi04/CommonCode.git

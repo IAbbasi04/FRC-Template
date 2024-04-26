@@ -1,7 +1,7 @@
 package frc.robot.modules;
 
-import com.lib.team8592.hardware.NeoPixelLED;
-import com.lib.team8592.hardware.NeoPixelLED.PresetColor;
+import org.frc8592.hardware.NeoPixelLED;
+import org.frc8592.hardware.NeoPixelLED.PresetColor;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;

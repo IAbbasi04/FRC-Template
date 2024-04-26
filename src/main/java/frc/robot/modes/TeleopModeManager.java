@@ -1,6 +1,6 @@
 package frc.robot.modes;
 
-import com.lib.team8592.controls.ps5.*;
+import org.frc8592.controls.ps5.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TeleopModeManager extends BaseTeleopModeManager {

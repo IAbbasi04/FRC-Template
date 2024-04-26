@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
-import com.lib.team8592.hardware.Clock;
+import org.frc8592.hardware.Clock;
 
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
 
-import com.lib.team8592.autonomous.NewtonAuto;
-import com.lib.team8592.controls.xbox.XboxController;
+import org.frc8592.controls.xbox.XController;
 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
@@ -21,7 +20,7 @@ import frc.robot.modules.*;
 public class Robot extends LoggedRobot {
   private ModuleList activeModules;
   private ModeManager currentMode;
-  private XboxController driverController, operatorController;
+  private XController driverController, operatorController;
 
   public static boolean LOG_TO_DASHBOARD = true;
 
@@ -34,8 +33,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {        
     // Controllers
-    driverController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT, "Driver");
-    operatorController = new XboxController(Constants.INPUT.OPERATOR_CONTROLLER_PORT, "Manipulator");
+    driverController = new XController(Constants.INPUT.DRIVER_CONTROLLER_PORT);
+    operatorController = new XController(Constants.INPUT.OPERATOR_CONTROLLER_PORT);
 
     // Add all modules to run here
     activeModules = new ModuleList(List.of(

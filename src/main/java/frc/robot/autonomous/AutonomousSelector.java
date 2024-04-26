@@ -1,7 +1,5 @@
 package frc.robot.autonomous;
 
-import com.lib.team8592.autonomous.NewtonAuto;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;

@@ -1,12 +1,12 @@
 package frc.robot.modules;
 
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.lib.team8592.ProfileGains;
-import com.lib.team8592.NewtonSwerve.NewtonSwerve;
-import com.lib.team8592.NewtonSwerve.SwerveModule;
-import com.lib.team8592.NewtonSwerve.Gyro.NewtonPigeon2;
-import com.lib.team8592.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
-import com.lib.team8592.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
+import org.frc8592.ProfileGains;
+import org.frc8592.NewtonSwerve.*;
+import org.frc8592.NewtonSwerve.Gyro.NewtonPigeon2;
+import org.frc8592.NewtonSwerve.Mk4.Mk4ModuleConfiguration;
+import org.frc8592.NewtonSwerve.Mk4.Mk4iSwerveModuleHelper;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -190,30 +190,9 @@ public class DriveModule extends Module {
             return;
         }
 
-        // Vector2d vectorBetween = new Coordinate2d(
-        //         getCurrentPose().getTranslation()
-        //     ).vectorBetweenCoordinates(
-        //         new Coordinate2d(targetPose.getTranslation())
-        // );
-
-        // Rotation2d endRotation = Rotation2d.fromDegrees(90);
-        // List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
-        //     getCurrentPose(),
-        //     new Pose2d(
-        //         targetPose.getTranslation(),
-        //         vectorBetween.getDirection()
-        //     )
-        // );
-
-        // PathPlannerPath onTheFlyPath = new PathPlannerPath(
-        //     bezierPoints, 
-        //     new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI), 
-        //     new GoalEndState(0, endRotation)
-        // );
-
         if (this.onTheFlyPathCommand == null) {
             this.onTheFlyPathCommand = AutoBuilder.pathfindToPoseFlipped(
-                targetPose,//.rotateBy(Rotation2d.fromDegrees(90)),
+                targetPose,
                 new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI)
             );
             this.onTheFlyPathCommand.initialize();

@@ -2,8 +2,6 @@ package frc.robot.autonomous;
 
 import java.util.List;
 
-import com.lib.team8592.autonomous.SwerveTrajectory;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;

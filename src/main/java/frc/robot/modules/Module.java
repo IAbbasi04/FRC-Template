@@ -1,6 +1,6 @@
 package frc.robot.modules;
 
-import com.lib.team8592.logging.SmartLogger;
+import org.frc8592.logging.SmartLogger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.common.Enums.MatchMode;
