@@ -8,7 +8,9 @@ import com.lib.team8592.hardware.Clock;
 
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.controls.xbox.XboxController;
+
+import com.lib.team8592.autonomous.NewtonAuto;
+import com.lib.team8592.controls.xbox.XboxController;
 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
@@ -43,8 +45,7 @@ public class Robot extends LoggedRobot {
       VisionModule.getInstance(),
       LEDModule.getInstance(),
       DriveModule.getInstance(),
-      IntakeModule.getInstance(),
-      ExampleModule.getInstance()
+      IntakeModule.getInstance()
     ));
 
     autoSelector = new AutonomousSelector();

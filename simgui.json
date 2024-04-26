@@ -95,9 +95,6 @@
   "NetworkTables": {
     "transitory": {
       "Shuffleboard": {
-        "Example": {
-          "open": true
-        },
         "Feeder": {
           "open": true
         },

@@ -4,10 +4,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
-import frc.robot.controls.DriveScaler;
-import frc.robot.controls.DriveScaler.ScaleType;
+import com.lib.team8592.controls.DriveScaler;
+import com.lib.team8592.controls.DriveScaler.ScaleType;
 import frc.robot.controls.InputMap.DRIVER;
-import frc.robot.controls.xbox.XboxInput;
+import com.lib.team8592.controls.xbox.XboxInput;
 import frc.robot.modules.*;
 
 public class BaseTeleopModeManager extends ModeManager {
@@ -51,19 +51,6 @@ public class BaseTeleopModeManager extends ModeManager {
             DriveModule.getInstance().driveToPose(AutoGenerator.AMP.getPose());
         } else if (driverController.getReleased(XboxInput.LEFT_BUMPER)) {
             DriveModule.getInstance().driveToPose(null);
-        }
-    }
-
-    /**
-     * Periodically updates inputs for the example subsytem
-     */
-    public void updateExample() {
-        if (driverController.isPressing(XboxInput.RIGHT_TRIGGER_BTN)) { // Right trigger pressed
-            ExampleModule.getInstance().setDesiredVelocity(2000.0);
-        } else if (driverController.isPressing(XboxInput.LEFT_TRIGGER_BTN)) {
-            ExampleModule.getInstance().setDesiredVelocity(-2000.0);
-        } else {
-            ExampleModule.getInstance().setDesiredVelocity(0.0);
         }
     }
 }

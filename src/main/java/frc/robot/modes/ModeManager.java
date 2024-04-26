@@ -1,6 +1,6 @@
 package frc.robot.modes;
 
-import frc.robot.controls.xbox.XboxController;
+import com.lib.team8592.controls.xbox.XboxController;
 import frc.robot.modules.*;
 import frc.robot.modules.LEDModule.LEDMode;
 

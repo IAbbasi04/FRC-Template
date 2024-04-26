@@ -3,7 +3,7 @@ package frc.robot.modules;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Enums.MatchMode;
-import frc.robot.controls.xbox.XboxController;
+import com.lib.team8592.controls.xbox.XboxController;
 
 public class OperatorInputModule extends Module {
     private static OperatorInputModule INSTANCE = null;
