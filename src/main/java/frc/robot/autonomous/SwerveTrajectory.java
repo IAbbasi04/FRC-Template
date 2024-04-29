@@ -1,7 +1,7 @@
 package frc.robot.autonomous;
 
-import org.frc8592.ProfileGains;
-import org.frc8592.Utils;
+import lib.frc8592.ProfileGains;
+import lib.frc8592.Utils;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -13,7 +13,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Robot;
-import frc.robot.modules.DriveModule;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveTrajectory {
     private Trajectory trajectory;
@@ -205,7 +205,7 @@ public class SwerveTrajectory {
      * The desired speed of the robot at a given time within a trajectory
      */
     public ChassisSpeeds sample(double time) {
-        Pose2d currentPose = DriveModule.getInstance().getCurrentPose();
+        Pose2d currentPose = SwerveSubsystem.getInstance().getCurrentPose();
         State desiredState = trajectory.sample(time);
         ChassisSpeeds desiredSpeeds = drivePID.calculate(currentPose, desiredState, rotationProfile.rotation);
 

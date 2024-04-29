@@ -4,21 +4,20 @@ import java.util.List;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
-import org.frc8592.hardware.Clock;
+import lib.frc8592.hardware.Clock;
 
 import frc.robot.common.Constants;
-import frc.robot.common.Enums.MatchMode;
-
-import org.frc8592.controls.xbox.XController;
+import lib.frc8592.MatchMode;
+import lib.frc8592.controls.xbox.XController;
 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.autonomous.*;
 import frc.robot.modes.*;
-import frc.robot.modules.*;
+import frc.robot.subsystems.*;
 
 public class Robot extends LoggedRobot {
-  private ModuleList activeModules;
+  private SubsystemList activeModules;
   private ModeManager currentMode;
   private XController driverController, operatorController;
 
@@ -37,14 +36,13 @@ public class Robot extends LoggedRobot {
     operatorController = new XController(Constants.INPUT.OPERATOR_CONTROLLER_PORT);
 
     // Add all modules to run here
-    activeModules = new ModuleList(List.of(
-      OperatorInputModule.getInstance(driverController, operatorController),
-      LoggerModule.getInstance(),
-      PowerModule.getInstance(),
-      VisionModule.getInstance(),
-      LEDModule.getInstance(),
-      DriveModule.getInstance(),
-      IntakeModule.getInstance()
+    activeModules = new SubsystemList(List.of(
+      LoggerSubsystem.getInstance(),
+      PowerSubsystem.getInstance(),
+      VisionSubsystem.getInstance(),
+      LEDSubsystem.getInstance(),
+      SwerveSubsystem.getInstance(),
+      IntakeSubsystem.getInstance()
     ));
 
     autoSelector = new AutonomousSelector();

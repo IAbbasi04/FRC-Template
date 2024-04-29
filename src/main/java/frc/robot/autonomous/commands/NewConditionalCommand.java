@@ -1,7 +1,6 @@
 package frc.robot.autonomous.commands;
 
-import com.lib.team8592.commands.NewtonCommand;
-
+import commands.NewtonCommand;
 import frc.robot.Robot;
 
 public class NewConditionalCommand extends NewtonCommand {

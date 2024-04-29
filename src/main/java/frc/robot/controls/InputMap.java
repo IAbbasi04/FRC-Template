@@ -1,6 +1,6 @@
 package frc.robot.controls;
 
-import org.frc8592.controls.xbox.XboxInput;
+import lib.frc8592.controls.xbox.XboxInput;
 
 public class InputMap {
     public static class DRIVER extends InputMap {

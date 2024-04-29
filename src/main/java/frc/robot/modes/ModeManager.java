@@ -1,8 +1,9 @@
 package frc.robot.modes;
 
-import org.frc8592.controls.xbox.XController;
-import frc.robot.modules.*;
-import frc.robot.modules.LEDModule.LEDMode;
+import lib.frc8592.controls.xbox.XController;
+
+import frc.robot.subsystems.*;
+import frc.robot.subsystems.LEDSubsystem.LEDMode;
 
 public abstract class ModeManager {
     protected XController driverController, operatorController; // Physical controllers used by the drivers
@@ -20,7 +21,7 @@ public abstract class ModeManager {
      */
     protected void updateLED() {
         LEDMode desiredLEDMode = LEDMode.kOff;
-        LEDModule.getInstance().setLEDMode(desiredLEDMode);
+        LEDSubsystem.getInstance().setLEDMode(desiredLEDMode);
     }
 
     /**

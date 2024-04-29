@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.autonomous.commands.*;
 import frc.robot.common.Constants;
-import frc.robot.modules.DriveModule;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public abstract class NewtonAuto {
     /**
@@ -16,10 +16,10 @@ public abstract class NewtonAuto {
      */
     public static void initializeAutoBuilder() {
         AutoBuilder.configureHolonomic(
-            DriveModule.getInstance()::getCurrentPose, 
-            DriveModule.getInstance()::setStartPose,
-            DriveModule.getInstance()::getCurrentSpeed, 
-            DriveModule.getInstance()::drive,
+            SwerveSubsystem.getInstance()::getCurrentPose, 
+            SwerveSubsystem.getInstance()::setStartPose,
+            SwerveSubsystem.getInstance()::getCurrentSpeed, 
+            SwerveSubsystem.getInstance()::drive,
             new HolonomicPathFollowerConfig(
                 Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND,
                 Constants.SWERVE.DRIVE_TRAIN_RADIUS,
@@ -31,7 +31,7 @@ public abstract class NewtonAuto {
                 }
                 return false; // Never flip if driver station does not display alliance color
             },
-            DriveModule.getInstance()
+            SwerveSubsystem.getInstance()
         );
 
         /**
