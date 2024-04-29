@@ -18,7 +18,7 @@ public abstract class NewtonAuto {
         AutoBuilder.configureHolonomic(
             SwerveSubsystem.getInstance()::getCurrentPose, 
             SwerveSubsystem.getInstance()::setStartPose,
-            SwerveSubsystem.getInstance()::getCurrentSpeed, 
+            SwerveSubsystem.getInstance()::getCurrentSpeeds, 
             SwerveSubsystem.getInstance()::drive,
             new HolonomicPathFollowerConfig(
                 Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND,
@@ -37,11 +37,11 @@ public abstract class NewtonAuto {
         /**
          * The following named commands are event markers that get called in path planner and correspond to the following commands
          */
-        NamedCommands.registerCommand("Intake", new IntakeCommand());
+        NamedCommands.registerCommand("Pause", new DelayCommand(1.0));
     }
 
     /**
-     * Initializes and creates the autonomous routine; Useful for passing into the WPILib command scheduler
+     * Initializes and creates the autonomous routine; Used for passing into the WPILib command scheduler
      */
     public abstract Command createAuto();
 

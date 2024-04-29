@@ -22,7 +22,6 @@ public class SDSMk4SwerveModule extends SwerveModule {
     public SDSMk4SwerveModule(Motor driveMotor, Motor steerMotor, SDSConfig moduleConfig, boolean inverted) {
         this.driveMotor = driveMotor;
         this.steerMotor = steerMotor;
-
         if (inverted && moduleConfig.invertedConfig != null) {
             this.moduleConfig = moduleConfig.invertedConfig;
         } else {

@@ -11,8 +11,14 @@ import lib.frc8592.swervelib.SwerveModule;
 import lib.frc8592.swervelib.NewtonSwerve.SwerveProfile;
 import lib.frc8592.swervelib.sds.SDSMk4SwerveModule.SDSConfig;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 
 public class SwerveSubsystem extends Subsystem {
     private static SwerveSubsystem INSTANCE = null;
@@ -24,6 +30,9 @@ public class SwerveSubsystem extends Subsystem {
     private NewtonSwerve swerve;
     private ChassisSpeeds desiredSpeeds;
     private DriveMode driveMode;
+
+    private Command onTheFlyPathCommand;
+    
     private ProfileGains kTurnToGains = new ProfileGains()
         .setP(0.05)
         .setD(0.001)
@@ -34,6 +43,7 @@ public class SwerveSubsystem extends Subsystem {
     private enum DriveMode {
         kNormal,
         kLocked,
+        kOnTheFlyPathFollower;
     }
 
     private SwerveSubsystem() {
@@ -76,7 +86,37 @@ public class SwerveSubsystem extends Subsystem {
     }
 
     /**
-     * CALL THIS IN ROBOT.JAVA AUTO INIT
+     * The field-based absolute position of the robot
+     */
+    public Pose2d getCurrentPose() {
+        if (Robot.isSimulation()) { // Use sim field position in simulation
+            return Robot.FIELD.getRobotPose();
+        }
+        return this.swerve.getCurrentPose();
+    }
+
+    /**
+     * The field-based absolute rotation of the robot
+     */
+    public Rotation2d getCurrentRotation() {
+        if (Robot.isSimulation()) { // Use sim field rotation in simulation
+            return Robot.FIELD.getRobotPose().getRotation();
+        }
+        return this.swerve.getYaw();
+    }
+
+    /**
+     * The current translational and rotational speeds of the robot
+     */
+    public ChassisSpeeds getCurrentSpeeds() {
+        if (Robot.isSimulation()) { // Desired speeds are theoretical speeds for simulation
+            return this.desiredSpeeds;
+        }
+        return this.swerve.getChassisSpeeds();
+    }
+
+    /**
+     * Sets the field-relative start position of the robot
      */
     public void setStartPose(Pose2d startPose) {
         this.swerve.resetPose(startPose);
@@ -112,6 +152,29 @@ public class SwerveSubsystem extends Subsystem {
     }
 
     /**
+     * Drives to a particular point on the field at a specified end rotation
+     */
+    public void driveToPose(Pose2d targetPose) {
+        if (targetPose == null) {
+            if (onTheFlyPathCommand != null) {
+                onTheFlyPathCommand.end(true);
+                onTheFlyPathCommand = null;
+            }
+            return;
+        }
+
+        if (this.onTheFlyPathCommand == null) {
+            this.onTheFlyPathCommand = AutoBuilder.pathfindToPoseFlipped(
+                targetPose,
+                new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI)
+            );
+            this.onTheFlyPathCommand.initialize();
+        }
+
+        this.driveMode = DriveMode.kOnTheFlyPathFollower;
+    }
+
+    /**
      * Lock the wheel in an 'X' pattern
      */
     public void lockWheels() {
@@ -134,11 +197,16 @@ public class SwerveSubsystem extends Subsystem {
     @Override
     public void init(MatchMode mode) {
         driveMode = DriveMode.kNormal;
+        desiredSpeeds = new ChassisSpeeds();
     }
 
     @Override
     public void initializeLogs() {
         this.logger.setEnum("Drive Mode", () -> driveMode);
+        // logger.setNumber("Desired Speeds X", () -> getDesiredSpeeds().vxMetersPerSecond);
+        // logger.setNumber("Desired Speeds Y", () -> getDesiredSpeeds().vyMetersPerSecond);
+        // logger.setNumber("Desired Speeds Omega", () -> getDesiredSpeeds().omegaRadiansPerSecond);
+        // logger.setNumber("Current Rotation Degrees", () -> getCurrentRotation().getDegrees());
     }
 
     @Override
@@ -150,6 +218,18 @@ public class SwerveSubsystem extends Subsystem {
                 break;
             case kLocked:
                 this.swerve.lockWheels();
+                break;
+            case kOnTheFlyPathFollower:
+                if (onTheFlyPathCommand != null) {
+                    onTheFlyPathCommand.execute();
+                    if (onTheFlyPathCommand.isFinished()) {
+                        onTheFlyPathCommand.end(false);
+                        onTheFlyPathCommand = null;
+                        this.driveMode = DriveMode.kNormal;
+                    }
+                } else {
+                    this.driveMode = DriveMode.kNormal;
+                }
                 break;
             default:
                 // Do nothing

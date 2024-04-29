@@ -1,20 +1,14 @@
 package frc.robot.modes;
 
-import lib.frc8592.controls.xbox.XController;
-
+import lib.frc8592.controls.xbox.XboxController;
+import frc.robot.common.Constants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.LEDSubsystem.LEDMode;
 
 public abstract class ModeManager {
-    protected XController driverController, operatorController; // Physical controllers used by the drivers
-
-    /**
-     * Passes in the driver and operator {@code XController} to all mode managers
-     */
-    public void setControllers(XController driver, XController operator) {
-        this.driverController = driver;
-        this.operatorController = operator;
-    }
+    // Physical controllers used by the drivers
+    protected XboxController driverController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT);
+    protected XboxController operatorController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT);
 
     /**
      * Updates inputs for the leds the entire match mode

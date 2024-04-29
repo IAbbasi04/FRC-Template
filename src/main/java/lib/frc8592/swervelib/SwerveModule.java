@@ -10,7 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public abstract class SwerveModule {
     protected Motor driveMotor, steerMotor;
     protected ModuleConfiguration moduleConfig;
-    protected SwerveModuleState swerveModuleState;
+    protected SwerveModuleState swerveModuleState = new SwerveModuleState();
     protected double wheelDiameterInches;
 
     /**

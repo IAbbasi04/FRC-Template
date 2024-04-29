@@ -181,3 +181,11 @@ logs/
 ctre_sim/
 
 *.lock
+
+*.bin
+
+gradle/wrapper/gradle-wrapper.jar
+
+simgui-ds.json
+
+simgui.json
