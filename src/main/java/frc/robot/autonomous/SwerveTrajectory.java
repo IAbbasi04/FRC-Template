@@ -155,11 +155,11 @@ public class SwerveTrajectory {
      * Gets the position of the robot at the start of the path
      */
     public Pose2d getInitialPose() {
-        return new Pose2d(
+        Pose2d initalPose = new Pose2d(
             trajectory.sample(0.0).poseMeters.getTranslation(),
             startRotation
         );
-        // return trajectory.sample(0.0).poseMeters;
+        return initalPose;
     }
 
     /**
@@ -221,7 +221,7 @@ public class SwerveTrajectory {
         );
 
         if (!Robot.isReal()) {
-            simulate(time, false);
+            simulate(time, true);
         }
 
         return desiredSpeeds;

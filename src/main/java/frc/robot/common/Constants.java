@@ -9,6 +9,7 @@ public class Constants {
 
     public final class LOGGING {
         public static final String LOG_FOLDER = "CustomLogs";
+        public static final String SEASON_NAME = "_Season_";
     }
 
     public static class POWER {

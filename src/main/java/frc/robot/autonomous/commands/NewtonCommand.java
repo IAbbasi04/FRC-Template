@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public abstract class NewtonCommand extends Command {
     protected String tag = "DEFAULT COMMAND";
     protected double startDelay = 0.0;
-    private Timer timeoutTimer = new Timer();
+    protected Timer timeoutTimer = new Timer();
     protected Timer commandTimer = new Timer();
-    public double timeout = 15.0; // 15 seconds means it technically never times out in autonomous
+    protected double timeout = 15.0; // 15 seconds means it technically never times out in autonomous
 
     /**
      * Adds a delay to the start of the command
@@ -43,7 +43,6 @@ public abstract class NewtonCommand extends Command {
         return this;
     }
 
-
     /**
      * Running clock during the execution of the command
      */
@@ -54,10 +53,21 @@ public abstract class NewtonCommand extends Command {
     }
 
     /**
+     * How much time has passed for this command
+     */
+    public double getCommandTimeElapsed() {
+        return this.commandTimer.get();
+    }
+
+    /**
      * Whether or not the timeout timer has past the timeout time
      */
     public boolean isPastTimeout() {
         return this.timeoutTimer.get() >= this.timeout;
+    }
+
+    public boolean isPastDelay() {
+        return this.commandTimer.get() >= this.startDelay;
     }
 
     /**

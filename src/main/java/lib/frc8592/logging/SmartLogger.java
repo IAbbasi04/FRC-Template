@@ -5,6 +5,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -104,6 +105,10 @@ public class SmartLogger {
         return enumConstants[data.get(cardName).getEnumOrdinal()];
     }
 
+    // public void setPose(Pose2d pose) {
+
+    // }
+
     public void update() {
         if (!logToShuffleboard) return;
         for (String key : Collections.list(data.keys())) {
@@ -113,6 +118,8 @@ public class SmartLogger {
                 cards.get(key).setBoolean(data.get(key).getBoolean());
             } else if (data.get(key).getDataClass().getEnumConstants() != null) {
                 cards.get(key).setString(data.get(key).getEnumName());
+            } else {
+                cards.get(key).setString(data.get(key).getString());
             }
         }
     }

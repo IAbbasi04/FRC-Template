@@ -14,8 +14,7 @@ import lib.frc8592.swervelib.sds.SDSMk4SwerveModule.SDSConfig;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
@@ -203,10 +202,7 @@ public class SwerveSubsystem extends Subsystem {
     @Override
     public void initializeLogs() {
         this.logger.setEnum("Drive Mode", () -> driveMode);
-        // logger.setNumber("Desired Speeds X", () -> getDesiredSpeeds().vxMetersPerSecond);
-        // logger.setNumber("Desired Speeds Y", () -> getDesiredSpeeds().vyMetersPerSecond);
-        // logger.setNumber("Desired Speeds Omega", () -> getDesiredSpeeds().omegaRadiansPerSecond);
-        // logger.setNumber("Current Rotation Degrees", () -> getCurrentRotation().getDegrees());
+        this.logger.setData("Current Pose", () -> getCurrentPose());
     }
 
     @Override
@@ -234,6 +230,20 @@ public class SwerveSubsystem extends Subsystem {
             default:
                 // Do nothing
                 break;
+        }
+
+        if (Robot.isSimulation() && Robot.MODE != MatchMode.AUTONOMOUS || Robot.MODE != MatchMode.DISABLED) { // Autonomous has its own simulation stuff
+            Robot.FIELD.setRobotPose( // Translate the simulated robot pose to simulate teleop movement
+                getCurrentPose().transformBy(
+                    new Transform2d(
+                        new Translation2d(
+                            0.02 * desiredSpeeds.vxMetersPerSecond,
+                            0.02 * desiredSpeeds.vyMetersPerSecond
+                        ),
+                        Rotation2d.fromRadians(0.02 * desiredSpeeds.omegaRadiansPerSecond)
+                    )
+                )
+            );
         }
     }
 }

@@ -9,6 +9,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Robot;
+import frc.robot.common.Constants;
 import lib.frc8592.MatchMode;
 
 public class LoggerSubsystem extends Subsystem {
@@ -19,7 +20,7 @@ public class LoggerSubsystem extends Subsystem {
     }
 
     private LoggerSubsystem() {
-        Logger.recordMetadata("Crescendo", "MyProject"); // Set a metadata value
+        Logger.recordMetadata(Constants.LOGGING.SEASON_NAME, "MyProject"); // Set a metadata value
         
         if (Robot.isReal()) { // If running on a real robot
             String eventName = DriverStation.getEventName() != ""?DriverStation.getEventName()+"_":"";

@@ -22,7 +22,7 @@ public class LoggerEntry<T> {
     }
 
     public String getString() {
-        return (String)data.get();
+        return data.get().toString();
     }
 
     public T getEnum() {

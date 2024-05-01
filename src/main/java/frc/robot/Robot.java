@@ -20,7 +20,7 @@ public class Robot extends LoggedRobot {
 
   public static boolean LOG_TO_DASHBOARD = true;
 
-  public static MatchMode MODE = MatchMode.DISABLED;;
+  public static MatchMode MODE = MatchMode.DISABLED;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
 
