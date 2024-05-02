@@ -203,6 +203,7 @@ public class SwerveSubsystem extends Subsystem {
     public void initializeLogs() {
         this.logger.setEnum("Drive Mode", () -> driveMode);
         this.logger.setData("Current Pose", () -> getCurrentPose());
+        this.logger.setData("Desired Speeds", () -> desiredSpeeds);
     }
 
     @Override

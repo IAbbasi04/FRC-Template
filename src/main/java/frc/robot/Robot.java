@@ -10,7 +10,7 @@ import lib.frc8592.MatchMode;
 import frc.robot.autonomous.*;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
-
+import frc.unittest.UnitTestSequence;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -54,7 +54,7 @@ public class Robot extends LoggedRobot {
     CLOCK.update();
 
     // Used mainly to run autonoumous routine
-    // Also used for 'on the fly' swerve pathing and any other potential commands ran in teleop
+    // Also used for 'on the fly' swerve pathing and test plan sequence
     CommandScheduler.getInstance().run(); 
   }
 
@@ -85,6 +85,7 @@ public class Robot extends LoggedRobot {
     CLOCK.restart();
     currentMode = TeleopModeManager.getInstance();
     activeModules.initAll(MODE);
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -98,6 +99,7 @@ public class Robot extends LoggedRobot {
     CLOCK.restart();
     currentMode = DisabledModeManager.getInstance();
     activeModules.initAll(MODE);
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -111,6 +113,9 @@ public class Robot extends LoggedRobot {
     CLOCK.restart();
     currentMode = TestModeManager.getInstance();
     activeModules.initAll(MODE);
+
+    CommandScheduler.getInstance().cancelAll();
+    new UnitTestSequence().schedule();
   }
 
   @Override

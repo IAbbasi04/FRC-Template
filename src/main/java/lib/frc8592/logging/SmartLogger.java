@@ -5,7 +5,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
