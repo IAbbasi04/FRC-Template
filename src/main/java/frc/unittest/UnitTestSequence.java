@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.autonomous.commands.NewtonCommand;
+import frc.unittest.UnitTest.StatusType;
 
 /**
  * Treated like a command since it gets passed into the WPILib Command Scheduler.
@@ -15,21 +18,25 @@ public class UnitTestSequence extends NewtonCommand {
     private Timer sequenceTimer = new Timer();
     private UnitTest currentTest;
     
-    private List<Boolean> testResults = new ArrayList<>(); // Whether each test passed or failed
+    private List<StatusType> testResults = new ArrayList<>(); // Whether each test passed or failed
     private List<UnitTest> ranTests = new ArrayList<>(); // Tests that have already finished
 
     private int currentIndex = 0;
 
     /**
-     * Pass all tests you want to run (in Robot.testPeriodic()) into here.
+     * Pass all tests you want to run in Robot.testPeriodic().
      * 
      * Treated like a queue of sorts since the tests run in order and not
      * simultaneously.
      */
-    public List<UnitTest> testsToRun = List.of(
-       new SwerveUnitTest(),
-       new IntakeUnitTest()
-    );
+    public List<UnitTest> testsToRun = new ArrayList<>();
+
+    /**
+     * If you want to assign a separate list than the default
+     */
+    public UnitTestSequence(List<UnitTest> tests) {
+        this.testsToRun = tests;
+    }
 
     @Override
     public void initialize() {
@@ -37,33 +44,24 @@ public class UnitTestSequence extends NewtonCommand {
         sequenceTimer.start();
         currentTest = testsToRun.get(0);
         currentTest.initialize();
-        currentTest.start();
     }
 
     @Override
     public void execute() {
         if (!currentTest.equals(null)) { // If there are tests to run
             currentTest.run(); // Runs through the current test plan
+            currentTest.updateStatus(); // Updates the ending status of the current unit test
             if (currentTest.hasFinished()) { // Test has completed
-                if (currentTest.hasFailed()) { // Test failed the requirements
-                    testResults.add(false);
-                } else if (currentTest.hasSucceeded()) { // Test passed the requirements
-                    testResults.add(true);
-                }
-                
+                testResults.add(currentTest.getStatus()); // Records the ending status of the current test
                 ranTests.add(currentTest);
-
                 currentIndex++;
 
-                if (currentIndex == testsToRun.size()) {
+                if (currentIndex == testsToRun.size()) { // No more tests left
                     currentTest = null;
-                } else {
+                } else { // Move on to the next test
                     currentTest = testsToRun.get(currentIndex);
                     currentTest.initialize();
-                    currentTest.start();
                 }
-
-                
             }
         }
     }
@@ -79,21 +77,36 @@ public class UnitTestSequence extends NewtonCommand {
 
         if (ranTests.size() != testResults.size()) {
             System.out.println("\n\n===========================================================");
-            System.out.println("Error: Number of Ran Tests Does Not Match Number of Results");
+            System.out.println("\u001B[31mError: Number of Ran Tests Does Not Match Number of Results\u001B[0m");
             System.out.println("===========================================================\n\n");
             return;
         }
 
         for (int i = 0; i < ranTests.size(); i++) {
             System.out.println("\n\n===========================================================");
-            String displayedResult = ranTests.get(i).getClass().getSimpleName();
-            if (ranTests.get(i).hasFailed()) {
-                displayedResult += " ... \u001B[31mFAILED\u001B[0m"; // Displayed as green
-            } else if (ranTests.get(i).hasSucceeded()) {
-                displayedResult += " ... \u001B[32mPASSED\u001B[0m"; // Displayed as red
-            } else {
-                displayedResult += " ... \u001B[33mRETURNED NO RESULT\u001B[0m"; // Displayed as yellow
+            String displayedResult = ranTests.get(i).toString();
+            String displayedStatus = ranTests.get(i).getStatus().displayResult;
+            String displayColor = "";
+            switch (ranTests.get(i).getStatus()) {
+                case kFailed:
+                    displayColor = "\u001B[31m"; // Red
+                    break;
+                case kSucceeded:
+                    displayColor = "\u001B[32m"; // Green
+                    break;
+                case kGivenUp:
+                    displayColor = "\u001B[35m"; // Purple
+                    break;
+                default:
+                    displayColor = "\u001B[33m"; // Yellow
+                    break;
             }
+
+            if (Robot.isSimulation()) {
+                SmartDashboard.putString("Unit Tests/" + displayedResult, displayedStatus);
+            }
+            
+            displayedResult += "... " + displayColor + displayedStatus + "\u001B[0m";
             System.out.println(displayedResult);
             System.out.println("===========================================================\n\n");
         }

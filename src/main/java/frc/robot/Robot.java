@@ -10,6 +10,7 @@ import lib.frc8592.MatchMode;
 import frc.robot.autonomous.*;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
+import frc.unittest.*;
 import frc.unittest.UnitTestSequence;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
@@ -115,7 +116,11 @@ public class Robot extends LoggedRobot {
     activeModules.initAll(MODE);
 
     CommandScheduler.getInstance().cancelAll();
-    new UnitTestSequence().schedule();
+    new UnitTestSequence(
+      List.of(
+        new SwerveUnitTest()
+      )
+    ).schedule();
   }
 
   @Override
