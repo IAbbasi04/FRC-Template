@@ -8,10 +8,12 @@ import lib.frc8592.hardware.Clock;
 import lib.frc8592.MatchMode;
 
 import frc.robot.autonomous.*;
+import frc.robot.common.crescendo.tables.DefendedShotTable;
+import frc.robot.common.crescendo.tables.ShotTable;
+import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
-import frc.unittest.UnitTestSequence;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -26,6 +28,9 @@ public class Robot extends LoggedRobot {
   public static Clock CLOCK = new Clock();
 
   private AutonomousSelector autoSelector;
+  
+  public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
+  public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
 
   @Override
   public void robotInit() {        
@@ -35,7 +40,11 @@ public class Robot extends LoggedRobot {
       PowerSubsystem.getInstance(),
       VisionSubsystem.getInstance(),
       LEDSubsystem.getInstance(),
-      SwerveSubsystem.getInstance()
+      SwerveSubsystem.getInstance(),
+      IntakeSubsystem.getInstance(),
+      ShooterSubsystem.getInstance(),
+      ElevatorSubsystem.getInstance(),
+      FeederSubsystem.getInstance()
     ));
     
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
@@ -45,9 +54,12 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotPeriodic() {
-    if (MODE != MatchMode.AUTONOMOUS) { 
+    if (MODE != MatchMode.AUTONOMOUS && MODE != MatchMode.TEST) { 
       // Autonomous uses WPILib command base 
       // so we do not want to run periodic
+      //
+      // Also experimenting with running only 
+      // unit tests in test mode
       currentMode.runPeriodic();
     }
     

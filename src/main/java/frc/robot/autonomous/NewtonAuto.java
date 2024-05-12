@@ -6,8 +6,10 @@ import com.pathplanner.lib.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Robot;
 import frc.robot.autonomous.commands.*;
 import frc.robot.common.Constants;
+import frc.robot.common.crescendo.ShotProfile;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public abstract class NewtonAuto {
@@ -38,6 +40,20 @@ public abstract class NewtonAuto {
          * The following named commands are event markers that get called in path planner and correspond to the following commands
          */
         NamedCommands.registerCommand("Pause", new DelayCommand(1.0));
+        NamedCommands.registerCommand("Pause", new DelayCommand(1.0));
+        NamedCommands.registerCommand("Intake", new IntakeCommand());
+        NamedCommands.registerCommand("RangeShoot", new ShootCommand());
+        NamedCommands.registerCommand("SubwooferShoot", new ShootCommand(Robot.UNDEFENDED_SHOT_TABLE.getSubwooferShot(), false));
+        NamedCommands.registerCommand("PrimeVision", new PrimeCommand());
+        NamedCommands.registerCommand("PrimeWing", 
+            new PrimeCommand(
+                new ShotProfile()
+                    .flywheel(4000, 4000)
+                    .pivot(30)
+                    .shouldShoot(false), 
+                false
+            )
+        );
     }
 
     /**

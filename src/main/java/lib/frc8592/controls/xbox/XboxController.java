@@ -19,6 +19,22 @@ public class XboxController extends Controller<XboxInput> {
     }
 
     @Override
+    public boolean isPressingAny(XboxInput[] inputs) {
+        for (XboxInput input : inputs) {
+            if (isPressing(input)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPressingAll(XboxInput[] inputs) {
+        for (XboxInput input : inputs) {
+            if (!isPressing(input)) return false;
+        }
+        return true;
+    }
+
+    @Override
     public boolean getPressed(XboxInput input) {
         return DriverStation.getStickButtonPressed(joystick.getPort(), input.getButtonID());
     }

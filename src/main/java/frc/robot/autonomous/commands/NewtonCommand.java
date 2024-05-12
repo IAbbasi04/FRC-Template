@@ -1,5 +1,7 @@
 package frc.robot.autonomous.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,6 +12,7 @@ public abstract class NewtonCommand extends Command {
     protected Timer timeoutTimer = new Timer();
     protected Timer commandTimer = new Timer();
     protected double timeout = 15.0; // 15 seconds means it technically never times out in autonomous
+    private Supplier<Boolean> endCondition = () -> false;
 
     /**
      * Adds a delay to the start of the command
@@ -92,5 +95,14 @@ public abstract class NewtonCommand extends Command {
      */
     public Pose2d getStartPose() {
         return new Pose2d();
+    }
+
+    public Supplier<Boolean> getEndCondition() {
+        return this.endCondition;
+    }
+
+    public NewtonCommand addEndCondition(Supplier<Boolean> endCondition) {
+        this.endCondition = endCondition;
+        return this;
     }
 }

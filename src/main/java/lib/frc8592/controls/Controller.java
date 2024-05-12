@@ -22,6 +22,16 @@ public abstract class Controller<T extends ControllerInput> extends GenericHID {
     public abstract boolean isPressing(T input);
 
     /**
+     * Determines whether any of the indicated inputs are being pressed
+     */
+    public abstract boolean isPressingAny(T[] inputs);
+
+    /**
+     * Determines whether all of the indicated inputs are being pressed
+     */
+    public abstract boolean isPressingAll(T[] inputs);
+
+    /**
      * Returns whether the input has just been pressed (Only works the frame of pressing); Currently only works on buttons
      */
     public abstract boolean getPressed(T input);

@@ -154,15 +154,15 @@ public class SwerveSubsystem extends Subsystem {
      * Drives to a particular point on the field at a specified end rotation
      */
     public void driveToPose(Pose2d targetPose) {
-        if (targetPose == null) {
-            if (onTheFlyPathCommand != null) {
+        if (targetPose == null) { // Allows passing in null to end the command
+            if (onTheFlyPathCommand != null) { // If there is a command currently running, end it
                 onTheFlyPathCommand.end(true);
                 onTheFlyPathCommand = null;
             }
             return;
         }
 
-        if (this.onTheFlyPathCommand == null) {
+        if (this.onTheFlyPathCommand == null) { // Only sets the path following on first frame
             this.onTheFlyPathCommand = AutoBuilder.pathfindToPoseFlipped(
                 targetPose,
                 new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI)

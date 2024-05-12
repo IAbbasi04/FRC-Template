@@ -4,13 +4,13 @@ import lib.frc8592.ProfileGains;
 
 public abstract class Motor {
     /**
-     * The output type (Velocity is in RPM, Position is in Rotations, Percent Output is [-100%, 100%], Voltage is in volts)
+     * The output type
      */
     public enum ControlType {
-        kVelocity,
-        kPosition,
-        kPercentOutput,
-        kVoltage,
+        kVelocity, // RPM
+        kPosition, // Rotations
+        kPercentOutput, // [-1, 1]
+        kVoltage, // Volts
     }
 
     public abstract int getMotorID();
@@ -48,4 +48,18 @@ public abstract class Motor {
      * Sets the motor to the demand in the desired control mode at a particular pid slot
      */
     public abstract void set(ControlType controlType, double demand, int pidSlot);
+
+    /**
+     * Returns this as a vortex motor
+     */
+    public VortexMotor asVortex() {
+        return (VortexMotor)this;
+    }
+
+    /**
+     * Returns this as a falcon motor
+     */
+    public FalconMotor asFalcon() {
+        return (FalconMotor)this;
+    }
 }
