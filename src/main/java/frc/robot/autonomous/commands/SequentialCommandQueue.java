@@ -1,6 +1,7 @@
 package frc.robot.autonomous.commands;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -22,6 +23,19 @@ public class SequentialCommandQueue extends NewtonCommand {
      * Note: Only works with Newton Commands
      */
     public SequentialCommandQueue(NewtonCommand... commands) {
+        this.commands = new LinkedList<>();
+        for (NewtonCommand command : commands) {
+            this.commands.add(command);
+            if (!command.getStartPose().equals(new Pose2d()) && this.startPose == null) {
+                this.startPose = command.getStartPose();
+            }
+        }
+    }
+
+    /**
+     * Note: Only works with Newton Commands
+     */
+    public SequentialCommandQueue(List<NewtonCommand> commands) {
         this.commands = new LinkedList<>();
         for (NewtonCommand command : commands) {
             this.commands.add(command);

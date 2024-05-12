@@ -9,12 +9,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class PathplannerFollowerCommand extends NewtonCommand {
-    private PathPlannerPath trajectory;
     private Command pathCommand;
+    private Pose2d startPose;
 
     public PathplannerFollowerCommand(PathPlannerPath trajectory) {
-        this.trajectory = trajectory;
         this.pathCommand = AutoBuilder.followPath(trajectory);
+        this.startPose = trajectory.getPreviewStartingHolonomicPose();
+    }
+
+    public PathplannerFollowerCommand(Command trajectoryCommand, Pose2d startPose) {
+        this.pathCommand = trajectoryCommand;
+        this.startPose = startPose;
     }
 
     @Override
@@ -34,7 +39,7 @@ public class PathplannerFollowerCommand extends NewtonCommand {
 
     @Override
     public Pose2d getStartPose() {
-        return trajectory.getPreviewStartingHolonomicPose();
+        return this.startPose;
     }
 
     @Override

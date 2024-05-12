@@ -3,10 +3,10 @@ package frc.robot.autonomous.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JointCommand extends NewtonCommand {
+public class ParallelJointCommand extends NewtonCommand {
     private List<NewtonCommand> commands;
 
-    public JointCommand(NewtonCommand... commands) {
+    public ParallelJointCommand(NewtonCommand... commands) {
         this.commands = new ArrayList<>();
         for (NewtonCommand command : commands) {
             this.commands.add(command);
