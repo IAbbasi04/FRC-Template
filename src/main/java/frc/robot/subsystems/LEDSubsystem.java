@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import lib.frc8592.MatchMode;
 import lib.frc8592.hardware.NeoPixelLED;
 import lib.frc8592.hardware.NeoPixelLED.PresetColor;
+import lib.frc8592.logging.SmartLogger;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Robot;
 
 public class LEDSubsystem extends Subsystem {
     private static LEDSubsystem INSTANCE = null;
@@ -35,7 +35,7 @@ public class LEDSubsystem extends Subsystem {
 
         ampTimer = new Timer();
         stagedNoteTimer = new Timer();
-        super.addLogger("LEDSubsystem", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("LEDSubsystem");
     }
     
     public void setLEDMode(LEDMode ledMode) {
@@ -59,7 +59,7 @@ public class LEDSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        logger.setEnum("LED Mode", () -> ledMode);
+        logger.logEnum("LED Mode", () -> ledMode);
     }
 
     @Override

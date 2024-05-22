@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.common.Constants.POWER;
 import lib.frc8592.MatchMode;
+import lib.frc8592.logging.SmartLogger;
 import frc.robot.common.Ports;
 
 public class PowerSubsystem extends Subsystem {
@@ -37,7 +38,7 @@ public class PowerSubsystem extends Subsystem {
 
     private PowerSubsystem() {
         revPDH = new PowerDistribution(Ports.PDH_CAN_ID, PowerDistribution.ModuleType.kRev);
-        super.addLogger("Power", true); // Always log power status
+        super.logger = new SmartLogger("PowerSubsystem"); // Always log power status
         voltages = new ArrayList<Double>();
     }
 

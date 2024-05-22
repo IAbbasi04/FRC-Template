@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
-import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Ports;
 import lib.frc8592.MatchMode;
 import lib.frc8592.ProfileGains;
 import lib.frc8592.hardware.BeamSensor;
 import lib.frc8592.hardware.motors.VortexMotor;
+import lib.frc8592.logging.SmartLogger;
 import lib.frc8592.hardware.motors.Motor.ControlType;
 
 public class FeederSubsystem extends Subsystem {
@@ -61,7 +61,7 @@ public class FeederSubsystem extends Subsystem {
         hasNote = false;
         noteState = NoteState.kNone;
         feederState = FeederState.kOff;
-        super.addLogger("Feeder", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("FeederSubsystem");
     }
 
     /**
@@ -150,14 +150,14 @@ public class FeederSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        logger.setNumber("Applied RPM", () -> getDesiredRPM());
+        logger.logDouble("Applied RPM", () -> getDesiredRPM());
 
-        logger.setBoolean("Entry Broken", () -> entryBroken());
-        logger.setBoolean("Exit Broken", () -> exitBroken());
-        logger.setBoolean("Has Note", () -> hasNote());
+        logger.logBoolean("Entry Broken", () -> entryBroken());
+        logger.logBoolean("Exit Broken", () -> exitBroken());
+        logger.logBoolean("Has Note", () -> hasNote());
 
-        logger.setEnum("Feeder State", () -> getFeederState());
-        logger.setEnum("Note State", () -> getNoteState());
+        logger.logEnum("Feeder State", () -> getFeederState());
+        logger.logEnum("Note State", () -> getNoteState());
     }
 
     @Override

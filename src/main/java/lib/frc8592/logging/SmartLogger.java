@@ -5,120 +5,101 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.Robot;
 
 public class SmartLogger {
-    private ShuffleboardTab tab;
-    private Dictionary<String, Supplier<?>> tabData;
+    private String tab;
+    private Dictionary<String, LoggerEntry<?>> data;
     private Dictionary<String, GenericEntry> cards;
 
-    private Dictionary<String, LoggerEntry<?>> data;
-
-    private boolean logToShuffleboard;
-
-    public SmartLogger(String tabName, boolean logToShuffleboard) {
-        this.tab = Shuffleboard.getTab(tabName);
-        this.tabData = new Hashtable<>();
-        this.cards = new Hashtable<>();
-        this.data = new Hashtable<>();
-
-        this.logToShuffleboard = logToShuffleboard;
+    private boolean logToShuffleboard = true;
+    
+    public SmartLogger(String tab) {
+        this.tab = tab;
+        data = new Hashtable<>();
+        cards = new Hashtable<>();
     }
 
-    public void setBoolean(String cardName, Supplier<Boolean> suppliedBoolean) {
-        tabData.put(cardName, suppliedBoolean);
-        data.put(cardName, new LoggerEntry<Boolean>(suppliedBoolean));
-        if (!logToShuffleboard) return;
+    public SmartLogger enable() {
+        this.logToShuffleboard = true;
+        return this;
+    }
 
-        if (cards.get(cardName) == null) {
-            cards.put(cardName, tab.add(cardName, suppliedBoolean.get()).getEntry());
-        } else {
-            cards.get(cardName).setBoolean(suppliedBoolean.get());
+    public SmartLogger disable() {
+        this.logToShuffleboard = Robot.isSimulation();
+        return this;
+    }
+
+    public void logDouble(String key, Supplier<Double> value) {
+        this.data.put(key, new LoggerEntry<Double>(value));
+        if (!this.logToShuffleboard) return; // Do not proceed if we do not want to log to shuffleboard
+
+        if (cards.get(key) == null) { // Card doesn't exist yet on shuffleboard
+            cards.put(key, Shuffleboard.getTab(tab).add(key, value.get()).getEntry());
+        } else { // Card already exists on shuffleboard
+            cards.get(key).setDouble(value.get());
         }
     }
 
-    public boolean getBoolean(String cardName) {
-        return data.get(cardName).getBoolean();
-    }
+    public void logBoolean(String key, Supplier<Boolean> value) {
+        this.data.put(key, new LoggerEntry<Boolean>(value));
+        if (!this.logToShuffleboard) return; // Do not proceed if we do not want to log to shuffleboard
 
-    public void setNumber(String cardName, Supplier<Double> suppliedNumber) {
-        tabData.put(cardName, suppliedNumber);
-        data.put(cardName, new LoggerEntry<Double>(suppliedNumber));
-        if (!logToShuffleboard) return;
-        if (cards.get(cardName) == null) {
-            cards.put(cardName, tab.add(cardName, suppliedNumber.get()).getEntry());
-        } else {
-            cards.get(cardName).setDouble(suppliedNumber.get());
+        if (cards.get(key) == null) { // Card doesn't exist yet on shuffleboard
+            cards.put(key, Shuffleboard.getTab(tab).add(key, value.get()).getEntry());
+        } else { // Card already exists on shuffleboard
+            cards.get(key).setBoolean(value.get());
         }
     }
 
-    public double getNumber(String cardName) {
-        return data.get(cardName).getDouble();
-    }
+    public <T extends Enum<T>> void logEnum(String key, Supplier<T> value) {
+        this.data.put(key, new LoggerEntry<T>(value));
+        if (!this.logToShuffleboard) return; // Do not proceed if we do not want to log to shuffleboard
 
-    public void setString(String cardName, Supplier<String> suppliedString) {
-        tabData.put(cardName, suppliedString);
-        data.put(cardName, new LoggerEntry<String>(suppliedString));
-        if (!logToShuffleboard) return;
-        if (cards.get(cardName) == null) {
-            cards.put(cardName, tab.add(cardName, suppliedString.get()).getEntry());
-        } else {
-            cards.get(cardName).setString(suppliedString.get());
+        if (cards.get(key) == null) { // Card doesn't exist yet on shuffleboard
+            cards.put(key, Shuffleboard.getTab(tab).add(key, value.get().name()).getEntry());
+        } else { // Card already exists on shuffleboard
+            cards.get(key).setString(value.get().name());
         }
     }
 
-    public String getString(String cardName) {
-        return data.get(cardName).getString();
-    }
+    public <T> void logData(String key, Supplier<T> value) {
+        this.data.put(key, new LoggerEntry<T>(value));
+        if (!this.logToShuffleboard) return; // Do not proceed if we do not want to log to shuffleboard
 
-    public <T> void setData(String cardName, Supplier<T> suppliedData) {
-        tabData.put(cardName, suppliedData);
-        data.put(cardName, new LoggerEntry<T>(suppliedData));
-        if (!logToShuffleboard) return;
-        if (cards.get(cardName) == null) {
-            cards.put(cardName, tab.add(cardName, suppliedData.get().toString()).getEntry());
-        } else {
-            cards.get(cardName).setString(suppliedData.get().toString());
+        if (cards.get(key) == null) { // Card doesn't exist yet on shuffleboard
+            cards.put(key, Shuffleboard.getTab(tab).add(key, value.get().toString()).getEntry());
+        } else { // Card already exists on shuffleboard
+            cards.get(key).setString(value.get().toString());
         }
     }
-
-    public <T> T getData(String cardName) {
-        return (T) data.get(cardName);
-    }
-
-    public <T extends Enum<T>> void setEnum(String cardName, Supplier<T> suppliedEnum) {
-        tabData.put(cardName, suppliedEnum);
-        data.put(cardName, new LoggerEntry<T>(suppliedEnum));
-        if (!logToShuffleboard) return;
-        if (cards.get(cardName) == null) {
-            cards.put(cardName, tab.add(cardName, suppliedEnum.get().name()).getEntry());
-        } else {
-            cards.get(cardName).setString(suppliedEnum.get().name());
-        }
-    }
-
-    public <T extends Enum<T>> T getEnum(String cardName) {
-        T[] enumConstants = (T[]) data.get(cardName).getDataClass().getEnumConstants();
-        return enumConstants[data.get(cardName).getEnumOrdinal()];
-    }
-
-    // public void setPose(Pose2d pose) {
-
-    // }
 
     public void update() {
-        if (!logToShuffleboard) return;
-        for (String key : Collections.list(data.keys())) {
-            if (data.get(key).getDataClass() == Double.class) {
-                cards.get(key).setDouble(data.get(key).getDouble());
-            } else if (data.get(key).getDataClass() == Boolean.class) {
-                cards.get(key).setBoolean(data.get(key).getBoolean());
-            } else if (data.get(key).getDataClass().getEnumConstants() != null) {
-                cards.get(key).setString(data.get(key).getEnumName());
-            } else {
-                cards.get(key).setString(data.get(key).getString());
+        for (String key : Collections.list(data.keys())) { // Update every logged value
+            if (data.get(key).getDataClass() == Double.class) { // Double
+                Logger.recordOutput(this.tab + "/" + key, data.get(key).getDouble());
+                if (cards.get(key) != null) {
+                    cards.get(key).setDouble(data.get(key).getDouble());
+                }
+            } else if (data.get(key).getDataClass() == Boolean.class) { // Boolean
+                Logger.recordOutput(this.tab + "/" + key, data.get(key).getBoolean());
+                if (cards.get(key) != null) {
+                    cards.get(key).setBoolean(data.get(key).getBoolean());
+                }
+            } else if (data.get(key).getDataClass().getEnumConstants() != null) { // Enum Value
+                Logger.recordOutput(this.tab + "/" + key, data.get(key).getEnumName());
+                if (cards.get(key) != null) {
+                    cards.get(key).setString(data.get(key).getEnumName());
+                }
+            } else { // Other type
+                Logger.recordOutput(this.tab + "/" + key, data.get(key).getString());
+                if (cards.get(key) != null) {
+                    cards.get(key).setString(data.get(key).getString());
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -63,6 +64,10 @@ public class Robot extends LoggedRobot {
       currentMode.runPeriodic();
     }
     
+    // We do not want to log to shuffleboard if we are in a match 
+    // since it will cause unnecessary noise
+    Robot.LOG_TO_DASHBOARD = Robot.isSimulation() || DriverStation.isFMSAttached(); 
+
     activeModules.periodicAll(); // Always calls regardless of match mode
     CLOCK.update();
 

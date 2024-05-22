@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.Robot;
 import frc.robot.common.Constants;
 import frc.robot.common.Ports;
 import lib.frc8592.MatchMode;
@@ -32,7 +31,7 @@ public class ShooterSubsystem extends Subsystem {
         this.leftMotor.withGains(shooterVelocityGains, 0);
         this.rightMotor.withGains(shooterVelocityGains, 0);
 
-        super.logger = new SmartLogger("ShooterSubsystem", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("ShooterSubsystem");
     }
 
     /**
@@ -88,11 +87,11 @@ public class ShooterSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        this.logger.setNumber("Desired Left Velocity (RPM)", () -> getDesiredLeftVelocity());
-        this.logger.setNumber("Desired Right Velocity (RPM)", () -> getDesiredRightVelocity());
-        this.logger.setNumber("Current Left Velocity (RPM)", () -> getCurrentLeftVelocity());
-        this.logger.setNumber("Current Right Velocity (RPM)", () -> getCurrentRightVelocity());
-        logger.setBoolean("At Desired RPM", () -> atTargetVelocity());
+        this.logger.logDouble("Desired Left Velocity (RPM)", () -> getDesiredLeftVelocity());
+        this.logger.logDouble("Desired Right Velocity (RPM)", () -> getDesiredRightVelocity());
+        this.logger.logDouble("Current Left Velocity (RPM)", () -> getCurrentLeftVelocity());
+        this.logger.logDouble("Current Right Velocity (RPM)", () -> getCurrentRightVelocity());
+        logger.logBoolean("At Desired RPM", () -> atTargetVelocity());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import frc.robot.Robot;
+import org.littletonrobotics.junction.Logger;
+
 import frc.robot.common.Ports;
 import lib.frc8592.*;
 import lib.frc8592.hardware.motors.*;
@@ -28,7 +29,7 @@ public class IntakeSubsystem extends Subsystem {
             0
         );
 
-        super.logger = new SmartLogger("IntakeSubsystem", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("Intake");
     }
 
     /**
@@ -59,13 +60,15 @@ public class IntakeSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        this.logger.setNumber("Desired Velocity RPM", () -> getDesiredVelocity());
-        this.logger.setNumber("Current Velocity RPM", () -> getCurrentVelocity());
+        this.logger.logDouble("Desired Velocity RPM", () -> getDesiredVelocity());
+        this.logger.logDouble("Current Velocity RPM", () -> getCurrentVelocity());
     }
 
     @Override
     public void periodic() {
         this.desiredVelocityRPM = Utils.clamp(desiredVelocityRPM, maxVelocity); // Clamp within maximum allowed RPM
         this.intakeMotor.set(ControlType.kVelocity, desiredVelocityRPM);
+
+        Logger.recordOutput("THIS OUTPUT", "IS NOTHING");
     }
 }

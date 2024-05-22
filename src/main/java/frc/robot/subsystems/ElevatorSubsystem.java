@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import frc.robot.Robot;
 import frc.robot.common.Constants.ELEVATOR;
 import frc.robot.common.Ports;
 import lib.frc8592.Conversions;
@@ -8,6 +7,7 @@ import lib.frc8592.MatchMode;
 import lib.frc8592.ProfileGains;
 import lib.frc8592.hardware.motors.VortexMotor;
 import lib.frc8592.hardware.motors.Motor.ControlType;
+import lib.frc8592.logging.SmartLogger;
 
 public class ElevatorSubsystem extends Subsystem {
     private static ElevatorSubsystem INSTANCE = null;
@@ -100,7 +100,7 @@ public class ElevatorSubsystem extends Subsystem {
 
         desiredState = ElevatorState.kDefault;
 
-        super.addLogger("Elevator", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("ElevatorSubsystem");
     }
 
     /**
@@ -193,12 +193,12 @@ public class ElevatorSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        logger.setNumber("Current Angle Degrees", () -> getPivotAngleDegrees());
-        logger.setNumber("Current Extension Meters", () -> getElevatorExtensionMeters());
-        logger.setNumber("Desired Pivot", () -> getDesiredPivotAngle());
-        logger.setNumber("Desired Extension", () -> getDesiredExtension());
-        logger.setBoolean("At Target", () -> atTargetPosition());
-        logger.setEnum("Elevator State", () -> getElevatorState());
+        logger.logDouble("Current Angle Degrees", () -> getPivotAngleDegrees());
+        logger.logDouble("Current Extension Meters", () -> getElevatorExtensionMeters());
+        logger.logDouble("Desired Pivot", () -> getDesiredPivotAngle());
+        logger.logDouble("Desired Extension", () -> getDesiredExtension());
+        logger.logBoolean("At Target", () -> atTargetPosition());
+        logger.logEnum("Elevator State", () -> getElevatorState());
     }
 
     @Override

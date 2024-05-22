@@ -1,19 +1,15 @@
 package frc.robot.subsystems;
 
 import java.util.List;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
 import lib.frc8592.MatchMode;
 import lib.frc8592.hardware.OakCamera;
+import lib.frc8592.logging.SmartLogger;
 
 import static frc.robot.common.crescendo.AprilTags.*;
 
@@ -30,7 +26,7 @@ public class VisionSubsystem extends Subsystem {
 
     private VisionSubsystem() {
         rearOak = new OakCamera();
-        super.addLogger("VisionSubsystem", Robot.LOG_TO_DASHBOARD);
+        super.logger = new SmartLogger("VisionSubsystem");
     }
 
     /**
@@ -114,8 +110,8 @@ public class VisionSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        logger.setNumber("Distance to Speaker", () -> getDistanceToSpeaker());
-        logger.setNumber("Angle to Speaker", () -> getAngleToSpeaker().getDegrees());
+        logger.logDouble("Distance to Speaker", () -> getDistanceToSpeaker());
+        logger.logDouble("Angle to Speaker", () -> getAngleToSpeaker().getDegrees());
     }
 
     @Override

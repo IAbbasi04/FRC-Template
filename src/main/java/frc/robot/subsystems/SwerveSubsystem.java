@@ -81,7 +81,7 @@ public class SwerveSubsystem extends Subsystem {
             }
         );
 
-        super.logger = new SmartLogger("Swerve", true);
+        super.logger = new SmartLogger("SwerveSubsystem");
     }
 
     /**
@@ -201,9 +201,9 @@ public class SwerveSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-        this.logger.setEnum("Drive Mode", () -> driveMode);
-        this.logger.setData("Current Pose", () -> getCurrentPose());
-        this.logger.setData("Desired Speeds", () -> desiredSpeeds);
+        this.logger.logEnum("Drive Mode", () -> driveMode);
+        this.logger.logData("Current Pose", () -> getCurrentPose());
+        this.logger.logData("Desired Speeds", () -> desiredSpeeds);
     }
 
     @Override

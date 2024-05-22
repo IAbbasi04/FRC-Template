@@ -5,20 +5,24 @@ import lib.frc8592.logging.SmartLogger;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Subsystem extends SubsystemBase {
-    protected SmartLogger logger = new SmartLogger("SmartDashboard", true); // Originally starts at smartdashboard tab
-
-    /**
-     * Adds a logger with a specified tab name for displaying to smart dashboard
-     */
-    public void addLogger(String tabName, boolean logToSmartdashboard) {
-        logger = new SmartLogger(tabName, logToSmartdashboard);
-    }
+    protected SmartLogger logger = new SmartLogger("");
 
     /**
      * Periodically runs and updates the shuffleboard outputs
      */
     public void updateLogger() {
         this.logger.update();
+    }
+
+    /**
+     * Either turns on or off the logging for the particular subsystem
+     */
+    public void enableLogger(boolean log) {
+        if (log) {
+            logger.enable();
+        } else {
+            logger.disable();
+        }
     }
 
     /**
