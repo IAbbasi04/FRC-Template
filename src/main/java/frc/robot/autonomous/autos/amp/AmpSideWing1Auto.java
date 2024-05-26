@@ -2,6 +2,7 @@ package frc.robot.autonomous.autos.amp;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.autonomous.AutoGenerator;
@@ -23,5 +24,10 @@ public class AmpSideWing1Auto extends NewtonAuto {
             ),
             new ShootCommand()
         ).setStartPose(AutoGenerator.SUBWOOFER_AMP.getPose());
+    }
+
+    @Override
+    public Pose2d getStartPose() {
+        return AutoGenerator.SUBWOOFER_AMP.getPose();
     }
 }

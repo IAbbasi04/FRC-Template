@@ -1,13 +1,13 @@
 package frc.robot.autonomous.commands;
 
-import frc.robot.modes.ModeManager;
+import frc.robot.subsystems.Superstructure;
 
 public class IntakeCommand extends NewtonCommand {
     public IntakeCommand() {}
     
     @Override
     public void execute() {
-        ModeManager.setIntaking();
+        Superstructure.getInstance().setIntaking();
     }
 
     @Override
@@ -19,7 +19,7 @@ public class IntakeCommand extends NewtonCommand {
 
     @Override
     public void end(boolean interrupted) {
-        ModeManager.stopIntake();
-        ModeManager.stopFeeder();
+        Superstructure.getInstance().stopIntake();
+        Superstructure.getInstance().stopFeeder();
     }
 }

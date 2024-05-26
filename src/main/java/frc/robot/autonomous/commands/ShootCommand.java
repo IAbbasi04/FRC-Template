@@ -3,7 +3,6 @@ package frc.robot.autonomous.commands;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.common.crescendo.ShotProfile;
-import frc.robot.modes.ModeManager;
 import frc.robot.subsystems.*;
 
 public class ShootCommand extends NewtonCommand {
@@ -37,7 +36,7 @@ public class ShootCommand extends NewtonCommand {
             actualShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(distanceToTag);
         }
 
-        ModeManager.setShooting(actualShotProfile); // Shoot with all subsystems
+        Superstructure.getInstance().setShooting(actualShotProfile); // Shoot with all subsystems
         if (ShooterSubsystem.getInstance().atTargetVelocity() && ElevatorSubsystem.getInstance().atTargetPosition()) {
             // Possibly add a condition for locked to speaker
             // Timer starts after ready to shoot
@@ -56,8 +55,6 @@ public class ShootCommand extends NewtonCommand {
 
     @Override
     public void end(boolean interrupted) {
-        ModeManager.setGroundState();
-        ModeManager.stopFeeder();
-        ModeManager.stopShooter();
+        Superstructure.getInstance().setGroundState();
     }
 }

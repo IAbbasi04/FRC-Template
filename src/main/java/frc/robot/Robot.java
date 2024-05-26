@@ -8,13 +8,18 @@ import lib.frc8592.hardware.Clock;
 import lib.frc8592.MatchMode;
 
 import frc.robot.autonomous.*;
+import frc.robot.common.Constants;
 import frc.robot.common.crescendo.tables.DefendedShotTable;
 import frc.robot.common.crescendo.tables.ShotTable;
 import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -87,6 +92,23 @@ public class Robot extends LoggedRobot {
     // This makes it so that only a single command needs to get scheduled to run the
     // entire autonomous
     Command autoCommand = autoSelector.getSelectedAutonomous().createAuto();
+
+    // Set the starting position of the robot on the field
+    Pose2d robotStartPose = autoSelector.getSelectedAutonomous().getStartPose();
+    if (DriverStation.getAlliance().get() == Alliance.Red) {
+      robotStartPose = new Pose2d(
+        new Translation2d(
+          Constants.FIELD.RED_WALL_X - robotStartPose.getX(),
+          robotStartPose.getY()
+        ),
+        Rotation2d.fromDegrees(
+          180 - robotStartPose.getRotation().getDegrees()
+        )
+      );
+    }
+    
+    SwerveSubsystem.getInstance().setStartPose(robotStartPose);
+
     if (autoCommand != null) { // If somehow no auto selected do not run anything
       autoCommand.schedule(); // Scheduling a command just throws it into a 'queue' to be ran by WPILib
     }

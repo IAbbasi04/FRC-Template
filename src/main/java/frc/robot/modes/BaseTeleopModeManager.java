@@ -25,8 +25,12 @@ public class BaseTeleopModeManager extends ModeManager {
 
     private boolean prime = false;
 
+    private Superstructure superstructure;
+
     @Override
-    public void runPeriodic() {}
+    public void runPeriodic() {
+        if (superstructure == null) superstructure = Superstructure.getInstance();
+    }
 
     protected void updateShooter() {
         scoreButton.update(driverController.isPressing(MANIPULATOR.SCORE));
@@ -56,15 +60,15 @@ public class BaseTeleopModeManager extends ModeManager {
         
         if (scoreButton.getValue()) { // Shoot
             if (ElevatorSubsystem.getInstance().getElevatorState() == ElevatorState.kAmp) { // Amp shot
-                ModeManager.scoreAmp();
+                superstructure.scoreAmp();
             } else { // Speaker shot
-                ModeManager.setShooting(desiredShotProfile);
+                superstructure.setShooting(desiredShotProfile);
             }
             prime = false;
         } else if (prime) { // Prepare for shot
-            setShooting(desiredShotProfile.shouldShoot(false));
+            superstructure.setShooting(desiredShotProfile.shouldShoot(false));
         } else { // Not shooting or primed
-            stopShooter();
+            superstructure.stopShooter();
         }
     }
 
@@ -78,19 +82,19 @@ public class BaseTeleopModeManager extends ModeManager {
                     FeederSubsystem.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_OUTAKE_RPM);
                     IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
                 } else { // Not pressing anything
-                    super.stopFeeder();
-                    super.stopIntake();
+                    superstructure.stopFeeder();
+                    superstructure.stopIntake();
                 }
             } else if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
-                super.setIntaking();
+                superstructure.setIntaking();
             } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
-                super.setOutaking();
+                superstructure.setOutaking();
             } else { // Not pressing anything
-                super.stopIntake();
+                superstructure.stopIntake();
                 if (FeederSubsystem.getInstance().getNoteState() == NoteState.kNone ||
                     operatorController.isPressing(MANIPULATOR.STOW) ||
                     scoreButton.isFallingEdge()) {
-                    super.stopFeeder();
+                    superstructure.stopFeeder();
                 }
             }
         }
@@ -98,17 +102,17 @@ public class BaseTeleopModeManager extends ModeManager {
 
     protected void updateElevator() {
         if (operatorController.isPressing(MANIPULATOR.STOW) || scoreButton.isFallingEdge()) { // Stow elevator
-            super.setGroundState();
+            superstructure.setGroundState();
         } else if (operatorController.isPressing(MANIPULATOR.AMP_POSITION)) { // Amp position
-            super.setAmpState();
+            superstructure.setAmpState();
             prime = false;
         } else if (!(operatorController.isPressing(MANIPULATOR.SCORE) || prime)) { // Not attempting to shoot or prime
             if (operatorController.isPressing(MANIPULATOR.CLIMB_POSITION)) { // Start climb
-                super.setClimbState();
+                superstructure.setClimbState();
             } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_RAISE)) { // Climber up
-                super.raiseClimber();
+                superstructure.raiseClimber();
             } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_LOWER)) { // Climber down
-                super.lowerClimber();
+                superstructure.lowerClimber();
             }
         }
     }

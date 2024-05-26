@@ -15,12 +15,13 @@ public class AutonomousSelector {
 
     public Class<?>[] autos = {
         // Put all autos in here
-        AmpSideWing1Auto.class,
-        AmpSideWing1Mid12Auto.class,
+        AmpSideWing1Auto.class, // 1 Preload 1 Wing 0 Mid | 12 pts
+        AmpSideWing1Mid12Auto.class, // 1 Preload 1 Wing 2 Mid | 22 pts
 
-        CenterWing321Auto.class,
-        CenterWing32Mid3Auto.class,
-        CenterWing21Mid1Auto.class,
+        CenterWing321Auto.class, // 1 Preload 3 Wing 0 Mid | 22 pts
+        CenterWing32Mid3Auto.class, // 1 Preload 2 Wing 1 Mid | 22 pts
+        CenterWing21Mid1Auto.class, // 1 Preload 2 Wing 1 Mid | 22 pts
+        CenterWing321Mid1Auto.class, // 1 Preload 3 Wing 1 Mid | 27 pts
     };
 
     public AutonomousSelector() {

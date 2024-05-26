@@ -3,7 +3,7 @@ package frc.robot.autonomous.commands;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.common.crescendo.ShotProfile;
-import frc.robot.modes.ModeManager;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class PrimeCommand extends NewtonCommand {
@@ -37,7 +37,7 @@ public class PrimeCommand extends NewtonCommand {
             actualShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(distanceToTag);
         }
 
-        ModeManager.setShooting(actualShotProfile.shouldShoot(false)); // Sets up for shooting without actually shooting
+        Superstructure.getInstance().setShooting(actualShotProfile.shouldShoot(false)); // Sets up for shooting without actually shooting
     }
 
     @Override

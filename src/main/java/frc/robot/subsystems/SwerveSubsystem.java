@@ -108,9 +108,8 @@ public class SwerveSubsystem extends Subsystem {
      * The current translational and rotational speeds of the robot
      */
     public ChassisSpeeds getCurrentSpeeds() {
-        if (Robot.isSimulation()) { // Desired speeds are theoretical speeds for simulation
-            return this.desiredSpeeds;
-        }
+        // Desired speeds are theoretical speeds for simulation
+        if (Robot.isSimulation()) return this.desiredSpeeds;
         return this.swerve.getChassisSpeeds();
     }
 
@@ -120,6 +119,9 @@ public class SwerveSubsystem extends Subsystem {
     public void setStartPose(Pose2d startPose) {
         this.swerve.resetPose(startPose);
         this.swerve.setYaw(startPose.getRotation().getDegrees());
+
+        if (Robot.isReal()) return;
+        Robot.FIELD.setRobotPose(startPose);
     }
 
     /**
