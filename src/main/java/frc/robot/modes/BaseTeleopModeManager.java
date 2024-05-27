@@ -16,9 +16,9 @@ import frc.robot.subsystems.FeederSubsystem.NoteState;
 import lib.frc8592.controls.xbox.XboxInput;
 
 public class BaseTeleopModeManager extends ModeManager {
-    protected DriveScaler xScaler = new DriveScaler(ScaleType.LINEAR, false);
-    protected DriveScaler yScaler = new DriveScaler(ScaleType.LINEAR, false);
-    protected DriveScaler rotateScaler = new DriveScaler(ScaleType.LINEAR, false);
+    protected DriveScaler xScaler = new DriveScaler(ScaleType.LINEAR, false, true);
+    protected DriveScaler yScaler = new DriveScaler(ScaleType.LINEAR, false, true);
+    protected DriveScaler rotateScaler = new DriveScaler(ScaleType.LINEAR, false, true);
 
     protected BooleanManager scoreButton = new BooleanManager();
     protected BooleanManager primeButton = new BooleanManager();
