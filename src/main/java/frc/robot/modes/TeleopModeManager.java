@@ -14,7 +14,7 @@ public class TeleopModeManager extends BaseTeleopModeManager {
         super.updateSwerve();
         super.updateLED();
         super.updateIntake();
-        super.updateShooter();
+        super.updateElevator();
         super.updateElevator();
     }
 }

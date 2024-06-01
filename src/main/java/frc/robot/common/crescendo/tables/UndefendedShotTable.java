@@ -1,8 +1,7 @@
 package frc.robot.common.crescendo.tables;
 
-import static frc.robot.common.Global.*;
-
-import com.lib.team8592.regressions.*;
+import static frc.robot.common.crescendo.Global.*;
+import lib.frc8592.regression.*;
 
 public class UndefendedShotTable extends ShotTable {
     public UndefendedShotTable() {

@@ -4,86 +4,80 @@ import java.util.List;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
-import com.lib.team8592.hardware.Clock;
+import lib.frc8592.hardware.Clock;
+import lib.frc8592.MatchMode;
 
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.autonomous.AutonomousSelector;
-import frc.robot.autonomous.NewtonAuto;
+import frc.robot.autonomous.*;
 import frc.robot.common.Constants;
-import frc.robot.common.Enums.MatchMode;
 import frc.robot.common.crescendo.tables.DefendedShotTable;
 import frc.robot.common.crescendo.tables.ShotTable;
 import frc.robot.common.crescendo.tables.UndefendedShotTable;
-import frc.robot.controls.xbox.XboxController;
-import frc.robot.modes.DisabledModeManager;
-import frc.robot.modes.ModeManager;
-import frc.robot.modes.TeleopModeManager;
-import frc.robot.modes.TestModeManager;
-import frc.robot.modules.DriveModule;
-import frc.robot.modules.ElevatorModule;
-import frc.robot.modules.FeederModule;
-import frc.robot.modules.IntakeModule;
-import frc.robot.modules.LEDModule;
-import frc.robot.modules.LoggerModule;
-import frc.robot.modules.ModuleList;
-import frc.robot.modules.OperatorInputModule;
-import frc.robot.modules.PowerModule;
-import frc.robot.modules.ShooterModule;
-import frc.robot.modules.VisionModule;
+import frc.robot.modes.*;
+import frc.robot.subsystems.*;
+import frc.unittest.*;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends LoggedRobot {
-  private ModuleList activeModules;
+  private SubsystemList activeModules;
   private ModeManager currentMode;
-  private XboxController driverController, operatorController;
+  private AutonomousSelector autoSelector;
 
-  public static boolean LOG_TO_DASHBOARD = true;
-
-  public static MatchMode MODE = MatchMode.DISABLED;;
+  public static MatchMode MODE = MatchMode.DISABLED;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
-
+  
   public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
   public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
 
-  private AutonomousSelector autoSelector;
+  public static boolean LOG_TO_DASHBOARD = true;
 
   @Override
   public void robotInit() {        
-    // Controllers
-    driverController = new XboxController(Constants.INPUT.DRIVER_CONTROLLER_PORT, "Driver");
-    operatorController = new XboxController(Constants.INPUT.OPERATOR_CONTROLLER_PORT, "Manipulator");
-
     // Add all modules to run here
-    activeModules = new ModuleList(List.of(
-      OperatorInputModule.getInstance(driverController, operatorController),
-      LoggerModule.getInstance(),
-      PowerModule.getInstance(),
-      VisionModule.getInstance(),
-      LEDModule.getInstance(),
-      DriveModule.getInstance(),
-      IntakeModule.getInstance(),
-      FeederModule.getInstance(),
-      ShooterModule.getInstance(),
-      ElevatorModule.getInstance()
+    activeModules = new SubsystemList(List.of(
+      LoggerSubsystem.getInstance(),
+      PowerSubsystem.getInstance(),
+      VisionSubsystem.getInstance(),
+      LEDSubsystem.getInstance(),
+      SwerveSubsystem.getInstance(),
+      IntakeSubsystem.getInstance(),
+      ShooterSubsystem.getInstance(),
+      ElevatorSubsystem.getInstance(),
+      FeederSubsystem.getInstance()
     ));
+    
+    autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
 
-    autoSelector = new AutonomousSelector();
-    NewtonAuto.initializeAutoBuilder();
+    NewtonAuto.initializeAutoBuilder(); // Sets up the pathplanner auto creation tool
   }
 
   @Override
   public void robotPeriodic() {
-    if (MODE != MatchMode.AUTONOMOUS) {
+    if (MODE != MatchMode.AUTONOMOUS && MODE != MatchMode.TEST) { 
+      // Autonomous uses WPILib command base 
+      // so we do not want to run periodic
+      //
+      // Also experimenting with running only 
+      // unit tests in test mode
       currentMode.runPeriodic();
     }
     
-    activeModules.periodicAll();
+    // We do not want to log to shuffleboard if we are in a match 
+    // since it will cause unnecessary noise
+    // Robot.LOG_TO_DASHBOARD = Robot.isSimulation() || !DriverStation.isFMSAttached(); 
+
+    activeModules.periodicAll(); // Always calls regardless of match mode
     CLOCK.update();
 
-    CommandScheduler.getInstance().run();
+    // Used mainly to run autonoumous routine
+    // Also used for 'on the fly' swerve pathing and test plan sequence
+    CommandScheduler.getInstance().run(); 
   }
 
   @Override
@@ -92,50 +86,85 @@ public class Robot extends LoggedRobot {
     CLOCK.restart();
 
     activeModules.initAll(MODE);
+
+    // The entire autonomous routine gets compiled into a WPILib Command.java class
+    // This makes it so that only a single command needs to get scheduled to run the
+    // entire autonomous
     Command autoCommand = autoSelector.getSelectedAutonomous().createAuto();
-    if (autoCommand != null) {
-      autoCommand.schedule();
+
+    // Set the starting position of the robot on the field
+    Pose2d robotStartPose = autoSelector.getSelectedAutonomous().getStartPose();
+    if (DriverStation.getAlliance().get() == Alliance.Red) {
+      robotStartPose = new Pose2d(
+        new Translation2d(
+          Constants.FIELD.RED_WALL_X - robotStartPose.getX(),
+          robotStartPose.getY()
+        ),
+        Rotation2d.fromDegrees(
+          180 - robotStartPose.getRotation().getDegrees()
+        )
+      );
+    }
+    
+    SwerveSubsystem.getInstance().setStartPose(robotStartPose);
+
+    if (autoCommand != null) { // If somehow no auto selected do not run anything
+      autoCommand.schedule(); // Scheduling a command just throws it into a 'queue' to be ran by WPILib
     }
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    // Since everything is being handled in the backend, nothing needs to be called here
+  }
 
   @Override
   public void teleopInit() {
     MODE = MatchMode.TELEOP;
     CLOCK.restart();
     currentMode = TeleopModeManager.getInstance();
-    currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // Since everything is ran through the mode manager, nothing is needed here
+  }
 
   @Override
   public void disabledInit() {
     MODE = MatchMode.DISABLED;
     CLOCK.restart();
     currentMode = DisabledModeManager.getInstance();
-    currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    // Since everything is ran through the mode manager, nothing is needed here
+  }
 
   @Override
   public void testInit() {
     MODE = MatchMode.TEST;
     CLOCK.restart();
     currentMode = TestModeManager.getInstance();
-    currentMode.setControllers(driverController, operatorController);
     activeModules.initAll(MODE);
+
+    CommandScheduler.getInstance().cancelAll();
+    new UnitTestSequence(
+      List.of(
+        new SwerveUnitTest()
+      )
+    ).schedule();
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    // Since everything is ran through the mode manager, nothing is needed here
+  }
 
   @Override
   public void simulationInit() {
@@ -145,5 +174,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void simulationPeriodic() {
     // Runs the mode manager for all other modes
+    // No other code required here
   }
 }

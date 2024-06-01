@@ -1,9 +1,8 @@
 package frc.robot.common.crescendo.tables;
 
-import com.lib.team8592.regressions.*;
-
 import frc.robot.common.crescendo.ShotProfile;
-import frc.robot.modules.ElevatorModule;
+import frc.robot.subsystems.ElevatorSubsystem;
+import lib.frc8592.regression.Regression;
 
 public abstract class ShotTable {
     protected Regression leftShooterRPMRegression;
@@ -37,8 +36,8 @@ public abstract class ShotTable {
      */
     public ShotProfile getStaticShot() {
         double shooterRPM = 4000;
-        double extension = ElevatorModule.getInstance().getElevatorExtensionMeters();
-        double pivot = ElevatorModule.getInstance().getPivotAngleDegrees();
+        double extension = ElevatorSubsystem.getInstance().getElevatorExtensionMeters();
+        double pivot = ElevatorSubsystem.getInstance().getPivotAngleDegrees();
         return new ShotProfile()
             .flywheel(shooterRPM, shooterRPM)
             .pivot(pivot)

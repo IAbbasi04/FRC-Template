@@ -1,7 +1,6 @@
 package frc.robot.controls;
 
-import frc.robot.controls.ps5.PS5Input;
-import frc.robot.controls.xbox.XboxInput;
+import lib.frc8592.controls.xbox.XboxInput;
 
 public class InputMap {
     public static class DRIVER extends InputMap {
@@ -15,12 +14,6 @@ public class InputMap {
             SPEAKER_TARGET_LOCK = XboxInput.RIGHT_TRIGGER_AXIS,
             NOTE_TARGET_LOCK = XboxInput.LEFT_TRIGGER_AXIS
             ;
-    }
-
-    public static class TEST extends InputMap {
-        public static ControllerInput
-            SHOOT = PS5Input.CROSS_BTN,
-            INTAKE = XboxInput.A_BTN;
     }
 
     public static class MANIPULATOR extends InputMap {
