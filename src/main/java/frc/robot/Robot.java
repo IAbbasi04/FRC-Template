@@ -9,6 +9,7 @@ import lib.frc8592.MatchMode;
 
 import frc.robot.autonomous.*;
 import frc.robot.common.Constants;
+import frc.robot.controls.Controls;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
@@ -26,6 +27,7 @@ public class Robot extends LoggedRobot {
   public static MatchMode MODE = MatchMode.DISABLED;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
+  public static Controls CONTROLS = new Controls();
   
   public static boolean LOG_TO_DASHBOARD = true;
 
@@ -48,6 +50,10 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic() {
     if (MODE != MatchMode.AUTONOMOUS && MODE != MatchMode.TEST) { 
+      // Updates the controls and what the status of all buttons are
+      // Currently set to single driver controls
+      CONTROLS.updateSingleDriver();
+
       // Autonomous uses WPILib command base 
       // so we do not want to run periodic
       //
@@ -111,6 +117,7 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.TELEOP;
     CLOCK.restart();
     currentMode = TeleopModeManager.getInstance();
+    currentMode.activateControllers();
     activeModules.initAll(MODE);
     CommandScheduler.getInstance().cancelAll();
   }
@@ -125,6 +132,7 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.DISABLED;
     CLOCK.restart();
     currentMode = DisabledModeManager.getInstance();
+    currentMode.activateControllers();
     activeModules.initAll(MODE);
     CommandScheduler.getInstance().cancelAll();
   }
@@ -139,6 +147,7 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.TEST;
     CLOCK.restart();
     currentMode = TestModeManager.getInstance();
+    currentMode.activateControllers();
     activeModules.initAll(MODE);
 
     CommandScheduler.getInstance().cancelAll();
