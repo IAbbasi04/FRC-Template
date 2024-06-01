@@ -10,13 +10,8 @@ import lib.frc8592.swervelib.sds.SDSMk4SwerveModule;
 import lib.frc8592.swervelib.SwerveModule;
 import lib.frc8592.swervelib.NewtonSwerve.SwerveProfile;
 import lib.frc8592.swervelib.sds.SDSMk4SwerveModule.SDSConfig;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
-
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 
 public class SwerveSubsystem extends Subsystem {
@@ -29,9 +24,6 @@ public class SwerveSubsystem extends Subsystem {
     private NewtonSwerve swerve;
     private ChassisSpeeds desiredSpeeds = new ChassisSpeeds();
     private DriveMode driveMode = DriveMode.kNormal;
-
-    private Command onTheFlyPathCommand;
-    
     private ProfileGains kTurnToGains = new ProfileGains()
         .setP(0.05)
         .setD(0.001)
@@ -153,29 +145,6 @@ public class SwerveSubsystem extends Subsystem {
     }
 
     /**
-     * Drives to a particular point on the field at a specified end rotation
-     */
-    public void driveToPose(Pose2d targetPose) {
-        if (targetPose == null) { // Allows passing in null to end the command
-            if (onTheFlyPathCommand != null) { // If there is a command currently running, end it
-                onTheFlyPathCommand.end(true);
-                onTheFlyPathCommand = null;
-            }
-            return;
-        }
-
-        if (this.onTheFlyPathCommand == null) { // Only sets the path following on first frame
-            this.onTheFlyPathCommand = AutoBuilder.pathfindToPoseFlipped(
-                targetPose,
-                new PathConstraints(4, 3, 4*Math.PI, 2*Math.PI)
-            );
-            this.onTheFlyPathCommand.initialize();
-        }
-
-        this.driveMode = DriveMode.kOnTheFlyPathFollower;
-    }
-
-    /**
      * Lock the wheel in an 'X' pattern
      */
     public void lockWheels() {
@@ -219,16 +188,7 @@ public class SwerveSubsystem extends Subsystem {
                 this.swerve.lockWheels();
                 break;
             case kOnTheFlyPathFollower:
-                if (onTheFlyPathCommand != null) {
-                    onTheFlyPathCommand.execute();
-                    if (onTheFlyPathCommand.isFinished()) {
-                        onTheFlyPathCommand.end(false);
-                        onTheFlyPathCommand = null;
-                        this.driveMode = DriveMode.kNormal;
-                    }
-                } else {
-                    this.driveMode = DriveMode.kNormal;
-                }
+                // Add code to run a path following command
                 break;
             default:
                 // Do nothing

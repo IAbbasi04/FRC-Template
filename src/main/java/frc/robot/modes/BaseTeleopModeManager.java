@@ -2,18 +2,12 @@ package frc.robot.modes;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
-import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
-import frc.robot.common.crescendo.ShotProfile;
 import lib.frc8592.BooleanManager;
 import lib.frc8592.controls.DriveScaler;
 import lib.frc8592.controls.DriveScaler.ScaleType;
-import frc.robot.controls.InputMap.DRIVER;
-import frc.robot.controls.InputMap.MANIPULATOR;
+import frc.robot.controls.InputMap.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.ElevatorSubsystem.ElevatorState;
-import frc.robot.subsystems.FeederSubsystem.NoteState;
-import lib.frc8592.controls.xbox.XboxInput;
 
 public class BaseTeleopModeManager extends ModeManager {
     protected DriveScaler xScaler = new DriveScaler(ScaleType.LINEAR, false, true);
@@ -23,95 +17,8 @@ public class BaseTeleopModeManager extends ModeManager {
     protected BooleanManager scoreButton = new BooleanManager();
     protected BooleanManager primeButton = new BooleanManager();
 
-    private boolean prime = false;
-
     @Override
     public void runPeriodic() {}
-
-    protected void updateShooter() {
-        scoreButton.update(driverController.isPressing(MANIPULATOR.SCORE));
-        primeButton.update(driverController.isPressing(MANIPULATOR.PRIME));
-        if (primeButton.isRisingEdge()) {
-            prime = true;
-        }
-
-        ShotProfile desiredShotProfile = new ShotProfile().shouldShoot(false);
-        if (driverController.isPressing(MANIPULATOR.MANUAL_MODE)) { // Manual mode
-            if (driverController.isPressing(MANIPULATOR.MANUAL_PODIUM_SHOT)) { // Shoot from podium
-                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getPodiumShot();
-            } else if (driverController.isPressing(MANIPULATOR.MANUAL_SUBWOOFER_SHOT)) { // Shoot from subwoofer
-                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getSubwooferShot();
-            }
-        } else { // Auto ranged shot
-            double distanceToTarget = VisionSubsystem.getInstance().getDistanceToSpeaker();
-            desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getShotFromDistance(distanceToTarget);
-            if (distanceToTarget == -1) { // Cannot see target
-                desiredShotProfile = Robot.UNDEFENDED_SHOT_TABLE.getStaticShot();
-            }
-        }
-
-        if (driverController.isPressingAny(new XboxInput[]{MANIPULATOR.STOW, MANIPULATOR.CLIMB_POSITION})) { // Situations we want to stop priming for
-            prime = false;
-        }
-        
-        if (scoreButton.getValue()) { // Shoot
-            if (ElevatorSubsystem.getInstance().getElevatorState() == ElevatorState.kAmp) { // Amp shot
-                Superstructure.getInstance().scoreAmp();
-            } else { // Speaker shot
-                Superstructure.getInstance().setShooting(desiredShotProfile);
-            }
-            prime = false;
-        } else if (prime) { // Prepare for shot
-            Superstructure.getInstance().setShooting(desiredShotProfile.shouldShoot(false));
-        } else { // Not shooting or primed
-            Superstructure.getInstance().stopShooter();
-        }
-    }
-
-    protected void updateIntake() {
-        if (!operatorController.isPressing(MANIPULATOR.SCORE)) { // Not scoring
-            if (operatorController.isPressing(MANIPULATOR.MANUAL_MODE)) {  // Manual controls
-                if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
-                    FeederSubsystem.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_INTAKE_RPM);
-                    IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_INTAKE_RPM);
-                } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
-                    FeederSubsystem.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_OUTAKE_RPM);
-                    IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
-                } else { // Not pressing anything
-                    Superstructure.getInstance().stopFeeder();
-                    Superstructure.getInstance().stopIntake();
-                }
-            } else if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
-                Superstructure.getInstance().setIntaking();
-            } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
-                Superstructure.getInstance().setOutaking();
-            } else { // Not pressing anything
-                Superstructure.getInstance().stopIntake();
-                if (FeederSubsystem.getInstance().getNoteState() == NoteState.kNone ||
-                    operatorController.isPressing(MANIPULATOR.STOW) ||
-                    scoreButton.isFallingEdge()) {
-                    Superstructure.getInstance().stopFeeder();
-                }
-            }
-        }
-    }
-
-    protected void updateElevator() {
-        if (operatorController.isPressing(MANIPULATOR.STOW) || scoreButton.isFallingEdge()) { // Stow elevator
-            Superstructure.getInstance().setGroundState();
-        } else if (operatorController.isPressing(MANIPULATOR.AMP_POSITION)) { // Amp position
-            Superstructure.getInstance().setAmpState();
-            prime = false;
-        } else if (!(operatorController.isPressing(MANIPULATOR.SCORE) || prime)) { // Not attempting to shoot or prime
-            if (operatorController.isPressing(MANIPULATOR.CLIMB_POSITION)) { // Start climb
-                Superstructure.getInstance().setClimbState();
-            } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_RAISE)) { // Climber up
-                Superstructure.getInstance().raiseClimber();
-            } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_LOWER)) { // Climber down
-                Superstructure.getInstance().lowerClimber();
-            }
-        }
-    }
 
     protected void updateSwerve() {
         double desiredX = xScaler.scale(-driverController.get(DRIVER.TRANSLATE_X));
@@ -138,11 +45,5 @@ public class BaseTeleopModeManager extends ModeManager {
         ChassisSpeeds speeds = new ChassisSpeeds(desiredX, desiredY, desiredRotate);
         if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, SwerveSubsystem.getInstance().getCurrentRotation());
         SwerveSubsystem.getInstance().drive(speeds);
-
-        if (driverController.getPressed(XboxInput.LEFT_BUMPER)) { // Drive to amp
-            SwerveSubsystem.getInstance().driveToPose(AutoGenerator.AMP.getPose());
-        } else if (driverController.getReleased(XboxInput.LEFT_BUMPER)) {
-            SwerveSubsystem.getInstance().driveToPose(null);
-        }
     }
 }

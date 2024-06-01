@@ -9,15 +9,10 @@ import lib.frc8592.MatchMode;
 
 import frc.robot.autonomous.*;
 import frc.robot.common.Constants;
-import frc.robot.common.crescendo.tables.DefendedShotTable;
-import frc.robot.common.crescendo.tables.ShotTable;
-import frc.robot.common.crescendo.tables.UndefendedShotTable;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -32,9 +27,6 @@ public class Robot extends LoggedRobot {
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
   
-  public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
-  public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
-
   public static boolean LOG_TO_DASHBOARD = true;
 
   @Override
@@ -45,11 +37,7 @@ public class Robot extends LoggedRobot {
       PowerSubsystem.getInstance(),
       VisionSubsystem.getInstance(),
       LEDSubsystem.getInstance(),
-      SwerveSubsystem.getInstance(),
-      IntakeSubsystem.getInstance(),
-      ShooterSubsystem.getInstance(),
-      ElevatorSubsystem.getInstance(),
-      FeederSubsystem.getInstance()
+      SwerveSubsystem.getInstance()
     ));
     
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode

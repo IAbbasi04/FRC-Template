@@ -20,19 +20,5 @@ public class Ports {
 
     public static final int PIGEON_CAN_ID = 17; // Gyro
 
-    public static final int INTAKE_ROLLER_CAN_ID = 35; // Intake
-
-    public static final int LEFT_SHOOTER_MOTOR_CAN_ID = 29; // Shooter
-    public static final int RIGHT_SHOOTER_MOTOR_CAN_ID = 28;
-
-    public static final int FEEDER_MOTOR_CAN_ID = 31; // Feeder
-
-    public static final int ENTRY_BEAM_DIO_PORT = 0; // Beam Breaks
-    public static final int EXIT_BEAM_DIO_PORT = 1;
-
-    public static final int ELEVATOR_MOTOR_CAN_ID = 37; // Elevator
-    public static final int PIVOT_MOTOR_CAN_ID = 36;
-    public static final int PIVOT_FOLLOW_MOTOR_CAN_ID = 38;
-
     public static final int PDH_CAN_ID = 1; // PDH
 }
