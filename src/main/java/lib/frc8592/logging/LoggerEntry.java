@@ -29,6 +29,7 @@ public class LoggerEntry<T> {
         return (T)data.get();
     }
 
+    @SuppressWarnings("unchecked") // Should theoretically just work
     public <E extends Enum<E>> int getEnumOrdinal() {
         return ((E)data.get()).ordinal();
     }

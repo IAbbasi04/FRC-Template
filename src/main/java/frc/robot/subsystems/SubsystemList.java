@@ -41,8 +41,8 @@ public class SubsystemList {
      * @param mode current match mode
      */
     public void initAllLogs(boolean enableLogs) {
-        subsystems.forEach(subsystem -> subsystem.initializeLogs());
         subsystems.forEach(subsystem -> subsystem.enableLogger(enableLogs));
+        subsystems.forEach(subsystem -> subsystem.initializeLogs());
     }
 
     /**
@@ -50,8 +50,8 @@ public class SubsystemList {
      * @param mode current match mode
      */
     public void initAll(MatchMode mode) {
-        subsystems.forEach(subsystem -> subsystem.init(mode));
         initAllLogs(Robot.LOG_TO_DASHBOARD);
+        subsystems.forEach(subsystem -> subsystem.init(mode));
     }
 
     /**

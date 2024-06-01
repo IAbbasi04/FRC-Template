@@ -9,14 +9,13 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import frc.robot.Robot;
 
 public class SmartLogger {
     private String tab;
     private Dictionary<String, LoggerEntry<?>> data;
     private Dictionary<String, GenericEntry> cards;
 
-    private boolean logToShuffleboard = true;
+    private boolean logToShuffleboard = false;
     
     public SmartLogger(String tab) {
         this.tab = tab;
@@ -30,7 +29,7 @@ public class SmartLogger {
     }
 
     public SmartLogger disable() {
-        this.logToShuffleboard = Robot.isSimulation();
+        this.logToShuffleboard = false;
         return this;
     }
 
@@ -78,27 +77,65 @@ public class SmartLogger {
         }
     }
 
+    public double getDouble(String key, double defaultValue) {
+        if (Collections.list(data.keys()).contains(key)) { // If the value is being logged
+            return data.get(key).getDouble();
+        }
+        return defaultValue; // If the value is not logged just return the default value
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        if (Collections.list(data.keys()).contains(key)) { // If the value is being logged
+            return data.get(key).getBoolean();
+        }
+        return defaultValue; // If the value is not logged just return the default value
+    }
+
+    public String getString(String key, String defaultValue) {
+        if (Collections.list(data.keys()).contains(key)) { // If the value is being logged
+            return data.get(key).getString();
+        }
+        return defaultValue; // If the value is not logged just return the default value
+    }
+
+    public <T extends Enum<T>> T getEnumValue(String key, Class<T> enumClass) {
+        if (Collections.list(data.keys()).contains(key)) { // If the value is being logged
+            // The values are stored as integer ordinals
+            // so we can pass in the class to get the actual enum value
+            return enumClass.getEnumConstants()[data.get(key).getEnumOrdinal()];
+        }
+        return enumClass.getEnumConstants()[0]; // If the value is not logged just return the starting value
+    }
+
     public void update() {
         for (String key : Collections.list(data.keys())) { // Update every logged value
             if (data.get(key).getDataClass() == Double.class) { // Double
                 Logger.recordOutput(this.tab + "/" + key, data.get(key).getDouble());
-                if (cards.get(key) != null) {
-                    cards.get(key).setDouble(data.get(key).getDouble());
+                if (logToShuffleboard) {
+                    if (cards.get(key) != null) {
+                        cards.get(key).setDouble(data.get(key).getDouble());
+                    }
                 }
             } else if (data.get(key).getDataClass() == Boolean.class) { // Boolean
                 Logger.recordOutput(this.tab + "/" + key, data.get(key).getBoolean());
-                if (cards.get(key) != null) {
-                    cards.get(key).setBoolean(data.get(key).getBoolean());
+                if (logToShuffleboard) {
+                    if (cards.get(key) != null) {
+                        cards.get(key).setBoolean(data.get(key).getBoolean());
+                    }
                 }
             } else if (data.get(key).getDataClass().getEnumConstants() != null) { // Enum Value
                 Logger.recordOutput(this.tab + "/" + key, data.get(key).getEnumName());
-                if (cards.get(key) != null) {
-                    cards.get(key).setString(data.get(key).getEnumName());
+                if (logToShuffleboard) {
+                    if (cards.get(key) != null) {
+                        cards.get(key).setString(data.get(key).getEnumName());
+                    }
                 }
             } else { // Other type
                 Logger.recordOutput(this.tab + "/" + key, data.get(key).getString());
-                if (cards.get(key) != null) {
-                    cards.get(key).setString(data.get(key).getString());
+                if (logToShuffleboard) {
+                    if (cards.get(key) != null) {
+                        cards.get(key).setString(data.get(key).getString());
+                    }
                 }
             }
         }

@@ -27,8 +27,8 @@ public class SwerveSubsystem extends Subsystem {
     }
 
     private NewtonSwerve swerve;
-    private ChassisSpeeds desiredSpeeds;
-    private DriveMode driveMode;
+    private ChassisSpeeds desiredSpeeds = new ChassisSpeeds();
+    private DriveMode driveMode = DriveMode.kNormal;
 
     private Command onTheFlyPathCommand;
     

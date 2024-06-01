@@ -91,7 +91,7 @@ public class ShooterSubsystem extends Subsystem {
         this.logger.logDouble("Desired Right Velocity (RPM)", () -> getDesiredRightVelocity());
         this.logger.logDouble("Current Left Velocity (RPM)", () -> getCurrentLeftVelocity());
         this.logger.logDouble("Current Right Velocity (RPM)", () -> getCurrentRightVelocity());
-        logger.logBoolean("At Desired RPM", () -> atTargetVelocity());
+        this.logger.logBoolean("At Desired Velocity (RPM)", () -> atTargetVelocity());
     }
 
     @Override

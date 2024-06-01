@@ -25,12 +25,8 @@ public class BaseTeleopModeManager extends ModeManager {
 
     private boolean prime = false;
 
-    private Superstructure superstructure;
-
     @Override
-    public void runPeriodic() {
-        if (superstructure == null) superstructure = Superstructure.getInstance();
-    }
+    public void runPeriodic() {}
 
     protected void updateShooter() {
         scoreButton.update(driverController.isPressing(MANIPULATOR.SCORE));
@@ -60,15 +56,15 @@ public class BaseTeleopModeManager extends ModeManager {
         
         if (scoreButton.getValue()) { // Shoot
             if (ElevatorSubsystem.getInstance().getElevatorState() == ElevatorState.kAmp) { // Amp shot
-                superstructure.scoreAmp();
+                Superstructure.getInstance().scoreAmp();
             } else { // Speaker shot
-                superstructure.setShooting(desiredShotProfile);
+                Superstructure.getInstance().setShooting(desiredShotProfile);
             }
             prime = false;
         } else if (prime) { // Prepare for shot
-            superstructure.setShooting(desiredShotProfile.shouldShoot(false));
+            Superstructure.getInstance().setShooting(desiredShotProfile.shouldShoot(false));
         } else { // Not shooting or primed
-            superstructure.stopShooter();
+            Superstructure.getInstance().stopShooter();
         }
     }
 
@@ -82,19 +78,19 @@ public class BaseTeleopModeManager extends ModeManager {
                     FeederSubsystem.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_OUTAKE_RPM);
                     IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
                 } else { // Not pressing anything
-                    superstructure.stopFeeder();
-                    superstructure.stopIntake();
+                    Superstructure.getInstance().stopFeeder();
+                    Superstructure.getInstance().stopIntake();
                 }
             } else if (operatorController.isPressing(MANIPULATOR.INTAKE)) { // Intake a note
-                superstructure.setIntaking();
+                Superstructure.getInstance().setIntaking();
             } else if (operatorController.isPressing(MANIPULATOR.OUTAKE)) { // Spit out a note
-                superstructure.setOutaking();
+                Superstructure.getInstance().setOutaking();
             } else { // Not pressing anything
-                superstructure.stopIntake();
+                Superstructure.getInstance().stopIntake();
                 if (FeederSubsystem.getInstance().getNoteState() == NoteState.kNone ||
                     operatorController.isPressing(MANIPULATOR.STOW) ||
                     scoreButton.isFallingEdge()) {
-                    superstructure.stopFeeder();
+                    Superstructure.getInstance().stopFeeder();
                 }
             }
         }
@@ -102,17 +98,17 @@ public class BaseTeleopModeManager extends ModeManager {
 
     protected void updateElevator() {
         if (operatorController.isPressing(MANIPULATOR.STOW) || scoreButton.isFallingEdge()) { // Stow elevator
-            superstructure.setGroundState();
+            Superstructure.getInstance().setGroundState();
         } else if (operatorController.isPressing(MANIPULATOR.AMP_POSITION)) { // Amp position
-            superstructure.setAmpState();
+            Superstructure.getInstance().setAmpState();
             prime = false;
         } else if (!(operatorController.isPressing(MANIPULATOR.SCORE) || prime)) { // Not attempting to shoot or prime
             if (operatorController.isPressing(MANIPULATOR.CLIMB_POSITION)) { // Start climb
-                superstructure.setClimbState();
+                Superstructure.getInstance().setClimbState();
             } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_RAISE)) { // Climber up
-                superstructure.raiseClimber();
+                Superstructure.getInstance().raiseClimber();
             } else if (operatorController.isPressing(MANIPULATOR.EXTENSION_LOWER)) { // Climber down
-                superstructure.lowerClimber();
+                Superstructure.getInstance().lowerClimber();
             }
         }
     }

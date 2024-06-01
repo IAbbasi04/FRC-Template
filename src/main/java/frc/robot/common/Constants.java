@@ -79,6 +79,7 @@ public class Constants {
     public static class INTAKE {
         public static final double ROLLER_INTAKE_RPM = 4500.0;
         public static final double ROLLER_OUTAKE_RPM = -2000.0;
+        public static final double MAX_ROLLER_VELOCITY = 4500.0;
     }
 
     public static class FEEDER {

@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import org.littletonrobotics.junction.Logger;
-
 import frc.robot.common.Ports;
 import lib.frc8592.*;
 import lib.frc8592.hardware.motors.*;
@@ -29,7 +27,7 @@ public class IntakeSubsystem extends Subsystem {
             0
         );
 
-        super.logger = new SmartLogger("Intake");
+        super.logger = new SmartLogger("IntakeSubsystem");
     }
 
     /**
@@ -43,7 +41,8 @@ public class IntakeSubsystem extends Subsystem {
      * Sets desired roller speed in RPM
      */
     public void setRollerVelocity(double desiredVelocityRPM) {
-        this.desiredVelocityRPM = desiredVelocityRPM;
+        // Clamp within maximum allowed RPM
+        this.desiredVelocityRPM = Utils.clamp(desiredVelocityRPM, maxVelocity);
     }
 
     /**
@@ -55,6 +54,7 @@ public class IntakeSubsystem extends Subsystem {
 
     @Override
     public void init(MatchMode mode) {
+        // Start each match mode with the intake turned off
         this.setRollerVelocity(0.0);
     }
 
@@ -66,9 +66,6 @@ public class IntakeSubsystem extends Subsystem {
 
     @Override
     public void periodic() {
-        this.desiredVelocityRPM = Utils.clamp(desiredVelocityRPM, maxVelocity); // Clamp within maximum allowed RPM
-        this.intakeMotor.set(ControlType.kVelocity, desiredVelocityRPM);
-
-        Logger.recordOutput("THIS OUTPUT", "IS NOTHING");
+        this.intakeMotor.set(ControlType.kVelocity, desiredVelocityRPM);        
     }
 }

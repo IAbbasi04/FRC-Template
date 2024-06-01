@@ -35,6 +35,11 @@ public abstract class Subsystem extends SubsystemBase {
      */
     public abstract void initializeLogs();
     
+    // /**
+    //  * Updates the {@code PeriodicIO.java} values periodically
+    //  */
+    // public abstract void updatePeriodicIO();
+    
     /**
      * Runs throughout the entirety of the current match mode
      */

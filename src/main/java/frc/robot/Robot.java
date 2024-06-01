@@ -26,17 +26,16 @@ import edu.wpi.first.wpilibj2.command.*;
 public class Robot extends LoggedRobot {
   private SubsystemList activeModules;
   private ModeManager currentMode;
-
-  public static boolean LOG_TO_DASHBOARD = true;
+  private AutonomousSelector autoSelector;
 
   public static MatchMode MODE = MatchMode.DISABLED;
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
-
-  private AutonomousSelector autoSelector;
   
   public static ShotTable UNDEFENDED_SHOT_TABLE = new UndefendedShotTable();
   public static ShotTable DEFENDED_SHOT_TABLE = new DefendedShotTable();
+
+  public static boolean LOG_TO_DASHBOARD = true;
 
   @Override
   public void robotInit() {        
@@ -71,7 +70,7 @@ public class Robot extends LoggedRobot {
     
     // We do not want to log to shuffleboard if we are in a match 
     // since it will cause unnecessary noise
-    Robot.LOG_TO_DASHBOARD = Robot.isSimulation() || DriverStation.isFMSAttached(); 
+    // Robot.LOG_TO_DASHBOARD = Robot.isSimulation() || !DriverStation.isFMSAttached(); 
 
     activeModules.periodicAll(); // Always calls regardless of match mode
     CLOCK.update();
