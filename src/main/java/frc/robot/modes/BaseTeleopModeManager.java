@@ -3,7 +3,7 @@ package frc.robot.modes;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.Robot;
 import frc.robot.common.Constants;
-import frc.robot.controls.Controls;
+import frc.robot.common.Controls;
 import lib.frc8592.controls.DriveScaler;
 import lib.frc8592.controls.DriveScaler.ScaleType;
 import frc.robot.subsystems.*;

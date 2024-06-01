@@ -9,7 +9,7 @@ import lib.frc8592.MatchMode;
 
 import frc.robot.autonomous.*;
 import frc.robot.common.Constants;
-import frc.robot.controls.Controls;
+import frc.robot.common.Controls;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;

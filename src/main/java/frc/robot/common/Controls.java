@@ -1,4 +1,4 @@
-package frc.robot.controls;
+package frc.robot.common;
 
 import lib.frc8592.BooleanManager;
 import lib.frc8592.controls.xbox.XboxController;
