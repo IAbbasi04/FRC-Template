@@ -6,7 +6,7 @@ import lib.frc8592.controls.xbox.XboxInput;
 
 public class Controls {
     private XboxController driver;
-    // private XboxController manipulator;
+    private XboxController manipulator;
 
     // Drivetrain Controls
     public double SWERVE_TRANSLATE_X = 0.0;
@@ -14,13 +14,18 @@ public class Controls {
     public double SWERVE_ROTATE = 0.0;
     public BooleanManager SNAIL_MODE = new BooleanManager();
     public BooleanManager RESET_GYRO = new BooleanManager();
+    
+    // General Controls
+    public BooleanManager STOW = new BooleanManager();
 
     // Intake Controls
-    public static BooleanManager INTAKE = new BooleanManager();
+    public BooleanManager INTAKE = new BooleanManager();
+    public BooleanManager PLACE = new BooleanManager();
+
 
     public void setControllers(XboxController driver, XboxController manipulator) {
         this.driver = driver;
-        // this.manipulator = manipulator;
+        this.manipulator = manipulator;
     }
 
     private void updateDriveControls() {
@@ -34,11 +39,25 @@ public class Controls {
         RESET_GYRO.update(driver.isPressing(XboxInput.START));
     }
 
+    /**
+     * Controls for just a singular driver
+     */
     public void updateSingleDriver() {
         updateDriveControls();
+
+        INTAKE.update(driver.isPressing(XboxInput.LEFT_TRIGGER_BTN));
+        PLACE.update(driver.isPressing(XboxInput.DPAD_DOWN));
+        STOW.update(driver.isPressing(XboxInput.A_BTN));
     }
 
+    /**
+     * Controls for 2 drivers
+     */
     public void updateDoubleDriver() {
         updateDriveControls();
+
+        INTAKE.update(manipulator.isPressing(XboxInput.LEFT_TRIGGER_BTN));
+        PLACE.update(driver.isPressingAll(new XboxInput[]{XboxInput.START, XboxInput.LEFT_BUMPER}));
+        STOW.update(driver.isPressing(XboxInput.A_BTN));
     }
 }

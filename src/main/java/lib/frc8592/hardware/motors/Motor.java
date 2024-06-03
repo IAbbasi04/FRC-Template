@@ -4,17 +4,13 @@ import lib.frc8592.ProfileGains;
 
 public abstract class Motor {
     /**
-     * The output type
+     * The CAN ID of the motor
      */
-    public enum ControlType {
-        kVelocity, // RPM
-        kPosition, // Rotations
-        kPercentOutput, // [-1, 1]
-        kVoltage, // Volts
-    }
-
     public abstract int getMotorID();
 
+    /**
+     * Sets the motor following another either directly or reversed
+     */
     public abstract void follow(Motor other, boolean reversed);
 
     /**
@@ -38,28 +34,38 @@ public abstract class Motor {
     public abstract void setCurrent(int amps);
 
     /**
-     * Sets the motor to the demand in the desired control mode
+     * Sets the motor to the desired velocity in meters per second
      */
-    public void set(ControlType controlType, double demand) {
-        set(controlType, demand, 0);
+    public void setVelocity(double velocityMetersPerSecond) {
+        setVelocity(velocityMetersPerSecond, 0);
     }
 
     /**
-     * Sets the motor to the demand in the desired control mode at a particular pid slot
+     * Sets the motor to the desired velocity in meters per second
      */
-    public abstract void set(ControlType controlType, double demand, int pidSlot);
-
-    /**
-     * Returns this as a vortex motor
-     */
-    public VortexMotor asVortex() {
-        return (VortexMotor)this;
+    public void setProfiledVelocity(double velocityMetersPerSecond) {
+        setProfiledVelocity(velocityMetersPerSecond, 0);
     }
 
     /**
-     * Returns this as a falcon motor
+     * Sets the motor to the desired position in rotations
      */
-    public FalconMotor asFalcon() {
-        return (FalconMotor)this;
+    public void setPosition(double positionRotations) {
+        setPosition(positionRotations, 0);
     }
+
+    /**
+     * Sets the motor to the desired velocity in meters per second
+     */
+    public abstract void setVelocity(double velocityMetersPerSecond, int pidSlot);
+
+    /**
+     * Sets the motor to the desired velocity in meters per second using a trapezoidal profile
+     */
+    public abstract void setProfiledVelocity(double velocityMetersPerSecond, int pidSlot);
+
+    /**
+     * Sets the motor to the desired position in rotations
+     */
+    public abstract void setPosition(double positionRotations, int pidSlot);
 }

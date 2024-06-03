@@ -65,5 +65,9 @@ public class Constants {
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }
 
+    public static class INTAKE {
+        
+    }
+
     public static class VISION {}
 }

@@ -1,7 +1,6 @@
 package lib.frc8592.swervelib;
 
 import lib.frc8592.hardware.motors.Motor;
-import lib.frc8592.hardware.motors.Motor.ControlType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -19,7 +18,8 @@ public abstract class SwerveModule {
     protected void setDriveVelocity(double velocityMetersPerSecond) {
         double rps = velocityMetersPerSecond / 
             (moduleConfig.getDriveReduction() * Math.PI * moduleConfig.getWheelDiameter());
-        driveMotor.set(ControlType.kVelocity, rps);
+        // driveMotor.set(ControlType.kVelocity, rps);
+        driveMotor.setVelocity(rps);
     }
 
     /**
@@ -28,7 +28,7 @@ public abstract class SwerveModule {
     protected void setSteerAngle(double angleRadians) {
         double rotations = angleRadians / 
             (2 * Math.PI * moduleConfig.getSteerReduction());
-        steerMotor.set(ControlType.kPosition, rotations);
+        steerMotor.setPosition(rotations);
     }
 
     /**

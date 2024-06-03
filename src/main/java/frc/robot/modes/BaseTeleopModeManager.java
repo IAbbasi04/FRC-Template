@@ -41,4 +41,14 @@ public class BaseTeleopModeManager extends ModeManager {
         if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, SwerveSubsystem.getInstance().getCurrentRotation());
         SwerveSubsystem.getInstance().drive(speeds);
     }
+
+    protected void updateIntake() {
+        if (controls.INTAKE.getValue()) { // Intake note
+            Superstructure.setIntaking();
+        } else if (controls.PLACE.getValue()) { // Place note on ground
+            Superstructure.setPlacing();
+        } else { // Do nothing in ground state
+            Superstructure.setIntakeGroundState();
+        }
+    }
 }

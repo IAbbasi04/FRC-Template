@@ -2,7 +2,6 @@ package frc.robot.autonomous;
 
 import com.pathplanner.lib.auto.*;
 import com.pathplanner.lib.util.*;
-import com.pathplanner.lib.commands.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -45,13 +44,6 @@ public abstract class NewtonAuto {
      * Initializes and creates the autonomous routine; Used for passing into the WPILib command scheduler
      */
     public abstract Command createAuto();
-
-    /**
-     * Gets the selected auto
-     */
-    public static Command getSelected() {
-        return new PathPlannerAuto("Center1WingAuto");
-    }
 
     /**
      * The starting position of the robot for this particular auto

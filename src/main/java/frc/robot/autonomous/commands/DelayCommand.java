@@ -17,7 +17,7 @@ public class DelayCommand extends NewtonCommand {
 
     @Override
     public boolean isFinished() {
-        return this.commandTimer.advanceIfElapsed(delayTime); // Always return true since this is mostly a passthrough command
+        return this.commandTimer.advanceIfElapsed(delayTime);
     }
 
     @Override

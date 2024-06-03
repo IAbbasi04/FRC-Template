@@ -39,11 +39,17 @@ public class Robot extends LoggedRobot {
       PowerSubsystem.getInstance(),
       VisionSubsystem.getInstance(),
       LEDSubsystem.getInstance(),
-      SwerveSubsystem.getInstance()
+      SwerveSubsystem.getInstance(),
+      IntakeSubsystem.getInstance(),
+      ConveyorSubsystem.getInstance(),
+      ShooterSubsystem.getInstance(),
+      BackpackSubsystem.getInstance()
     ));
     
-    autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
+    currentMode = DisabledModeManager.getInstance();
+    currentMode.activateControllers();
 
+    autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
     NewtonAuto.initializeAutoBuilder(); // Sets up the pathplanner auto creation tool
   }
 
@@ -117,7 +123,6 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.TELEOP;
     CLOCK.restart();
     currentMode = TeleopModeManager.getInstance();
-    currentMode.activateControllers();
     activeModules.initAll(MODE);
     CommandScheduler.getInstance().cancelAll();
   }
@@ -132,7 +137,6 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.DISABLED;
     CLOCK.restart();
     currentMode = DisabledModeManager.getInstance();
-    currentMode.activateControllers();
     activeModules.initAll(MODE);
     CommandScheduler.getInstance().cancelAll();
   }
@@ -147,7 +151,6 @@ public class Robot extends LoggedRobot {
     MODE = MatchMode.TEST;
     CLOCK.restart();
     currentMode = TestModeManager.getInstance();
-    currentMode.activateControllers();
     activeModules.initAll(MODE);
 
     CommandScheduler.getInstance().cancelAll();
