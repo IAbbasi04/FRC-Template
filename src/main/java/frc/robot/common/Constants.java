@@ -65,7 +65,5 @@ public class Constants {
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }
 
-    public static class VISION {
-        public static final String FRONT_LIMELIGHT_NAME = "limelight";
-    }
+    public static class VISION {}
 }
