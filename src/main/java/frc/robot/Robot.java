@@ -40,7 +40,8 @@ public class Robot extends LoggedRobot {
       VisionSubsystem.getInstance(),
       LEDSubsystem.getInstance(),
       SwerveSubsystem.getInstance(),
-      IntakeSubsystem.getInstance()
+      IntakeSubsystem.getInstance(),
+      ShooterSubsystem.getInstance()
     ));
     
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
