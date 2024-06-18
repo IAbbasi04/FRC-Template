@@ -21,4 +21,33 @@ public class Ports {
     public static final int PIGEON_CAN_ID = 17; // Gyro
 
     public static final int PDH_CAN_ID = 1; // PDH
+
+    // ============== \\
+    // === INTAKE === \\
+    // ============== \\
+
+    public static final int INTAKE_ROLLER_CAN_ID = 0;
+
+    // ============== \\
+    // === FEEDER === \\
+    // ============== \\
+    
+    public static final int FEEDER_ROLLER_CAN_ID = 0;
+    public static final int FEEDER_BOTTOM_BEAM_CAN_ID = 0;
+    public static final int FEEDER_TOP_BEAM_CAN_ID = 0;
+
+    // =============== \\
+    // === SHOOTER === \\
+    // =============== \\
+    
+    public static final int SHOOTER_LEFT_CAN_ID = 0;
+    public static final int SHOOTER_RIGHT_CAN_ID = 0;
+
+    // =============== \\
+    // === ELEVATOR === \\
+    // =============== \\
+    
+    public static final int PIVOT_LEFT_CAN_ID = 0;
+    public static final int PIVOT_RIGHT_CAN_ID = 0;
+    public static final int EXTENSION_CAN_ID = 0;
 }
