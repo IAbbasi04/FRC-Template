@@ -69,5 +69,21 @@ public class Constants {
         
     }
 
+    public static class INDEXER {
+        public static final double FEEDER_INTAKE_VELOCITY_RPM = 3000.0;
+        public static final double FEEDER_ALIGN_VELOCITY_RPM = -1000.0;
+        public static final double FEEDER_SHOOT_VELOCITY_RPM = 2000.0;
+        public static final double FEEDER_PLACE_VELOCITY_RPM = -3000.0;
+        public static final double FEEDER_AMP_INITIATE_VELOCITY_RPM = -1000.0;
+        public static final double FEEDER_AMP_PASS_VELOCITY_RPM = 2000.0;
+
+        public static final double INDEXER_INTAKE_VELOCITY_RPM = 1000.0;
+        public static final double INDEXER_ALIGN_VELOCITY_RPM = -1000.0;
+        public static final double INDEXER_SHOOT_VELOCITY_RPM = 2000.0;
+        public static final double INDEXER_PLACE_VELOCITY_RPM = -3000.0;
+        public static final double INDEXER_AMP_INITIATE_VELOCITY_RPM = -1000.0;
+        public static final double INDEXER_AMP_PASS_VELOCITY_RPM = 2000.0;
+    }
+
     public static class VISION {}
 }

@@ -41,7 +41,7 @@ public class Robot extends LoggedRobot {
       LEDSubsystem.getInstance(),
       SwerveSubsystem.getInstance(),
       IntakeSubsystem.getInstance(),
-      ConveyorSubsystem.getInstance(),
+      IndexerSubsystem.getInstance(),
       ShooterSubsystem.getInstance(),
       BackpackSubsystem.getInstance()
     ));

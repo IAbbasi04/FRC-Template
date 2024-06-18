@@ -32,6 +32,29 @@ public class Ports {
 
     public static final int INTAKE_ARM_CAN_ID = 3;
     public static final int INTAKE_ROLLER_CAN_ID = 4;
-    public static final int INTAKE_FEED_CAN_ID = 5;
-    public static final int ENTRY_BEAM_CAN_ID = 6;
+
+    // ====================
+    //        Indexer
+    // ==================== 
+
+    public static final int FEEDER_CAN_ID = 5;
+    public static final int INDEXER_CAN_ID = 6;
+    public static final int FRONT_BEAM_CAN_ID = 7;
+    public static final int BACK_BEAM_CAN_ID = 8;
+
+    // ====================
+    //       Backpack
+    // ====================
+
+    public static final int BACKPACK_FRONT_LIFT_CAN_ID = 21;
+    public static final int BACKPACK_BACK_LIFT_CAN_ID = 22;
+    public static final int BACKPACK_ROLLERS_CAN_ID = 23;
+    
+    // ====================
+    //        Climber
+    // ====================
+
+    // ====================
+    //        Shooter
+    // ==================== 
 }

@@ -51,4 +51,33 @@ public class BaseTeleopModeManager extends ModeManager {
             Superstructure.setIntakeGroundState();
         }
     }
+
+    protected void updateShooter() {
+        if (controls.PRIME_SUBWOOFER.getValue()) { // Score in speaker against subwoofer
+            // Set the shot profile to subwoofer shot
+        } else if (controls.PRIME_PODIUM.getValue()) { // Score in speaker against podium
+            // Set the shot profile to podium shot
+        } else { // Score from anywhere
+            // Set the shot profile to ranged shot
+        }
+
+        if (controls.SCORE.getValue()) {
+            // Ask for if we want amp or speaker
+            // Shoot note or score in amp
+        } else {
+            // Disable shooter
+        }
+    }
+    
+    protected void updateBackpack() {
+        if (controls.AMP.isFallingEdge()) { // Set to amp state
+            Superstructure.loadAmp();
+        } else if (controls.RUN_CLIMB.getValue()) { // 
+
+        }
+    }
+
+    protected void updateClimber() {
+
+    }
 }
