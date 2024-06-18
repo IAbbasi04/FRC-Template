@@ -3,13 +3,13 @@ package lib.frc8592.hardware.motors;
 import lib.frc8592.hardware.*;
 import lib.frc8592.ProfileGains;
 import com.revrobotics.*;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class VortexMotor extends Motor {
     private CANSparkFlex motor;
     private SparkPIDController motorCtrl;
     private RelativeEncoder motorEncoder;
-    private boolean useSmartMotion = false;
 
     public VortexMotor(int id) {
         this(id, false);
@@ -38,7 +38,6 @@ public class VortexMotor extends Motor {
     @Override
     public void withGains(ProfileGains gains, int index) {
         HardwareUtils.setPIDGains(motor, gains.setSlot(index));
-        useSmartMotion = gains.isSmartMotion();
     }
 
     @Override
@@ -57,37 +56,47 @@ public class VortexMotor extends Motor {
         this.motor.setSecondaryCurrentLimit(amps);
     }
 
+    // @Override
+    // public void set(ControlType controlType, double demand, int pidSlot) {
+    //     switch(controlType) {
+    //         case kPercentOutput:
+    //             motor.set(demand);
+    //             break;
+    //         case kVelocity:
+    //             if (useSmartMotion) {
+    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartVelocity, pidSlot);
+    //             } else {
+    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVelocity, pidSlot);
+    //             }
+    //             break;
+    //         case kPosition:
+    //             if (useSmartMotion) {
+    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartMotion, pidSlot);
+    //             } else {
+    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kPosition, pidSlot);
+    //             }
+    //             break;
+    //         case kVoltage:
+    //             motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVoltage, pidSlot);
+    //             break;
+    //         default:
+    //             motor.set(0.0);
+    //             break;
+    //     }
+    // }
+
     @Override
-    public void set(ControlType controlType, double demand, int pidSlot) {
-        switch(controlType) {
-            case kPercentOutput:
-                motor.set(demand);
-                break;
-            case kVelocity:
-                if (useSmartMotion) {
-                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartVelocity, pidSlot);
-                } else {
-                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVelocity, pidSlot);
-                }
-                break;
-            case kPosition:
-                if (useSmartMotion) {
-                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartMotion, pidSlot);
-                } else {
-                    motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kPosition, pidSlot);
-                }
-                break;
-            case kVoltage:
-                motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVoltage, pidSlot);
-                break;
-            default:
-                motor.set(0.0);
-                break;
-        }
+    public void setVelocity(double velocityMetersPerSecond, int pidSlot) {
+        motorCtrl.setReference(velocityMetersPerSecond, ControlType.kVelocity, pidSlot);
     }
 
     @Override
-    public void set(ControlType controlType, double demand) {
-        set(controlType, demand, 0);
+    public void setProfiledVelocity(double velocityMetersPerSecond, int pidSlot) {
+        motorCtrl.setReference(velocityMetersPerSecond, ControlType.kSmartVelocity, pidSlot);
+    }
+
+    @Override
+    public void setPosition(double positionRotations, int pidSlot) {
+        motorCtrl.setReference(positionRotations, ControlType.kSmartMotion, pidSlot);
     }
 }

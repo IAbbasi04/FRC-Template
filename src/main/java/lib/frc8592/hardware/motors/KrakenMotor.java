@@ -6,18 +6,18 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import lib.frc8592.ProfileGains;
 
-public class FalconMotor extends Motor {
+public class KrakenMotor extends Motor {
     private TalonFX falconMotor;
     private TalonFXConfiguration configuration;
 
     private PositionVoltage positionOutput;
     private VelocityVoltage velocityOutput;
 
-    public FalconMotor(int id) {
+    public KrakenMotor(int id) {
         this(id, false);
     }
 
-    public FalconMotor(int id, boolean reversed) {
+    public KrakenMotor(int id, boolean reversed) {
         this.falconMotor = new TalonFX(id);
         this.falconMotor.setInverted(reversed);
 

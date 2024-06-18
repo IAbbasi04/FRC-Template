@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.common.Ports;
 import lib.frc8592.MatchMode;
 import lib.frc8592.hardware.motors.VortexMotor;
+import lib.frc8592.logging.SmartLogger;
 
 public class IntakeSubsystem extends Subsystem {
     private static IntakeSubsystem INSTANCE = null;
@@ -16,6 +17,7 @@ public class IntakeSubsystem extends Subsystem {
 
     private IntakeSubsystem() {
         rollerMotor = new VortexMotor(Ports.INTAKE_ROLLER_CAN_ID);
+        super.logger =  new SmartLogger("IntakeSubsystem");
     }
 
     /**
@@ -39,11 +41,12 @@ public class IntakeSubsystem extends Subsystem {
 
     @Override
     public void initializeLogs() {
-
+        logger.logDouble("Desired Roller Velocity (RPM)", () -> desiredRollerRPM);
+        logger.logDouble("Current Roller Velocity (RPM)", () -> getRollerVelocity());
     }
 
     @Override
     public void periodic() {
-        
+        rollerMotor.setVelocity(desiredRollerRPM);
     }
 }
