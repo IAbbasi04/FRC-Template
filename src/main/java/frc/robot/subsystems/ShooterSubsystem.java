@@ -42,7 +42,7 @@ public class ShooterSubsystem extends Subsystem {
     /**
      * Sets the desired speed of both shooter motors in RPM
      */
-    public void setShooterVelocity(double desiredLeftRPM, double desiredRightRPM) {
+    public void setDesiredVelocity(double desiredLeftRPM, double desiredRightRPM) {
         setLeftShooterVelocity(desiredLeftRPM);
         setRightShooterVelocity(desiredRightRPM);
     }
@@ -72,7 +72,7 @@ public class ShooterSubsystem extends Subsystem {
 
     @Override
     public void init(MatchMode mode) {
-        setShooterVelocity(0.0, 0.0);
+        setDesiredVelocity(0.0, 0.0);
     }
 
     @Override

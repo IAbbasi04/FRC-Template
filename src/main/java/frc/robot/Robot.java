@@ -10,6 +10,7 @@ import lib.frc8592.MatchMode;
 import frc.robot.autonomous.*;
 import frc.robot.common.Constants;
 import frc.robot.common.Controls;
+import frc.robot.crescendo.tables.ShotTable;
 import frc.robot.modes.*;
 import frc.robot.subsystems.*;
 import frc.unittest.*;
@@ -28,6 +29,7 @@ public class Robot extends LoggedRobot {
   public static Field2d FIELD = new Field2d();
   public static Clock CLOCK = new Clock();
   public static Controls CONTROLS = new Controls();
+  public static ShotTable SHOT_TABLE = new ShotTable();
   
   public static boolean LOG_TO_DASHBOARD = true;
 
@@ -41,7 +43,9 @@ public class Robot extends LoggedRobot {
       LEDSubsystem.getInstance(),
       SwerveSubsystem.getInstance(),
       IntakeSubsystem.getInstance(),
-      ShooterSubsystem.getInstance()
+      ShooterSubsystem.getInstance(),
+      ElevatorSubsystem.getInstance(),
+      FeederSubsystem.getInstance()
     ));
     
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode

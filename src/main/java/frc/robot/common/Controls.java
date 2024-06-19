@@ -18,7 +18,20 @@ public class Controls {
     // Intake Controls
     public BooleanManager INTAKE = new BooleanManager();
     public BooleanManager OUTAKE = new BooleanManager();
+
+    // Elevator Controls
     public BooleanManager STOW = new BooleanManager();
+    public BooleanManager AMP_POSITION = new BooleanManager();
+    public BooleanManager CLIMB_POSITION = new BooleanManager();
+    public BooleanManager CLIMB_RAISE = new BooleanManager();
+    public BooleanManager CLIMB_LOWER = new BooleanManager();
+
+    // Shooter Controls
+    public BooleanManager PRIME = new BooleanManager();
+    public BooleanManager SCORE = new BooleanManager();
+    public BooleanManager PODIUM_SHOT = new BooleanManager();
+    public BooleanManager SUBWOOFER_SHOT = new BooleanManager();
+    public BooleanManager PASS = new BooleanManager();
 
     public void setControllers(XboxController driver, XboxController manipulator) {
         this.driver = driver;
@@ -36,20 +49,42 @@ public class Controls {
         RESET_GYRO.update(driver.isPressing(XboxInput.START));
     }
 
-    public void updateCommonControls() {
+    private void updateCommonControls() {
         updateDriveControls();
         INTAKE.update(driver.isPressing(XboxInput.LEFT_TRIGGER_BTN));
+        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
     }
 
     public void updateSingleDriver() {
         updateCommonControls();
         OUTAKE.update(driver.isPressing(XboxInput.DPAD_DOWN));
+
         STOW.update(driver.isPressing(XboxInput.A_BTN));
+        AMP_POSITION.update(driver.isPressing(XboxInput.LEFT_BUMPER));
+        CLIMB_POSITION.update(driver.isPressing(XboxInput.START));
+        CLIMB_RAISE.update(driver.isPressing(XboxInput.DPAD_UP));
+        CLIMB_LOWER.update(driver.isPressing(XboxInput.DPAD_DOWN));
+
+        PRIME.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
+        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
+        PASS.update(driver.isPressing(XboxInput.B_BTN));
+
+        SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.B_BTN));
+        PODIUM_SHOT.update(driver.isPressing(XboxInput.B_BTN));
     }
 
     public void updateDoubleDriver() {
         updateCommonControls();
-        OUTAKE.update(manipulator.isPressing(XboxInput.LEFT_BUMPER));
-        STOW.update(manipulator.isPressing(XboxInput.A_BTN) || driver.isPressing(XboxInput.A_BTN));
+        OUTAKE.update(driver.isPressing(XboxInput.DPAD_DOWN));
+
+        STOW.update(manipulator.isPressing(XboxInput.A_BTN));
+        AMP_POSITION.update(manipulator.isPressing(XboxInput.LEFT_BUMPER));
+        CLIMB_POSITION.update(manipulator.isPressing(XboxInput.START));
+        CLIMB_RAISE.update(manipulator.isPressing(XboxInput.DPAD_UP));
+        CLIMB_LOWER.update(manipulator.isPressing(XboxInput.DPAD_DOWN));
+
+        PRIME.update(manipulator.isPressing(XboxInput.RIGHT_BUMPER));
+        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
+        PASS.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
     }
 }
