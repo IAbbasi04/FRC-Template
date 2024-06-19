@@ -13,5 +13,8 @@ public class TeleopModeManager extends BaseTeleopModeManager {
     public void runPeriodic() {
         super.updateSwerve();
         super.updateLED();
+        super.updateElevator();
+        super.updateIntake();
+        super.updateShooter();
     }
 }
