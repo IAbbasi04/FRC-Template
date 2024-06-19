@@ -14,6 +14,7 @@ public class Controls {
     public double SWERVE_ROTATE = 0.0;
     public BooleanManager SNAIL_MODE = new BooleanManager();
     public BooleanManager RESET_GYRO = new BooleanManager();
+    public double SNAP_VALUE = -1;
 
     // Intake Controls
     public BooleanManager INTAKE = new BooleanManager();
@@ -47,12 +48,14 @@ public class Controls {
         SWERVE_ROTATE = -driver.get(XboxInput.RIGHT_X_AXIS);
         SNAIL_MODE.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
         RESET_GYRO.update(driver.isPressing(XboxInput.START));
+
+        SNAP_VALUE = driver.getPOV();
     }
 
     private void updateCommonControls() {
         updateDriveControls();
         INTAKE.update(driver.isPressing(XboxInput.LEFT_TRIGGER_BTN));
-        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
+        SCORE.update(!driver.isPressing(XboxInput.START) && driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
     }
 
     public void updateSingleDriver() {
@@ -66,7 +69,6 @@ public class Controls {
         CLIMB_LOWER.update(driver.isPressing(XboxInput.DPAD_DOWN));
 
         PRIME.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
-        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
         PASS.update(driver.isPressing(XboxInput.B_BTN));
 
         SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.B_BTN));
@@ -84,7 +86,9 @@ public class Controls {
         CLIMB_LOWER.update(manipulator.isPressing(XboxInput.DPAD_DOWN));
 
         PRIME.update(manipulator.isPressing(XboxInput.RIGHT_BUMPER));
-        SCORE.update(driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
-        PASS.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
+        PASS.update(!driver.isPressing(XboxInput.START) && driver.isPressing(XboxInput.RIGHT_BUMPER));
+
+        SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.START) && driver.isPressing(XboxInput.RIGHT_TRIGGER_BTN));
+        PODIUM_SHOT.update(driver.isPressing(XboxInput.START) && driver.isPressing(XboxInput.RIGHT_BUMPER));
     }
 }

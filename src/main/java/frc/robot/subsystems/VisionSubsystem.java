@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.autonomous.AutoGenerator;
 import frc.robot.common.Constants;
 import lib.frc8592.MatchMode;
-import lib.frc8592.hardware.OakCamera;
+import lib.frc8592.hardware.Limelight;
+import lib.frc8592.hardware.OrangePy;
 import lib.frc8592.logging.SmartLogger;
 
 import static frc.robot.crescendo.AprilTags.*;
@@ -22,10 +23,12 @@ public class VisionSubsystem extends Subsystem {
         return INSTANCE;
     }
 
-    private OakCamera rearOak;
+    private OrangePy rearOakD;
+    private Limelight frontLimelight;
 
     private VisionSubsystem() {
-        rearOak = new OakCamera();
+        rearOakD = new OrangePy(Constants.VISION.REAR_ORANGE_PY_NAME);
+        frontLimelight = new Limelight(Constants.VISION.FRONT_LIMELIGHT_NAME);
         super.logger = new SmartLogger("VisionSubsystem");
     }
 
@@ -33,7 +36,7 @@ public class VisionSubsystem extends Subsystem {
      * Distance to the centered april tag on the speaker
      */
     public double getDistanceToSpeaker() {
-        double distance = rearOak.distanceToAprilTag(
+        double distance = rearOakD.distanceToAprilTag(
             List.of(BLUE_SPEAKER_CENTER.id(), 
                     RED_SPEAKER_CENTER.id()
                 )
@@ -63,10 +66,10 @@ public class VisionSubsystem extends Subsystem {
      * Yaw offset from speaker
      */
     public Rotation2d getAngleToSpeaker() {
-        double offset = rearOak.getXOffsetFromTag(BLUE_SPEAKER_CENTER.id());
+        double offset = rearOakD.getXOffsetFromTag(BLUE_SPEAKER_CENTER.id());
         if (DriverStation.getAlliance().isPresent()) {
             if (DriverStation.getAlliance().get() == Alliance.Red) {  
-                offset = rearOak.getXOffsetFromTag(RED_SPEAKER_CENTER.id());
+                offset = rearOakD.getXOffsetFromTag(RED_SPEAKER_CENTER.id());
             }
         }
         
@@ -99,10 +102,22 @@ public class VisionSubsystem extends Subsystem {
      * Whether the april tag on the speaker is visible or not
      */
     public boolean isSpeakerTargetVisible() {
-        return rearOak.getCurrTagID() == RED_SPEAKER_CENTER.id() || 
-            rearOak.getCurrTagID() == BLUE_SPEAKER_CENTER.id() || 
-            rearOak.getCurrTag2ID() == RED_SPEAKER_CENTER.id() || 
-            rearOak.getCurrTag2ID() == BLUE_SPEAKER_CENTER.id();
+        return rearOakD.getCurrTagID() == RED_SPEAKER_CENTER.id() || 
+            rearOakD.getCurrTagID() == BLUE_SPEAKER_CENTER.id() || 
+            rearOakD.getCurrTag2ID() == RED_SPEAKER_CENTER.id() || 
+            rearOakD.getCurrTag2ID() == BLUE_SPEAKER_CENTER.id();
+    }
+
+    public boolean isNoteInView() {
+        return frontLimelight.isTargetValid();
+    }
+
+    public boolean isNoteTargettable() {
+        return isNoteInView() && frontLimelight.getY() <= -15.0;
+    }
+
+    public Pose2d getAbsolutePositionFromAprilTag() {
+        return new Pose2d();
     }
     
     @Override

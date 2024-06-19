@@ -124,5 +124,6 @@ public class Constants {
 
     public static class VISION {
         public static final String FRONT_LIMELIGHT_NAME = "limelight-targetting";
+        public static final String REAR_ORANGE_PY_NAME = "jetson";
     }
 }
