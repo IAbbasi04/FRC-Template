@@ -1,5 +1,7 @@
 package frc.robot.common;
 
+import edu.wpi.first.apriltag.*;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
@@ -65,5 +67,10 @@ public class Constants {
         public static final double SLEW_LIMIT = 2.0; // 200% rate of change per second
     }
 
-    public static class VISION {}
+    public static class VISION {
+        public static final AprilTagFieldLayout APRIL_TAG_LAYOUT = 
+            AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+        
+        public static final Transform3d CAMERA_POSE_TO_ROBOT_POSE = new Transform3d();
+    }
 }
