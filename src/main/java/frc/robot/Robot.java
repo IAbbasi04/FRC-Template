@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj2.command.*;
 public class Robot extends LoggedRobot {
   private SubsystemList activeModules;
   private ModeManager currentMode;
-  private AutonomousSelector autoSelector;
+  // private AutonomousSelector autoSelector;
+  private AutonomousBuilder autoBuilder;
 
   public static MatchMode MODE = MatchMode.DISABLED;
   public static Field2d FIELD = new Field2d();
@@ -48,7 +49,8 @@ public class Robot extends LoggedRobot {
       FeederSubsystem.getInstance()
     ));
     
-    autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
+    // autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
+    autoBuilder = new AutonomousBuilder();
 
     NewtonAuto.initializeAutoBuilder(); // Sets up the pathplanner auto creation tool
   }
@@ -90,10 +92,13 @@ public class Robot extends LoggedRobot {
     // The entire autonomous routine gets compiled into a WPILib Command.java class
     // This makes it so that only a single command needs to get scheduled to run the
     // entire autonomous
-    Command autoCommand = autoSelector.getSelectedAutonomous().createAuto();
+    // Command autoCommand = autoSelector.getSelectedAutonomous().createAuto();
+    Command autoCommand = autoBuilder.buildAuto();
 
     // Set the starting position of the robot on the field
-    Pose2d robotStartPose = autoSelector.getSelectedAutonomous().getStartPose();
+    // Pose2d robotStartPose = autoSelector.getSelectedAutonomous().getStartPose();
+    Pose2d robotStartPose = autoBuilder.getStartPose();
+
     if (DriverStation.getAlliance().get() == Alliance.Red) {
       robotStartPose = new Pose2d(
         new Translation2d(

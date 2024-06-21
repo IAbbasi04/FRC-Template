@@ -39,9 +39,9 @@ public abstract class NewtonAuto {
          * The following named commands are event markers that get called in path planner and correspond to the following commands
          */
         NamedCommands.registerCommand("Pause", new DelayCommand(1.0));
-        // NamedCommands.registerCommand("Intake", new DelayCommand(1.0));
-        // NamedCommands.registerCommand("RangeShoot", new DelayCommand(1.0));
-        // NamedCommands.registerCommand("SubwooferShoot", new DelayCommand(0.75));
+        NamedCommands.registerCommand("Intake", new DelayCommand(1.0));
+        NamedCommands.registerCommand("RangeShoot", new DelayCommand(1.0));
+        NamedCommands.registerCommand("SubwooferShoot", new DelayCommand(0.75));
     }
 
     /**
