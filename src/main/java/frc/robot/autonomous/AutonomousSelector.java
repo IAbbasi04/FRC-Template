@@ -5,6 +5,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autonomous.autos.*;
+import frc.robot.autonomous.autos.ampside.*;
+import frc.robot.autonomous.autos.centerside.*;
+import frc.robot.autonomous.autos.sourceside.*;
 
 public class AutonomousSelector {
     public ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Configuration");
@@ -13,6 +16,12 @@ public class AutonomousSelector {
 
     public Class<?>[] autos = {
         // Put all autos in here
+        AmpSideWing1Mid12Auto.class, // 4 Note Auto
+
+        CenterWing32Mid3Auto.class, // 3 Note Auto
+        CenterWing321Auto.class, // 4 Note Auto
+
+        SourceSideMid54Auto.class, // 2 Note Auto
     };
 
     public AutonomousSelector() {

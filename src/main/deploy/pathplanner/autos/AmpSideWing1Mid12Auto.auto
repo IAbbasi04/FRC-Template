@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6892327782069432,
+      "y": 6.706193481747041
+    },
+    "rotation": 59.70847459664034
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker Up To Wing Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wing Note 1 to Mid Note 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Note 1 to Wing Line"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wing Score to Mid Note 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Note 2 to Wing Score"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Amp Side Start",
+  "choreoAuto": false
+}

@@ -16,7 +16,11 @@
     "Wing Note 2",
     "Wing Note 3"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Amp Side Start",
+    "Center Side Start",
+    "Source Side Start"
+  ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

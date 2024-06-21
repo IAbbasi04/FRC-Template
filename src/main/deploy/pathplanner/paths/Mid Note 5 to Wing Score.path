@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.9324858470826065,
+        "y": 0.7636554807993345
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.406548487515581,
+        "y": 1.5126252792756034
+      },
+      "isLocked": false,
+      "linkedName": "Mid Note 5"
+    },
+    {
+      "anchor": {
+        "x": 3.468038420871118,
+        "y": 2.8196510060283098
+      },
+      "prevControl": {
+        "x": 4.8484925592391335,
+        "y": 1.909138701998336
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "WIng Score Source"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -30.0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -33.27488798483494,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Mid Note 5",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

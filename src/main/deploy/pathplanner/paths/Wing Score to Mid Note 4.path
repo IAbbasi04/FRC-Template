@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.468038420871118,
+        "y": 2.8196510060283098
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.804435512269952,
+        "y": 0.587427292922565
+      },
+      "isLocked": false,
+      "linkedName": "WIng Score Source"
+    },
+    {
+      "anchor": {
+        "x": 8.035285623344055,
+        "y": 2.2615950777518736
+      },
+      "prevControl": {
+        "x": 7.0954019546679525,
+        "y": 1.6447964201831808
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Mid Note 4"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": 30.0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 33.2317110679793,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Wing Score",
+  "previewStartingState": {
+    "rotation": -37.568592028827446,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

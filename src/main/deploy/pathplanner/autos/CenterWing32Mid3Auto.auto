@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.325730468864645,
+      "y": 5.515804013063089
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Speaker to Wing Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wing Note 3 to Wing Note 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wing Note 2 to Mid Note 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Note 3 to Wing Score"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Center Side Start",
+  "choreoAuto": false
+}

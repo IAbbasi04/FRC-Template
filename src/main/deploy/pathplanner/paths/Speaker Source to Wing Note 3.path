@@ -1,0 +1,63 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.6924444618120014,
+        "y": 4.391019014596169
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6924444618120051,
+        "y": 4.391019014596169
+      },
+      "isLocked": true,
+      "linkedName": "Speaker Source"
+    },
+    {
+      "anchor": {
+        "x": 2.6015831638103353,
+        "y": 4.097305368134887
+      },
+      "prevControl": {
+        "x": 1.6015831638103353,
+        "y": 4.097305368134887
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "Wing Note 3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 0.1,
+      "rotationDegrees": -60.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Speaker Source",
+  "previewStartingState": {
+    "rotation": -60.01836063115067,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

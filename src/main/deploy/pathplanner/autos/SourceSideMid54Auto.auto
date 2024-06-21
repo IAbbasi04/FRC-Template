@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.695314845175145,
+      "y": 4.384510587202993
+    },
+    "rotation": -58.840695491655595
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker Source to Mid Note 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Note 5 to Wing Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Wing Score to Mid Note 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Note 4 to Wing Score"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Source Side Start",
+  "choreoAuto": false
+}

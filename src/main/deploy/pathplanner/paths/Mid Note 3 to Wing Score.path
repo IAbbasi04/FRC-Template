@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.043316855864482,
+        "y": 4.084914323674802
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.1424356694867255,
+        "y": 3.8678415818370104
+      },
+      "isLocked": false,
+      "linkedName": "Mid Note 3"
+    },
+    {
+      "anchor": {
+        "x": 4.244543873703133,
+        "y": 5.920165686485219
+      },
+      "prevControl": {
+        "x": 4.441882729919307,
+        "y": 3.8678415818370104
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Wing Score"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 8.471144633014925,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "Mid Note 3",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
