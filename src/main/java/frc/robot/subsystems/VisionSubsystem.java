@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.util.List;
+
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -108,16 +109,40 @@ public class VisionSubsystem extends Subsystem {
             rearOakD.getCurrTag2ID() == BLUE_SPEAKER_CENTER.id();
     }
 
+    /**
+     * Whether a note is in view of the front camera
+     */
     public boolean isNoteInView() {
         return frontLimelight.isTargetValid();
     }
 
+    /**
+     * Whether the visible note is in suitable targettable
+     */
     public boolean isNoteTargettable() {
         return isNoteInView() && frontLimelight.getY() <= -15.0;
     }
 
-    public Pose2d getAbsolutePositionFromAprilTag() {
-        return new Pose2d();
+    /**
+     * The calculated 2d pose of the robot based on April Tag data
+     */
+    public Pose2d getEstimatedPose() {
+        if (rearOakD.getTagInView()) {
+            // int tagID = rearOakD.getCurrTagID();
+            // double dx = rearOakD.getCurrTagX();
+            // double dy = rearOakD.getCurrTagY();
+            // double dz = rearOakD.getCurrTagZ();
+            // Pose3d tagPose = Constants.FIELD.APRIL_TAG_FIELD_LAYOUT.getTagPose(tagID).get();
+            // Pose2d robotPose = new Pose2d(
+            //     new Translation2d(
+            //         tagPose.getX() - dx,
+            //         tagPose.getY() - dy
+            //     ),
+            //     new Rotation2d()
+            // );
+            return new Pose2d();
+        }
+        return null; // Return null if there is no tag visible
     }
     
     @Override

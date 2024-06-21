@@ -1,13 +1,9 @@
 package lib.frc8592.swervelib;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.estimator.*;
+import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.wpilibj.Timer;
 import lib.frc8592.swervelib.gyro.Gyro;
 
 public class NewtonSwerve {
@@ -17,6 +13,7 @@ public class NewtonSwerve {
     private SwerveDriveKinematics kinematics;
     private Gyro gyro;
     private SwerveProfile profile;
+    private SwerveDrivePoseEstimator poseEstimator;
 
     public NewtonSwerve(SwerveProfile profile, Gyro gyro, SwerveModule[] modules) {
         this.modules = modules;
@@ -31,12 +28,21 @@ public class NewtonSwerve {
             }
         );
 
-        this.odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(),
-                new SwerveModulePosition[] { new SwerveModulePosition(), new SwerveModulePosition(),
-                        new SwerveModulePosition(), new SwerveModulePosition() });
+        SwerveModulePosition[] initialPositions = new SwerveModulePosition[] { new SwerveModulePosition(), new SwerveModulePosition(),
+                        new SwerveModulePosition(), new SwerveModulePosition() };
+
+        this.odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(), initialPositions);
+        this.poseEstimator = new SwerveDrivePoseEstimator(kinematics, getYaw(), initialPositions, getCurrentPose());
 
         this.setMaxThrottleCurrent(80); // Defaults to 80 amps
         this.setMaxSteerCurrent(20); // Defaults to 20 amps
+    }
+
+    /**
+     *  Use vision data to adjust odometry
+     */
+    public void addVisionPoseEstimate(Pose2d visionPose) {
+        this.poseEstimator.addVisionMeasurement(visionPose, Timer.getFPGATimestamp());
     }
 
     /**
@@ -116,6 +122,17 @@ public class NewtonSwerve {
             );
         }
         return states;
+    }
+
+    /**
+     * The position of each of the swerve modules
+     */
+    public SwerveModulePosition[] getPositions() {
+        SwerveModulePosition[] positions = new SwerveModulePosition[modules.length];
+        for (int i = 0; i < modules.length; i++) {
+            positions[i] = modules[i].getModulePosition();
+        }
+        return positions;
     }
 
     /**

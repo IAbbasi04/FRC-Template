@@ -1,11 +1,14 @@
 package frc.robot.common;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.util.Units;
 import lib.frc8592.Conversions;
 
 public class Constants {
     public static class FIELD {
         public static final double RED_WALL_X = 16.542;
+        public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
     }
 
     public final class LOGGING {
