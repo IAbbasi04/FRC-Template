@@ -1,6 +1,9 @@
 package lib.frc8592.swervelib;
 
+import lib.frc8592.ProfileGains;
 import lib.frc8592.hardware.motors.Motor;
+
+import com.ctre.phoenix6.hardware.CANcoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -11,6 +14,8 @@ public abstract class SwerveModule {
     protected ModuleConfiguration moduleConfig;
     protected SwerveModuleState swerveModuleState = new SwerveModuleState();
     protected double wheelDiameterInches;
+    protected SwerveConstants swerveConstants;
+    protected CANcoder cancoder;
 
     /**
      * Sets the velocity of the drive motor in meters per second
@@ -59,7 +64,7 @@ public abstract class SwerveModule {
      */
     public void setModuleState(SwerveModuleState moduleState) {
         swerveModuleState = moduleState;
-        this.set(swerveModuleState.speedMetersPerSecond, swerveModuleState.angle.getRadians());
+        this.setModuleState(swerveModuleState.speedMetersPerSecond, swerveModuleState.angle.getRadians());
     }
 
     /**
@@ -93,7 +98,7 @@ public abstract class SwerveModule {
     /**
      * Applies desired throttle velocity and steer angle 
      */
-    public void set(double driveMetersPerSecond, double steerRadians) {
+    public void setModuleState(double driveMetersPerSecond, double steerRadians) {
         steerRadians %= 2 * Math.PI; // Clamp within [-360, 360]
         if (steerRadians < 0.0) { // Convert to [0, 360]
             steerRadians += 2.0 * Math.PI;
@@ -130,9 +135,24 @@ public abstract class SwerveModule {
     }
 
     /**
-     * Applies desired throttle velocity and steer angle 
+     * Sets the steer motor towards absolute 0 instead of relative 0
      */
-    public void set(SwerveModuleState state) {
-        this.set(state.speedMetersPerSecond, state.angle.getRadians());
+    public void resetAbsoluteSteerAngle() {
+        this.setSteerAngle(swerveConstants.steerOffset - cancoder.getAbsolutePosition().getValueAsDouble());
+    }
+
+    /**
+     * Stores different constants in a single place for easy use and application
+     */
+    public static class SwerveConstants {
+        public double steerOffset = 0;
+        public ProfileGains driveGains = new ProfileGains();
+        public ProfileGains steerGains = new ProfileGains();
+
+        public SwerveConstants(double steerOffset, ProfileGains driveGains, ProfileGains steerGains) {
+            this.steerOffset = steerOffset;
+            this.driveGains = driveGains;
+            this.steerGains = steerGains;
+        }
     }
 }

@@ -5,14 +5,17 @@ import lib.frc8592.ProfileGains;
 import lib.frc8592.swervelib.gyro.NewtonPigeon2;
 import lib.frc8592.hardware.motors.FalconMotor;
 import lib.frc8592.logging.SmartLogger;
-import lib.frc8592.swervelib.NewtonSwerve;
-import lib.frc8592.swervelib.sds.SDSMk4SwerveModule;
-import lib.frc8592.swervelib.SwerveModule;
+import lib.frc8592.swervelib.*;
 import lib.frc8592.swervelib.NewtonSwerve.SwerveProfile;
-import lib.frc8592.swervelib.sds.SDSMk4SwerveModule.SDSConfig;
+import lib.frc8592.swervelib.sds.*;
+import lib.frc8592.swervelib.sds.SDSMk4SwerveModule.*;
+
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+
 import frc.robot.Robot;
+import frc.robot.common.Constants;
+import frc.robot.common.Ports;
 
 public class SwerveSubsystem extends Subsystem {
     private static SwerveSubsystem INSTANCE = null;
@@ -40,35 +43,51 @@ public class SwerveSubsystem extends Subsystem {
     private SwerveSubsystem() {
         this.swerve = new NewtonSwerve(
             new SwerveProfile(
-                0.8, 
-                0.8, 
-                4.5
+                Constants.SWERVE.DRIVE_TRAIN_WIDTH, 
+                Constants.SWERVE.DRIVE_TRAIN_LENGTH, 
+                Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND
             ),
-            new NewtonPigeon2(0),
+            new NewtonPigeon2(Ports.PIGEON_CAN_ID),
             new SwerveModule[] {
-                new SDSMk4SwerveModule( // Front left
-                    new FalconMotor(0), 
-                    new FalconMotor(0), 
-                    SDSConfig.Mk4L2, 
-                    true
+                new SDSMk4SwerveModule( // Front Left Module
+                    new FalconMotor(Ports.FRONT_LEFT_MODULE_DRIVE_MOTOR_CAN_ID), 
+                    new FalconMotor(Ports.FRONT_LEFT_MODULE_STEER_MOTOR_CAN_ID), 
+                    new SDSConstants(
+                        SDSConfig.Mk4L2,
+                        Ports.FRONT_LEFT_MODULE_STEER_ENCODER_CAN_ID,
+                        true,
+                        Constants.SWERVE.FRONT_LEFT_MODULE_STEER_OFFSET
+                    )
                 ),
-                new SDSMk4SwerveModule( // Front right
-                    new FalconMotor(0), 
-                    new FalconMotor(0), 
-                    SDSConfig.Mk4L2, 
-                    true
+                new SDSMk4SwerveModule( // Front Right Module
+                    new FalconMotor(Ports.FRONT_RIGHT_MODULE_DRIVE_MOTOR_CAN_ID), 
+                    new FalconMotor(Ports.FRONT_RIGHT_MODULE_STEER_MOTOR_CAN_ID), 
+                    new SDSConstants(
+                        SDSConfig.Mk4L2,
+                        Ports.FRONT_RIGHT_MODULE_STEER_ENCODER_CAN_ID,
+                        true,
+                        Constants.SWERVE.FRONT_RIGHT_MODULE_STEER_OFFSET
+                    )
                 ),
-                new SDSMk4SwerveModule( // Back left
-                    new FalconMotor(0), 
-                    new FalconMotor(0), 
-                    SDSConfig.Mk4L2, 
-                    true
+                new SDSMk4SwerveModule( // Back Left Module
+                    new FalconMotor(Ports.BACK_LEFT_MODULE_DRIVE_MOTOR_CAN_ID), 
+                    new FalconMotor(Ports.BACK_LEFT_MODULE_STEER_MOTOR_CAN_ID), 
+                    new SDSConstants(
+                        SDSConfig.Mk4L2,
+                        Ports.BACK_LEFT_MODULE_STEER_ENCODER_CAN_ID,
+                        true,
+                        Constants.SWERVE.BACK_LEFT_MODULE_STEER_OFFSET
+                    )
                 ),
-                new SDSMk4SwerveModule( // Back right
-                    new FalconMotor(0), 
-                    new FalconMotor(0), 
-                    SDSConfig.Mk4L2, 
-                    true
+                new SDSMk4SwerveModule( // Back Right Module
+                    new FalconMotor(Ports.BACK_RIGHT_MODULE_DRIVE_MOTOR_CAN_ID), 
+                    new FalconMotor(Ports.BACK_RIGHT_MODULE_STEER_MOTOR_CAN_ID), 
+                    new SDSConstants(
+                        SDSConfig.Mk4L2,
+                        Ports.BACK_RIGHT_MODULE_STEER_ENCODER_CAN_ID,
+                        true,
+                        Constants.SWERVE.BACK_RIGHT_MODULE_STEER_OFFSET
+                    )
                 ),
             }
         );

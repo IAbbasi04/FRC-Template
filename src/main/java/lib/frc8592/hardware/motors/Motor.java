@@ -34,17 +34,17 @@ public abstract class Motor {
     public abstract void setCurrent(int amps);
 
     /**
-     * Sets the motor to the desired velocity in meters per second
+     * Sets the motor to the desired velocity in RPM
      */
-    public void setVelocity(double velocityMetersPerSecond) {
-        setVelocity(velocityMetersPerSecond, 0);
+    public void setVelocity(double velocityRPM) {
+        setVelocity(velocityRPM, 0);
     }
 
     /**
-     * Sets the motor to the desired velocity in meters per second
+     * Sets the motor to the desired velocity in RPM
      */
-    public void setProfiledVelocity(double velocityMetersPerSecond) {
-        setProfiledVelocity(velocityMetersPerSecond, 0);
+    public void setProfiledVelocity(double velocityRPM) {
+        setProfiledVelocity(velocityRPM, 0);
     }
 
     /**
@@ -55,14 +55,14 @@ public abstract class Motor {
     }
 
     /**
-     * Sets the motor to the desired velocity in meters per second
+     * Sets the motor to the desired velocity in RPM
      */
-    public abstract void setVelocity(double velocityMetersPerSecond, int pidSlot);
+    public abstract void setVelocity(double velocityRPM, int pidSlot);
 
     /**
-     * Sets the motor to the desired velocity in meters per second using a trapezoidal profile
+     * Sets the motor to the desired velocity in RPM using a trapezoidal profile
      */
-    public abstract void setProfiledVelocity(double velocityMetersPerSecond, int pidSlot);
+    public abstract void setProfiledVelocity(double velocityRPM, int pidSlot);
 
     /**
      * Sets the motor to the desired position in rotations

@@ -56,35 +56,6 @@ public class VortexMotor extends Motor {
         this.motor.setSecondaryCurrentLimit(amps);
     }
 
-    // @Override
-    // public void set(ControlType controlType, double demand, int pidSlot) {
-    //     switch(controlType) {
-    //         case kPercentOutput:
-    //             motor.set(demand);
-    //             break;
-    //         case kVelocity:
-    //             if (useSmartMotion) {
-    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartVelocity, pidSlot);
-    //             } else {
-    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVelocity, pidSlot);
-    //             }
-    //             break;
-    //         case kPosition:
-    //             if (useSmartMotion) {
-    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kSmartMotion, pidSlot);
-    //             } else {
-    //                 motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kPosition, pidSlot);
-    //             }
-    //             break;
-    //         case kVoltage:
-    //             motorCtrl.setReference(demand, com.revrobotics.CANSparkBase.ControlType.kVoltage, pidSlot);
-    //             break;
-    //         default:
-    //             motor.set(0.0);
-    //             break;
-    //     }
-    // }
-
     @Override
     public void setVelocity(double velocityMetersPerSecond, int pidSlot) {
         motorCtrl.setReference(velocityMetersPerSecond, ControlType.kVelocity, pidSlot);

@@ -1,5 +1,8 @@
 package lib.frc8592.swervelib.sds;
 
+import com.ctre.phoenix6.hardware.CANcoder;
+
+import frc.robot.common.Constants;
 import lib.frc8592.hardware.motors.Motor;
 import lib.frc8592.swervelib.ModuleConfiguration;
 import lib.frc8592.swervelib.SwerveModule;
@@ -19,13 +22,33 @@ public class SDSMk4SwerveModule extends SwerveModule {
         }
     }
 
-    public SDSMk4SwerveModule(Motor driveMotor, Motor steerMotor, SDSConfig moduleConfig, boolean inverted) {
+    public SDSMk4SwerveModule(Motor driveMotor, Motor steerMotor, SDSConstants constants) {
         this.driveMotor = driveMotor;
         this.steerMotor = steerMotor;
-        if (inverted && moduleConfig.invertedConfig != null) {
-            this.moduleConfig = moduleConfig.invertedConfig;
+        if (constants.inverted && constants.moduleConfig.invertedConfig != null) {
+            this.moduleConfig = constants.moduleConfig.invertedConfig;
         } else {
-            this.moduleConfig = moduleConfig.regularConfig;
+            this.moduleConfig = constants.moduleConfig.regularConfig;
         }
+
+        this.driveMotor.withGains(Constants.SWERVE.THROTTLE_GAINS, 0);
+        this.steerMotor.withGains(Constants.SWERVE.STEER_GAINS, 0);
+
+        this.cancoder = new CANcoder(constants.cancoderID);
+    }
+
+    public static class SDSConstants {
+        public final SDSConfig moduleConfig;
+        public final int cancoderID;
+        public final boolean inverted;
+        public final double steerOffset;
+
+        public SDSConstants(SDSConfig moduleConfig, int cancoderID, boolean inverted, double steerOffset) {
+            this.moduleConfig = moduleConfig;
+            this.cancoderID = cancoderID;
+            this.inverted = inverted;
+            this.steerOffset = steerOffset;
+        }
+
     }
 }

@@ -4,11 +4,16 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.util.Units;
 import lib.frc8592.Conversions;
+import lib.frc8592.ProfileGains;
 
 public class Constants {
     public static class FIELD {
         public static final double RED_WALL_X = 16.542;
         public static final AprilTagFieldLayout APRIL_TAG_FIELD_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+    }
+
+    public static class ROBOT {
+        public static final double CAN_TIMEOUT_MS = 100.0;
     }
 
     public final class LOGGING {
@@ -60,6 +65,18 @@ public class Constants {
         public static final double STEER_kP = 0.2;
         public static final double STEER_kI = 0.0;
         public static final double STEER_kD = 0.1;
+
+        public static final ProfileGains THROTTLE_GAINS = new ProfileGains()
+            .setP(THROTTLE_kP)
+            .setI(THROTTLE_kI)
+            .setD(THROTTLE_kD)
+        ;
+
+        public static final ProfileGains STEER_GAINS = new ProfileGains()
+            .setP(STEER_kP)
+            .setI(STEER_kI)
+            .setD(STEER_kD)
+        ;
 
         public static final double DRIVE_TRAIN_WIDTH = Units.inchesToMeters(32.875); // meters
         public static final double DRIVE_TRAIN_LENGTH = Units.inchesToMeters(35.750); // meters

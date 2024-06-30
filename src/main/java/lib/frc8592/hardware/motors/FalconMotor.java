@@ -100,8 +100,8 @@ public class FalconMotor extends Motor {
     }
 
     @Override
-    public void setVelocity(double velocityMetersPerSecond, int pidSlot) {
-        falconMotor.setControl(velocityOutput.withVelocity(velocityMetersPerSecond));
+    public void setVelocity(double velocityRPM, int pidSlot) {
+        falconMotor.setControl(velocityOutput.withVelocity(velocityRPM / 60.0));
     }
 
     @Override

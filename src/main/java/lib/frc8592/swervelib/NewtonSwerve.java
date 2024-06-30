@@ -39,6 +39,15 @@ public class NewtonSwerve {
     }
 
     /**
+     * Resets the absolute steer angle of the swerve towards 0 
+     */
+    public void resetAbsoluteSteer() {
+        for (SwerveModule mod : modules) {
+            mod.resetAbsoluteSteerAngle();
+        }
+    }
+
+    /**
      *  Use vision data to adjust odometry
      */
     public void addVisionPoseEstimate(Pose2d visionPose) {
@@ -154,10 +163,10 @@ public class NewtonSwerve {
         SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, profile.maxSpeed);
 
-        modules[0].set(states[0]); 
-        modules[1].set(states[1]);
-        modules[2].set(states[2]);
-        modules[3].set(states[3]);
+        modules[0].setModuleState(states[0]); 
+        modules[1].setModuleState(states[1]);
+        modules[2].setModuleState(states[2]);
+        modules[3].setModuleState(states[3]);
 
         this.odometry.update(this.getYaw(),
             new SwerveModulePosition[] { 
@@ -178,10 +187,10 @@ public class NewtonSwerve {
      * Locks the wheels in an 'X' pattern
      */
     public void lockWheels() {
-        modules[0].set(new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45)));
-        modules[1].set(new SwerveModuleState(0.0, Rotation2d.fromDegrees(45)));
-        modules[2].set(new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45)));
-        modules[3].set(new SwerveModuleState(0.0, Rotation2d.fromDegrees(45)));
+        modules[0].setModuleState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45)));
+        modules[1].setModuleState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(45)));
+        modules[2].setModuleState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45)));
+        modules[3].setModuleState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(45)));
     }
 
     /**
