@@ -23,6 +23,19 @@ public abstract class ModeManager {
      */
     protected void updateLED() {
         LEDMode desiredLEDMode = LEDMode.kOff;
+        switch(FeederSubsystem.getInstance().getNoteState()) {
+            case kAligning:
+            case kHasNote:
+                desiredLEDMode = LEDMode.kHasNote;
+                break;
+            case kStaged:
+                desiredLEDMode = LEDMode.kStagedNote;
+                break;
+            case kNone:
+            default:
+                desiredLEDMode = LEDMode.kDisabled;
+                break;
+        }
         LEDSubsystem.getInstance().setLEDMode(desiredLEDMode);
     }
 

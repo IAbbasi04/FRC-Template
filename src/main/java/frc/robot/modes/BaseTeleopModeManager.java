@@ -17,6 +17,7 @@ public class BaseTeleopModeManager extends ModeManager {
     protected Controls controls = Robot.CONTROLS;
 
     private boolean prime = false;
+    private ShotProfile desiredShotProfile = new ShotProfile().shouldShoot(false);
 
     @Override
     public void runPeriodic() {}
@@ -42,7 +43,8 @@ public class BaseTeleopModeManager extends ModeManager {
         desiredRotate *= rotateMultiplier * Constants.SWERVE.MAX_VELOCITY_METERS_PER_SECOND;
 
         ChassisSpeeds speeds = new ChassisSpeeds(desiredX, desiredY, desiredRotate);
-        if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, SwerveSubsystem.getInstance().getCurrentRotation());
+        // if (Robot.isReal()) speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, SwerveSubsystem.getInstance().getCurrentRotation());
+        speeds = ChassisSpeeds.fromFieldRelativeSpeeds(speeds, SwerveSubsystem.getInstance().getCurrentRotation());
         SwerveSubsystem.getInstance().drive(speeds);
     }
 
@@ -53,6 +55,7 @@ public class BaseTeleopModeManager extends ModeManager {
             Superstructure.setOutaking();
         } else { // Ground state
             Superstructure.stopIntake();
+            Superstructure.stopFeeder();
         }
     }
 
@@ -61,17 +64,20 @@ public class BaseTeleopModeManager extends ModeManager {
             prime = true;
         }
 
-        ShotProfile desiredShotProfile = new ShotProfile().shouldShoot(false);
-        if (controls.PODIUM_SHOT.getValue()) { // Shoot from podium
-            desiredShotProfile = Robot.SHOT_TABLE.getPodiumShot();
-        } else if (controls.SUBWOOFER_SHOT.getValue()) { // Shoot from subwoofer
-            desiredShotProfile = Robot.SHOT_TABLE.getSubwooferShot();
-        } else { // Auto ranged shot
-            double distanceToTarget = VisionSubsystem.getInstance().getDistanceToSpeaker();
-            desiredShotProfile = Robot.SHOT_TABLE.getShotFromDistance(distanceToTarget);
-            if (distanceToTarget == -1) { // Cannot see target
-                desiredShotProfile = Robot.SHOT_TABLE.getStaticShot();
+        if (prime || controls.SCORE.getValue()) { // Priming or scoring
+            if (controls.PODIUM_SHOT.getValue()) { // Shoot from podium
+                desiredShotProfile = Robot.SHOT_TABLE.getPodiumShot();
+            } else if (controls.SUBWOOFER_SHOT.getValue()) { // Shoot from subwoofer
+                desiredShotProfile = Robot.SHOT_TABLE.getSubwooferShot();
+            } else { // Auto ranged shot
+                double distanceToTarget = VisionSubsystem.getInstance().getDistanceToSpeaker();
+                desiredShotProfile = Robot.SHOT_TABLE.getShotFromDistance(distanceToTarget);
+                if (distanceToTarget == -1) { // Cannot see target
+                    desiredShotProfile = Robot.SHOT_TABLE.getStaticShot();
+                }
             }
+        } else {
+            desiredShotProfile = new ShotProfile().shouldShoot(false);
         }
 
         if (controls.STOW.getValue() || controls.CLIMB_POSITION.getValue()) { // Situations we want to stop priming for
@@ -111,6 +117,8 @@ public class BaseTeleopModeManager extends ModeManager {
             } else if (controls.CLIMB_LOWER.getValue()) { // Climber down
                 Superstructure.lowerClimber();
             }
+        } else if (prime || controls.SCORE.getValue()) { // Priming or scoring
+            // Do nothing since this is taken care of in the updateShooter() method
         }
     }
 }

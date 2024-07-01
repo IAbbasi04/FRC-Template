@@ -1,10 +1,7 @@
 package frc.robot.common;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.util.Units;
-import lib.frc8592.Conversions;
-import lib.frc8592.ProfileGains;
+import edu.wpi.first.apriltag.*;
+import lib.frc8592.*;
 
 public class Constants {
     public static class FIELD {
@@ -50,6 +47,7 @@ public class Constants {
         public static final int MANIPULATOR_CONTROLLER_PORT = 1;
         public static final String DRIVER_SHUFFLEBOARD_TAB = "Driver";
         public static final String MANIPULATOR_SHUFFLEBOARD_TAB = "Manipulator";
+        public static final double SIMULATION_DEADBAND = 0.1;
     }
 
     public static class SWERVE {
@@ -77,12 +75,12 @@ public class Constants {
             .setI(STEER_kI)
             .setD(STEER_kD)
         ;
-
-        public static final double DRIVE_TRAIN_WIDTH = Units.inchesToMeters(32.875); // meters
-        public static final double DRIVE_TRAIN_LENGTH = Units.inchesToMeters(35.750); // meters
+        
+        public static final double DRIVE_TRAIN_WIDTH = 0.527; // meters
+        public static final double DRIVE_TRAIN_LENGTH = 0.478; // meters 
         public static final double WHEEL_CIRCUMFERENCE = 4 * Math.PI; // inches
 
-        public static final double DRIVE_TRAIN_RADIUS = Math.sqrt(Math.pow(DRIVE_TRAIN_WIDTH, 2) + Math.pow(DRIVE_TRAIN_LENGTH, 2));
+        public static final double DRIVE_TRAIN_RADIUS = Math.sqrt(Math.pow(DRIVE_TRAIN_WIDTH, 2) + Math.pow(DRIVE_TRAIN_LENGTH, 2)); // meters
 
         public static final double TRANSLATE_POWER_FAST = 1.0; // Scaling for teleop driving.  1.0 is maximum
         public static final double ROTATE_POWER_FAST = 0.75; // Scaling for teleop driving.  1.0 is maximum

@@ -1,5 +1,6 @@
 package frc.robot.common;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import lib.frc8592.BooleanManager;
 import lib.frc8592.controls.xbox.XboxController;
 import lib.frc8592.controls.xbox.XboxInput;
@@ -46,7 +47,6 @@ public class Controls {
         SWERVE_TRANSLATE_X = -driver.get(XboxInput.LEFT_Y_AXIS);
         SWERVE_TRANSLATE_Y = -driver.get(XboxInput.LEFT_X_AXIS);
         SWERVE_ROTATE = -driver.get(XboxInput.RIGHT_X_AXIS);
-        SNAIL_MODE.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
         RESET_GYRO.update(driver.isPressing(XboxInput.START));
 
         SNAP_VALUE = driver.getPOV();
@@ -72,11 +72,14 @@ public class Controls {
         PASS.update(driver.isPressing(XboxInput.B_BTN));
 
         SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.B_BTN));
-        PODIUM_SHOT.update(driver.isPressing(XboxInput.B_BTN));
+        PODIUM_SHOT.update(driver.isPressing(XboxInput.X_BTN));
+
+        SmartDashboard.putBoolean("AAAASKLDJKALDJKS", PRIME.getValue());
     }
 
     public void updateDoubleDriver() {
         updateCommonControls();
+        SNAIL_MODE.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
         OUTAKE.update(driver.isPressing(XboxInput.DPAD_DOWN));
 
         STOW.update(manipulator.isPressing(XboxInput.A_BTN));

@@ -59,6 +59,7 @@ public class Robot extends LoggedRobot {
       // Updates the controls and what the status of all buttons are
       // Currently set to single driver controls
       CONTROLS.updateSingleDriver();
+      // CONTROLS.updateDoubleDriver();
 
       // Autonomous uses WPILib command base 
       // so we do not want to run periodic

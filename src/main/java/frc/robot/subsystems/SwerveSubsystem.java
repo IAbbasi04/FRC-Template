@@ -219,10 +219,10 @@ public class SwerveSubsystem extends Subsystem {
                 getCurrentPose().transformBy(
                     new Transform2d(
                         new Translation2d(
-                            0.02 * desiredSpeeds.vxMetersPerSecond,
-                            0.02 * desiredSpeeds.vyMetersPerSecond
+                            0.01 * desiredSpeeds.vxMetersPerSecond,
+                            0.01 * desiredSpeeds.vyMetersPerSecond
                         ),
-                        Rotation2d.fromRadians(0.02 * desiredSpeeds.omegaRadiansPerSecond)
+                        Rotation2d.fromRadians(0.01 * desiredSpeeds.omegaRadiansPerSecond)
                     )
                 )
             );
