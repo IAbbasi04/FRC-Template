@@ -1,9 +1,7 @@
 package frc.robot.common;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import lib.frc8592.BooleanManager;
-import lib.frc8592.controls.xbox.XboxController;
-import lib.frc8592.controls.xbox.XboxInput;
+import lib.frc8592.controls.xbox.*;
 
 public class Controls {
     private XboxController driver;
@@ -71,10 +69,8 @@ public class Controls {
         PRIME.update(driver.isPressing(XboxInput.RIGHT_BUMPER));
         PASS.update(driver.isPressing(XboxInput.B_BTN));
 
-        SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.B_BTN));
+        SUBWOOFER_SHOT.update(driver.isPressing(XboxInput.Y_BTN));
         PODIUM_SHOT.update(driver.isPressing(XboxInput.X_BTN));
-
-        SmartDashboard.putBoolean("AAAASKLDJKALDJKS", PRIME.getValue());
     }
 
     public void updateDoubleDriver() {

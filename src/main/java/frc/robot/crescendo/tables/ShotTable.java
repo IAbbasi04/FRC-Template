@@ -68,4 +68,15 @@ public class ShotTable {
     public ShotProfile getPodiumShot() {
         return getShotFromDistance(2.83);
     }
+
+    /**
+     * Static Shot profile for passes
+     */
+    public ShotProfile getPassShot() {
+        return new ShotProfile()
+            .flywheel(4500, 5000)
+            .pivot(45)
+            .shouldShoot(true)
+        ;
+    }
 }

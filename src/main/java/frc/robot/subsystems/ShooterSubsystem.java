@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
 import frc.robot.common.Ports;
 import lib.frc8592.MatchMode;
 import lib.frc8592.hardware.motors.Motor;
@@ -67,7 +68,7 @@ public class ShooterSubsystem extends Subsystem {
     public boolean isAtTargetSpeed() {
         boolean left = Math.abs(leftMotor.getVelocity() - desiredLeftVelocityRPM) <= 50;
         boolean right = Math.abs(rightMotor.getVelocity() - desiredRightVelocityRPM) <= 50;
-        return left && right;
+        return (left && right) || Robot.isSimulation();
     }
 
     @Override

@@ -17,7 +17,7 @@ public class BooleanManager {
         lastFrame = b;
     }
 
-    public boolean getValue() {
+    public boolean isTrue() {
         return value;
     }
 

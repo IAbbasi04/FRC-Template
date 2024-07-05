@@ -18,6 +18,7 @@ public class AutonomousSelector {
         // Put all autos in here
         AmpSideWing1Mid12Auto.class, // 4 Note Auto
 
+        CenterWing2Auto.class, // 2 Note Auto
         CenterWing32Mid3Auto.class, // 3 Note Auto
         CenterWing321Auto.class, // 4 Note Auto
 

@@ -108,6 +108,7 @@ public class Constants {
         public static final int FEEDER_INTAKE_RPM = 2000;
         public static final int FEEDER_OUTAKE_RPM = -2000;
         public static final int FEEDER_ALIGN_RPM = -1000;
+        public static final double FEEDER_AMP_RPM = -5000;
     }
 
     public static class SHOOTER {

@@ -1,6 +1,11 @@
 package frc.robot.autonomous;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -81,7 +86,7 @@ public enum AutoGenerator {
     /**
      * Creates a spline trajectory using a specific config and multiple poses
      */
-    public static SwerveTrajectory generate(TrajectoryConfig config, Pose2d ... poses) {
+    public static SwerveTrajectory generateWPILibTrajectory(TrajectoryConfig config, Pose2d ... poses) {
         Translation2d[] interiorPoses = new Translation2d[poses.length - 2];
         boolean isRed = DriverStation.getAlliance().get() != Alliance.Blue;
         Pose2d startPose = !isRed ? poses[0] : new Pose2d(RED_WALL_X - poses[0].getX(), poses[0].getY(), Rotation2d.fromDegrees(180).minus(poses[0].getRotation()));
@@ -99,5 +104,33 @@ public enum AutoGenerator {
             endPose,
             config
         )).setStartAngle(poses[0].getRotation());
+    }
+
+    /**
+     * Creates a spline trajectory using the Path Planner Pathing UI
+     */
+    public static PathPlannerPath generatePathPlannerPath(PathConfiguration config, Pose2d ... poses) {
+        List<Translation2d> interiorPoses = new ArrayList<>();
+        for (int i = 0; i < poses.length; i++) {
+            interiorPoses.add(poses[i].getTranslation());
+        }
+        return new PathPlannerPath(interiorPoses, config.constraints, config.endState);
+    }
+
+    /**
+     * Creates a spline trajectory using the Path Planner Pathing UI
+     */
+    public static PathPlannerPath generatePathPlannerPath(PathConfiguration config, List<Translation2d> poses) {
+        return new PathPlannerPath(poses, config.constraints, config.endState);
+    }
+
+    public static class PathConfiguration {
+        public PathConstraints constraints;
+        public GoalEndState endState;
+        
+        public PathConfiguration(PathConstraints constraints, double endVelocity, Rotation2d endRotation) {
+            this.constraints = constraints;
+            this.endState = new GoalEndState(endVelocity, endRotation);
+        }
     }
 }

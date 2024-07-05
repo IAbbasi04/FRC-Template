@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
+import com.pathplanner.lib.pathfinding.LocalADStar;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
 import lib.frc8592.hardware.Clock;
 import lib.frc8592.MatchMode;
 
@@ -37,6 +40,7 @@ public class Robot extends LoggedRobot {
   public void robotInit() {        
     // Add all modules to run here
     activeModules = new SubsystemList(List.of(
+      Superstructure.getInstance(),
       LoggerSubsystem.getInstance(),
       PowerSubsystem.getInstance(),
       VisionSubsystem.getInstance(),
@@ -51,6 +55,8 @@ public class Robot extends LoggedRobot {
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
 
     NewtonAuto.initializeAutoBuilder(); // Sets up the pathplanner auto creation tool
+
+    Pathfinding.setPathfinder(new LocalADStar());
   }
 
   @Override

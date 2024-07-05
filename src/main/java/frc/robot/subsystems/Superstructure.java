@@ -4,6 +4,8 @@ import frc.robot.Robot;
 import frc.robot.crescendo.ShotProfile;
 import frc.robot.subsystems.ElevatorSubsystem.ElevatorState;
 import frc.robot.subsystems.FeederSubsystem.FeederState;
+import lib.frc8592.MatchMode;
+import lib.frc8592.logging.SmartLogger;
 import frc.robot.common.Constants;
 
 /**
@@ -15,153 +17,193 @@ import frc.robot.common.Constants;
  * Typically, game functions only requiring a single mechanism 
  * can be dealt with inside its respective mechanism class
  */
-public class Superstructure {
-    /**
-     * Allows the robot to intake a note and stage it accordingly in the feeder
-     */
-    public static void setIntaking() {
-        IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_INTAKE_RPM);
-        FeederSubsystem.getInstance().setFeederState(FeederState.kIntake);
+public class Superstructure extends Subsystem {
+    private static Superstructure INSTANCE = null;
+    public static Superstructure getInstance() {
+        if (INSTANCE == null) INSTANCE = new Superstructure();
+        return INSTANCE;
+    }
+
+    public enum Superstate {
+        kDefault,
+        kIntake,
+        kOutake,
+        kClimb,
+        kPrime,
+        kScore,
+        kStow,
+        ;
+    }
+
+    public enum ScoreState {
+        kOverride(),
+        kNone(Robot.SHOT_TABLE.getStaticShot()),
+        kRanged,
+        kSubwoofer(Robot.SHOT_TABLE.getSubwooferShot()),
+        kPodium(Robot.SHOT_TABLE.getPodiumShot()),
+        kAmp,
+        kPass(Robot.SHOT_TABLE.getPassShot());
+
+        public double leftRPM = 0;
+        public double rightRPM = 0;
+        public double pivot = 0;
+        public double extension = 0;
+
+        private ScoreState() {}
+
+        private ScoreState(double leftRPM, double rightRPM, double pivot, double extension) {
+            this.leftRPM = leftRPM;
+            this.rightRPM = rightRPM;
+            this.pivot = pivot;
+            this.extension = extension;
+        }
+
+        private ScoreState(ShotProfile shotprofile) {
+            this.leftRPM = shotprofile.leftShotRPM;
+            this.rightRPM = shotprofile.rightShotRPM;
+            this.pivot = shotprofile.pivotDegrees;
+            this.extension = shotprofile.extensionMeters;
+        }
+    }
+
+    private Superstate state = Superstate.kDefault;
+    private ScoreState scoreState = ScoreState.kNone;
+
+    private ShotProfile overrideShotProfile = new ShotProfile();
+
+    private Superstructure() {
+        super.logger = new SmartLogger("Superstructure");
     }
 
     /**
-     * Allows the robot to spit out a note for any reason in any state
+     * Sets the state of the robot and all mechanisms
      */
-    public static void setOutaking() {
-        IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
-        FeederSubsystem.getInstance().setFeederState(FeederState.kOutake);
+    public void setSuperState(Superstate state) {
+        this.state = state;
     }
 
     /**
-     * Stop spinning the intake roller
+     * Sets the scoring state of the robot
      */
-    public static void stopIntake() {
-        IntakeSubsystem.getInstance().setRollerVelocity(0.0);
+    public void setScoreState(ScoreState state) {
+        this.scoreState = state;
     }
 
     /**
-     * Set the feeder state to the kOff state
+     * The desired state of the robot
      */
-    public static void stopFeeder() {
-        FeederSubsystem.getInstance().setFeederState(FeederState.kOff);
+    public Superstate getState() {
+        return this.state;
+    }
+    
+    @Override
+    public void init(MatchMode mode) {
+        this.state = Superstate.kDefault; // Anytime we switch between modes, reset superstate
     }
 
-    /**
-     * Resets the robot to the starting ground state of the robot.
-     * 
-     * <p> - Elevator System in {@code ElevatorState.kStowed} </p> 
-     * <p> - Feeder Rollers in {@code FeederState.kOff} </p> 
-     * <p> - Intake Rollers turned off </p>
-     */
-    public static void setGroundState() {
-        stopIntake();
-        stopFeeder();
-        stopShooter();
-        setStowState();
+    @Override
+    public void initializeLogs() {
+        logger.logEnum("Superstructure State", () -> getState());
     }
 
-    /**
-     * Sets all parameters for shooting
-     */
-    public static void setShooting(double leftRPM, double rightRPM, double pivotAngle, double elevatorHeight, boolean shouldShoot) {
-        ShooterSubsystem.getInstance().setDesiredVelocity(leftRPM, rightRPM);
-        ElevatorSubsystem.getInstance().setPivot(pivotAngle);
-        ElevatorSubsystem.getInstance().setExtension(elevatorHeight);
-        if ((ShooterSubsystem.getInstance().isAtTargetSpeed() && 
-            ElevatorSubsystem.getInstance().atTargetPosition() &&
-            shouldShoot) || Robot.isSimulation()) {
-            FeederSubsystem.getInstance().setFeederState(FeederState.kShoot);
+    @Override
+    public void periodic() {
+        switch (state) {
+            case kIntake:
+                IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_INTAKE_RPM);
+                FeederSubsystem.getInstance().setFeederState(FeederState.kIntake);
+                ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kStow);
+                break;
+            case kOutake:
+                IntakeSubsystem.getInstance().setRollerVelocity(Constants.INTAKE.ROLLER_OUTAKE_RPM);
+                FeederSubsystem.getInstance().setFeederState(FeederState.kOutake);
+                break;
+            case kScore:
+                switch (scoreState) {
+                    case kAmp:
+                        // Amp scoring does not require shooter to be up to speed
+                        FeederSubsystem.getInstance().setFeederVelocity(Constants.FEEDER.FEEDER_AMP_RPM);
+                        break;
+                    default:
+                        if (ShooterSubsystem.getInstance().isAtTargetSpeed()) {
+                            // Only shoot if shooter up to speed
+                            FeederSubsystem.getInstance().setFeederState(FeederState.kShoot);
+                        } else {
+                            FeederSubsystem.getInstance().setFeederVelocity(0.0);
+                        }
+                        break;
+                }
+                // Fall through since scoring is just an extension of priming
+            case kPrime:
+                switch (scoreState) {
+                    case kRanged:
+                        double distanceToTarget = VisionSubsystem.getInstance().getDistanceToSpeaker();
+                        ShotProfile profile = Robot.SHOT_TABLE.getShotFromDistance(distanceToTarget);
+                        // SmartDashboard.putNumber("JKLASDAJKLSDALJKDASJKL", profile.pivotDegrees);
+                        ShooterSubsystem.getInstance().setDesiredVelocity(profile.leftShotRPM, profile.rightShotRPM);
+                        ElevatorSubsystem.getInstance().setPivot(profile.pivotDegrees);
+                        ElevatorSubsystem.getInstance().setExtension(profile.extensionMeters);
+                        break;
+                    case kAmp:
+                        ShooterSubsystem.getInstance().setDesiredVelocity(-1000, -1000);
+                        ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kAmp);
+                        break;
+                    case kOverride:
+                        ShooterSubsystem.getInstance().setDesiredVelocity(
+                            overrideShotProfile.leftShotRPM, 
+                            overrideShotProfile.rightShotRPM
+                        );
+                        ElevatorSubsystem.getInstance().setPivot(overrideShotProfile.pivotDegrees);
+                        ElevatorSubsystem.getInstance().setExtension(overrideShotProfile.extensionMeters);
+                    default:
+                        ShooterSubsystem.getInstance().setDesiredVelocity(scoreState.leftRPM, scoreState.rightRPM);
+                        ElevatorSubsystem.getInstance().setPivot(scoreState.pivot);
+                        ElevatorSubsystem.getInstance().setExtension(scoreState.extension);
+                        break;
+                }
+                break;
+            case kClimb:
+                ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kClimb);
+                break;
+            case kStow:
+                ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kStow);
+                // Stow is basically default but with a grounded elevator system
+                // So we fall through here
+            case kDefault:
+                // Fall through intentional
+            default:
+                // No rollers spinning in a default state
+                IntakeSubsystem.getInstance().setRollerVelocity(0.0);
+                ShooterSubsystem.getInstance().setDesiredVelocity(0, 0);
+                FeederSubsystem.getInstance().setFeederState(FeederState.kOff);
+                break;
         }
     }
 
     /**
-     * Sets the robot to a shooting state given the desired shot profile
+     * Sets a desired shot profile to be directly applied
      */
-    public static void setShooting(ShotProfile desiredShotProfile) {
-        setShooting(
-            desiredShotProfile.leftShotRPM, 
-            desiredShotProfile.rightShotRPM, 
-            desiredShotProfile.pivotDegrees, 
-            desiredShotProfile.extensionMeters, 
-            desiredShotProfile.shouldShoot
-        );
-    }
-
-    /**
-     * Sets the velocity of the shooter motors
-     */
-    public static void setShooterVelocity(double leftRPM, double rightRPM) {
-        ShooterSubsystem.getInstance().setDesiredVelocity(leftRPM, rightRPM);
-    }
-
-    /**
-     * Sets the override feeder velocity
-     */
-    public static void setFeederVelocity(double feederRPM) {
-        FeederSubsystem.getInstance().setFeederVelocity(feederRPM);
-    }
-
-    /**
-     * Turns off shooter motors
-     */
-    public static void stopShooter() {
-        setShooterVelocity(0, 0);
-    }
-
-    /**
-     * Sets the angle of the pivot
-     */
-    public static void setPivotAngle(double pivot) {
-        ElevatorSubsystem.getInstance().setPivot(pivot);
-    }
-
-    /**
-     * Sets the height of the elevator
-     */
-    public static void setElevatorHeight(double extension) {
-        ElevatorSubsystem.getInstance().setExtension(extension);
-    }
-
-    /**
-     * Shooter and feeder presets for scoring in amp
-     */
-    public static void scoreAmp() {
-        setShooterVelocity(-1000, -1000);
-        FeederSubsystem.getInstance().setFeederVelocity(-3000);
-    }
-
-    /**
-     * Sets the robot to the amp position
-     */
-    public static void setStowState() {
-        ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kStow);
-    }
-
-    /**
-     * Sets the robot to the amp position
-     */
-    public static void setAmpState() {
-        ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kAmp);
-    }
-
-    /**
-     * Sets the robot to the climb position
-     */
-    public static void setClimbState() {
-        ElevatorSubsystem.getInstance().setElevatorState(ElevatorState.kClimb);
+    public void setShotProfile(ShotProfile shotProfile) {
+        this.scoreState = ScoreState.kOverride;
+        this.overrideShotProfile = shotProfile;
+        if (shotProfile.shouldShoot) { // Score
+            this.state = Superstate.kScore;
+        } else { // Prime
+            this.state = Superstate.kPrime;
+        }
     }
 
     /**
      * Extends the elevator
      */
-    public static void raiseClimber() {
+    public void raiseClimber() {
         ElevatorSubsystem.getInstance().moveElevator(0.005);
     }
 
     /**
      * Retracts the elevator
      */
-    public static void lowerClimber() {
+    public void lowerClimber() {
         ElevatorSubsystem.getInstance().moveElevator(-0.005);
     }
 }
