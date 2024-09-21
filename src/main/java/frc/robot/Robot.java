@@ -36,10 +36,11 @@ public class Robot extends LoggedRobot {
     // Add all modules to run here
     activeModules = new SubsystemList(List.of(
       LoggerSubsystem.getInstance(),
-      PowerSubsystem.getInstance(),
-      VisionSubsystem.getInstance(),
-      LEDSubsystem.getInstance(),
-      SwerveSubsystem.getInstance()
+      // PowerSubsystem.getInstance(),
+      // VisionSubsystem.getInstance(),
+      // LEDSubsystem.getInstance(),
+      // SwerveSubsystem.getInstance()
+      TestSubsystem.getInstance()
     ));
     
     autoSelector = new AutonomousSelector(); // Initialized here to allow auto selection during disabled mode
